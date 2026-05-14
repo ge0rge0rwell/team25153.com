@@ -12,6 +12,7 @@ const robotData = {
     whyText: 'This season, we named our robot Cerberon, inspired by Cerberus — the mythological three-headed guardian — and cannon, symbolizing power and precision.',
     image: 'https://team25153.com/wp-content/uploads/2026/04/logo-removebg-preview-300x300.png',
     seasonImage: '/decode-season.png',
+    heroBgBlend: 'normal',
     youtubeId: 'LCqWA6gSCXA',
     youtubeTitle: '2025-2026 DECODE presented by RTX Game Animation',
     gameTitle: 'DECODE — 2025–2026',
@@ -35,7 +36,8 @@ const robotData = {
     whyTitle: 'Why HILDA?',
     whyText: 'HILDA stands for Highly Intelligent Linear Drive Assembly. The name captures both the clever engineering and the season\'s deep-sea theme, built to retrieve game pieces from below the surface.',
     image: 'https://team25153.com/wp-content/uploads/2026/04/Screenshot_2026-04-03_at_17.28.40-removebg-preview-300x247.png',
-    seasonImage: null,
+    seasonImage: '/into-the-deep-season.jpg',
+    heroBgBlend: 'normal',
     youtubeId: 'ewlDPvRK4U4',
     youtubeTitle: '2024-2025 FIRST Tech Challenge Into The Deep Game Animation',
     gameTitle: 'INTO THE DEEP — 2024–2025',
@@ -59,7 +61,8 @@ const robotData = {
     whyTitle: 'Why X & Y?',
     whyText: 'X & Y is named after the Cartesian axes — a direct nod to our team identity. The name reflects our philosophy: every move is calculated, every position is precise, and every strategy is data-driven.',
     image: 'https://team25153.com/wp-content/uploads/2026/04/Adsiz-tasarim-1-300x236.png',
-    seasonImage: null,
+    seasonImage: '/centerstage-season.png',
+    heroBgBlend: 'screen',
     youtubeId: '6e-5Uo1dRic',
     youtubeTitle: '2023-2024 FIRST Tech Challenge CENTERSTAGE Game Animation',
     gameTitle: 'CENTERSTAGE — 2023–2024',
@@ -168,6 +171,7 @@ export default function RobotPage() {
               src={robot.image}
               alt={robot.name}
               className="w-64 h-64 lg:w-80 lg:h-80 object-contain drop-shadow-2xl"
+              style={{ mixBlendMode: robot.heroBgBlend }}
             />
           </div>
         </div>
@@ -178,23 +182,26 @@ export default function RobotPage() {
       ══════════════════════════════════════════ */}
       <section className="py-20 bg-gray-50">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="mb-10">
-            <p className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-2">The Game</p>
-            <h2 className="text-3xl font-bold text-navy">{robot.gameTitle}</h2>
+          <div className="mb-12">
+            <p className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-5">The Game</p>
+            {robot.seasonImage ? (
+              <div className="flex flex-col items-start gap-3">
+                <img
+                  src={robot.seasonImage}
+                  alt={robot.competition + ' Season'}
+                  className="h-32 object-contain"
+                  style={{ mixBlendMode: 'multiply' }}
+                />
+                <span className="text-navy/40 text-xs font-semibold uppercase tracking-widest">{robot.year}</span>
+              </div>
+            ) : (
+              <h2 className="text-3xl font-bold text-navy">{robot.gameTitle}</h2>
+            )}
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-            {/* Left: season image on top, game description below */}
+            {/* Left: game description */}
             <div className="flex flex-col gap-6">
-              {robot.seasonImage && (
-                <div className="bg-white rounded-2xl p-6 shadow-sm ring-1 ring-gray-100 flex items-center justify-center">
-                  <img
-                    src={robot.seasonImage}
-                    alt={robot.competition + ' Season'}
-                    className="max-h-40 object-contain"
-                  />
-                </div>
-              )}
               <div className="bg-white rounded-2xl p-7 shadow-sm ring-1 ring-gray-100 flex-1">
                 <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">Game Overview</p>
                 <p className="text-gray-700 leading-relaxed">{robot.gameDescription}</p>
