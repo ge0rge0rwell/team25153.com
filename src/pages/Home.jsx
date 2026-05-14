@@ -114,18 +114,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Stats Bar ─────────────────────────────── */}
-      <section className="bg-navy text-white py-8">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-6">
-          {stats.map((s) => (
-            <div key={s.label} className="text-center">
-              <div className="text-3xl font-bold text-gold">{s.number}</div>
-              <div className="text-white/60 text-xs uppercase tracking-wider mt-1">{s.label}</div>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* ── About Strip ───────────────────────────── */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-6">
@@ -151,59 +139,7 @@ export default function Home() {
       </div>
 
       {/* ── Sponsors / Partners ───────────────────── */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
-            {/* Left flanking image */}
-            <div className="hidden md:block">
-              <img
-                src="https://team25153.com/wp-content/uploads/elementor/thumbs/Adsiz-tasarim-2-rlbl2w9lqtoh6fwkre762qv3rs8lmgfqy1qjpiuyjc.png"
-                alt="Team"
-                className="rounded-xl w-full object-cover max-h-40 object-contain"
-              />
-            </div>
-
-            {/* Center carousel */}
-            <div>
-              <p className="text-center text-xs font-bold uppercase tracking-[0.25em] text-crimson mb-4">Our Partners</p>
-              <LogoCarousel />
-            </div>
-
-            {/* Right flanking image */}
-            <div className="hidden md:block">
-              <img
-                src="https://team25153.com/wp-content/uploads/elementor/thumbs/tr04vy7v19cg0s004-rlbja71j2lckmmnij8ejqshphfj3d952hfemymptyy.jpg"
-                alt="Competition"
-                className="rounded-xl w-full object-cover max-h-40 object-cover"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── CTA ───────────────────────────────────── */}
-      <section className="py-20 bg-crimson-gradient bg-crimson text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.3) 1px, transparent 1px)',
-            backgroundSize: '28px 28px'
-          }}
-        />
-        <div className="relative max-w-3xl mx-auto px-6 text-center">
-          <h2 className="text-3xl font-medium mb-4">Want to Support Us?</h2>
-          <p className="text-white/80 mb-8 leading-relaxed">
-            We're looking for sponsors and partners who share our passion for STEM education and innovation.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link to="/sponsorship" className="bg-white text-crimson px-8 py-3 rounded-full font-medium uppercase tracking-wide text-sm hover:bg-gold hover:text-white transition-colors duration-300">
-              Become a Sponsor
-            </Link>
-            <Link to="/contact" className="border-2 border-white text-white px-8 py-3 rounded-full font-medium uppercase tracking-wide text-sm hover:bg-white hover:text-crimson transition-colors duration-300">
-              Contact Us
-            </Link>
-          </div>
-        </div>
-      </section>
+      <LogoCarousel />
     </div>
   )
 }

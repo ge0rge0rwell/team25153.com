@@ -12,10 +12,10 @@ export default function Footer() {
         {/* Brand */}
         <div>
           <img
-            src="https://team25153.com/wp-content/uploads/2025/11/Cartesian-Font-Vector-scaled-1.png"
+            src="/cartesian-logo-transparent.png"
             alt="Cartesian Robotics"
-            className="h-12 w-auto mb-4 brightness-0 invert"
-            onError={(e) => { e.target.style.display='none' }}
+            className="h-10 w-auto mb-4"
+            style={{ filter: 'brightness(0) invert(1)' }}
           />
           <p className="text-white/60 text-sm leading-relaxed mb-6">
             A student-led FTC robotics team that believes in the power of thinking and creating.

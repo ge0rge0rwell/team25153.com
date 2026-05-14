@@ -17,7 +17,11 @@ const robotData = {
     youtubeTitle: '2025-2026 DECODE presented by RTX Game Animation',
     gameTitle: 'DECODE — 2025–2026',
     gameDescription: 'Two alliances of three robots each work to score foam balls into goals. At the end of the match, robots climb a structure to earn additional points.',
-    participated: ['Piri Reis Regional 1', 'Piri Reis Regional 2', 'Türkiye Championship'],
+    participated: [
+      { name: 'Piri Reis Regional 1', url: 'https://ftc-events.firstinspires.org/2025/TRTUQ1' },
+      { name: 'Piri Reis Regional 2', url: 'https://ftc-events.firstinspires.org/2025/TRTUQ2' },
+      { name: 'Türkiye Championship', url: 'https://ftc-events.firstinspires.org/2025/TRTUCH' },
+    ],
     features: [
       'High-speed Intake Mechanism',
       'Precise Autonomous Routines',
@@ -42,7 +46,10 @@ const robotData = {
     youtubeTitle: '2024-2025 FIRST Tech Challenge Into The Deep Game Animation',
     gameTitle: 'INTO THE DEEP — 2024–2025',
     gameDescription: 'Two alliances compete to collect and deliver samples, score specimens on the chamber, and ascend the submersible structure at the end of the match.',
-    participated: ['Türkiye Regional', 'Türkiye Championship'],
+    participated: [
+      { name: 'Türkiye Regional', url: 'https://ftc-events.firstinspires.org/2024/TRTUQ1' },
+      { name: 'Türkiye Championship', url: 'https://ftc-events.firstinspires.org/2024/TRTUCH' },
+    ],
     features: [
       'Submersible Intake Arm',
       'Advanced Sensor Integration',
@@ -67,7 +74,10 @@ const robotData = {
     youtubeTitle: '2023-2024 FIRST Tech Challenge CENTERSTAGE Game Animation',
     gameTitle: 'CENTERSTAGE — 2023–2024',
     gameDescription: 'Alliances work together to place pixels on the backdrop, launch paper airplanes across the field, and hang from the rigging at the end of the match.',
-    participated: ['Türkiye Regional', 'Türkiye Championship'],
+    participated: [
+      { name: 'Türkiye Regional', url: 'https://ftc-events.firstinspires.org/2023/TRTUQ1' },
+      { name: 'Türkiye Championship', url: 'https://ftc-events.firstinspires.org/2023/TRTUCH' },
+    ],
     features: [
       'Coordinate-based Movement System',
       'Backdrop Pixel Placer',
@@ -248,15 +258,21 @@ export default function RobotPage() {
               <h3 className="text-2xl font-bold text-navy mb-6">Participated In</h3>
               <div className="flex flex-col gap-3">
                 {robot.participated.map((event, i) => (
-                  <div
-                    key={event}
-                    className="flex items-center gap-4 bg-crimson text-white rounded-xl px-5 py-3 font-semibold text-sm"
+                  <a
+                    key={event.name}
+                    href={event.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-4 bg-crimson hover:bg-crimson-dark text-white rounded-xl px-5 py-3 font-semibold text-sm transition-all hover:-translate-y-0.5 hover:shadow-lg group"
                   >
                     <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-xs font-black flex-shrink-0">
                       {i + 1}
                     </span>
-                    {event}
-                  </div>
+                    <span className="flex-1">{event.name}</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
                 ))}
               </div>
             </div>
