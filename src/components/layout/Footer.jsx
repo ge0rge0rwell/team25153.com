@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
-import { Instagram, Mail, MapPin, ArrowUp } from 'lucide-react'
+import { Mail, MapPin, ArrowUp } from 'lucide-react'
+import { FaInstagram } from 'react-icons/fa'
 
 export default function Footer() {
   const scrollTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -69,7 +70,7 @@ export default function Footer() {
               </a>
             </li>
             <li className="flex items-center gap-3 text-sm text-white/60">
-              <Instagram size={16} className="text-gold flex-shrink-0" />
+              <FaInstagram size={16} className="text-gold flex-shrink-0" />
               <a
                 href="https://www.instagram.com/cartesian25153/"
                 target="_blank"
@@ -89,7 +90,7 @@ export default function Footer() {
               rel="noopener noreferrer"
               className="w-9 h-9 rounded-full bg-navy-mid hover:bg-crimson flex items-center justify-center transition-colors duration-300"
             >
-              <Instagram size={16} />
+              <FaInstagram size={16} />
             </a>
           </div>
         </div>

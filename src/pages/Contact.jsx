@@ -1,6 +1,7 @@
 import PageBanner from '../components/ui/PageBanner'
 import { Link } from 'react-router-dom'
-import { MapPin, Mail, Instagram } from 'lucide-react'
+import { MapPin, Mail } from 'lucide-react'
+import { FaInstagram } from 'react-icons/fa'
 import ContactForm from '../components/ui/ContactForm'
 
 export default function Contact() {
@@ -51,7 +52,7 @@ export default function Contact() {
               </li>
               <li className="flex items-start gap-4">
                 <div className="w-11 h-11 rounded-full bg-crimson/10 flex items-center justify-center flex-shrink-0">
-                  <Instagram size={18} className="text-crimson" />
+                  <FaInstagram size={18} className="text-crimson" />
                 </div>
                 <div>
                   <h4 className="font-semibold text-navy mb-1">Find Us On</h4>
@@ -61,7 +62,7 @@ export default function Contact() {
                     rel="noopener noreferrer"
                     className="text-crimson text-sm hover:underline flex items-center gap-1"
                   >
-                    <Instagram size={14} /> @cartesian25153
+                    <FaInstagram size={14} /> @cartesian25153
                   </a>
                 </div>
               </li>
