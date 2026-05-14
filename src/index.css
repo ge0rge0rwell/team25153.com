@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-roboto text-gray-800 bg-white;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-roboto font-medium;
+  }
+}
+
+@layer components {
+  /* Logo Carousel Track */
+  .logo-track {
+    display: flex;
+    width: max-content;
+    animation: scrollLeft 30s linear infinite;
+  }
+
+  .logo-track:hover {
+    animation-play-state: paused;
+  }
+
+  /* Navbar dropdown */
+  .nav-dropdown {
+    @apply absolute top-full left-0 min-w-[200px] bg-navy shadow-2xl py-2 opacity-0 invisible 
+           translate-y-2 transition-all duration-200 z-50;
+  }
+
+  .nav-item:hover .nav-dropdown,
+  .nav-item:focus-within .nav-dropdown {
+    @apply opacity-100 visible translate-y-0;
+  }
+
+  /* Sub-dropdown */
+  .nav-sub-dropdown {
+    @apply absolute left-full top-0 min-w-[200px] bg-navy shadow-2xl py-2 opacity-0 invisible 
+           translate-x-2 transition-all duration-200 z-50;
+  }
+
+  .nav-sub-item:hover .nav-sub-dropdown,
+  .nav-sub-item:focus-within .nav-sub-dropdown {
+    @apply opacity-100 visible translate-x-0;
+  }
+
+  /* Section titles */
+  .section-title {
+    @apply text-crimson font-medium text-3xl mb-2;
+  }
+
+  .section-divider {
+    @apply w-10 h-0.5 bg-gold mb-6;
+  }
+
+  /* Buttons */
+  .btn-primary {
+    @apply inline-flex items-center gap-2 bg-crimson text-white px-6 py-3 rounded-full
+           font-medium uppercase tracking-wide text-sm transition-all duration-300
+           hover:bg-crimson-dark hover:-translate-y-0.5 hover:shadow-lg;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center gap-2 border-2 border-crimson text-crimson px-6 py-3 rounded-full
+           font-medium uppercase tracking-wide text-sm transition-all duration-300
+           hover:bg-crimson hover:text-white;
+  }
+
+  /* Page banner */
+  .page-banner {
+    @apply relative bg-navy text-white py-16 overflow-hidden;
+    background-image: url('/banner-bg.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+
+  .page-banner::before {
+    content: '';
+    @apply absolute inset-0 bg-navy/80;
+  }
+
+  /* Cards */
+  .card {
+    @apply bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300
+           hover:-translate-y-1 hover:shadow-xl;
+  }
+
+  /* Form inputs */
+  .form-input {
+    @apply w-full border border-gray-200 rounded-lg px-4 py-3 text-sm bg-gray-50
+           transition-all duration-200 outline-none
+           focus:border-crimson focus:bg-white focus:ring-2 focus:ring-crimson/10;
+  }
+
+  .form-label {
+    @apply block text-xs font-bold text-crimson uppercase tracking-wider mb-2;
+  }
+}
