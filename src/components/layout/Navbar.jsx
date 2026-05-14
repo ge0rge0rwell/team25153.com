@@ -17,8 +17,8 @@ const navItems = [
       },
       {
         label: 'Our Awards',
-        to: '/awards',
         children: [
+          { label: 'All Awards', to: '/awards' },
           { label: 'Decode', to: '/awards/decode' },
           { label: 'Into The Deep', to: '/awards/into-the-deep' },
           { label: 'Centerstage', to: '/awards/centerstage' },
@@ -30,6 +30,7 @@ const navItems = [
   {
     label: 'Resources',
     children: [
+      { label: 'All Resources', to: '/resources' },
       { label: 'Decoding FTC', to: '/resources/decoding-ftc' },
       { label: 'Software', to: '/resources/software' },
       { label: 'CAD & Modeling', to: '/resources/cad' },
@@ -39,6 +40,7 @@ const navItems = [
   {
     label: 'Portfolio',
     children: [
+      { label: 'All Portfolios', to: '/portfolio' },
       { label: 'AGE – Decode', to: '/portfolio/age' },
       { label: 'DIVE – Into The Deep', to: '/portfolio/dive' },
       { label: 'SHOW – Centerstage', to: '/portfolio/show' },
@@ -46,10 +48,7 @@ const navItems = [
   },
   { label: 'Blog', to: '/blog' },
   { label: 'Sponsorship', to: '/sponsorship' },
-  {
-    label: 'Contact',
-    children: [{ label: 'Contact Us', to: '/contact' }],
-  },
+  { label: 'Contact Us', to: '/contact' },
 ]
 
 function DropdownItem({ item, depth = 0 }) {
@@ -63,10 +62,14 @@ function DropdownItem({ item, depth = 0 }) {
         onMouseEnter={() => setOpen(true)}
         onMouseLeave={() => setOpen(false)}
       >
-        <button className="flex items-center justify-between w-full px-5 py-2.5 text-sm text-white/80 hover:text-gold hover:bg-navy-light transition-colors uppercase tracking-wider font-medium">
-          {item.label}
+        <div className="flex items-center justify-between w-full px-5 py-2.5 text-sm text-white/80 hover:text-gold hover:bg-navy-light transition-colors uppercase tracking-wider font-medium">
+          {item.to ? (
+            <Link to={item.to} className="flex-1 text-left">{item.label}</Link>
+          ) : (
+            <span className="flex-1 text-left cursor-default">{item.label}</span>
+          )}
           <ChevronDown size={12} className={`ml-2 transition-transform ${open ? 'rotate-180' : ''}`} />
-        </button>
+        </div>
         {open && (
           <div className="absolute left-full top-0 min-w-[200px] bg-navy shadow-2xl py-2 z-50 border-t-2 border-gold">
             {item.children.map((child) => (
@@ -100,11 +103,15 @@ function TopNavItem({ item }) {
         onMouseEnter={() => setOpen(true)}
         onMouseLeave={() => setOpen(false)}
       >
-        <button className={`flex items-center gap-1 px-3 py-2 text-sm font-medium uppercase tracking-wider transition-colors
+        <div className={`flex items-center gap-1 px-3 py-2 text-sm font-medium uppercase tracking-wider transition-colors
           ${open ? 'text-navy-mid' : 'text-navy hover:text-navy-mid'}`}>
-          {item.label}
+          {item.to ? (
+            <Link to={item.to} className="flex-1">{item.label}</Link>
+          ) : (
+            <span className="flex-1 cursor-default">{item.label}</span>
+          )}
           <ChevronDown size={12} className={`transition-transform ${open ? 'rotate-180' : ''}`} />
-        </button>
+        </div>
         {open && (
           <div className="absolute top-full left-0 min-w-[200px] bg-navy shadow-2xl py-2 z-50 border-t-2 border-gold">
             {item.children.map((child) => (
@@ -133,13 +140,18 @@ function MobileNavItem({ item, onClose }) {
   if (item.children) {
     return (
       <div>
-        <button
-          onClick={() => setOpen(!open)}
+        <div
           className="flex items-center justify-between w-full px-6 py-3 text-white font-medium uppercase tracking-wider border-b border-navy-mid/30 hover:bg-navy-light transition-colors"
         >
-          {item.label}
-          <ChevronDown size={16} className={`transition-transform ${open ? 'rotate-180' : ''}`} />
-        </button>
+          {item.to ? (
+            <Link to={item.to} onClick={onClose} className="flex-1 text-left">{item.label}</Link>
+          ) : (
+            <span className="flex-1 text-left" onClick={() => setOpen(!open)}>{item.label}</span>
+          )}
+          <button onClick={() => setOpen(!open)} className="p-1">
+            <ChevronDown size={16} className={`transition-transform ${open ? 'rotate-180' : ''}`} />
+          </button>
+        </div>
         {open && (
           <div className="bg-navy-light/50">
             {item.children.map((child) => (

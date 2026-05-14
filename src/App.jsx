@@ -11,24 +11,16 @@ import Blog from './pages/Blog'
 import Sponsorship from './pages/Sponsorship'
 import Contact from './pages/Contact'
 import Resources from './pages/Resources'
+import PortfolioDetail from './pages/PortfolioDetail'
+import ResourceDetail from './pages/ResourceDetail'
+import BlogPost from './pages/BlogPost'
 
 function ScrollToTop() {
   const { pathname } = window.location
   return null
 }
 
-// Generic placeholder for sub-pages not yet built
-function Placeholder({ title }) {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="text-center px-6">
-        <div className="text-6xl mb-4">🔧</div>
-        <h1 className="text-2xl font-medium text-navy mb-2">{title}</h1>
-        <p className="text-gray-500 text-sm">This page is coming soon.</p>
-      </div>
-    </div>
-  )
-}
+
 
 export default function App() {
   return (
@@ -48,15 +40,15 @@ export default function App() {
 
             {/* Resources */}
             <Route path="/resources" element={<Resources />} />
-            <Route path="/resources/:slug" element={<Placeholder title="Resource Page" />} />
+            <Route path="/resources/:slug" element={<ResourceDetail />} />
 
             {/* Portfolio */}
             <Route path="/portfolio" element={<Portfolio />} />
-            <Route path="/portfolio/:slug" element={<Placeholder title="Portfolio Detail" />} />
+            <Route path="/portfolio/:slug" element={<PortfolioDetail />} />
 
             {/* Blog */}
             <Route path="/blog" element={<Blog />} />
-            <Route path="/blog/:slug" element={<Placeholder title="Blog Post" />} />
+            <Route path="/blog/:slug" element={<BlogPost />} />
 
             {/* Other */}
             <Route path="/sponsorship" element={<Sponsorship />} />
