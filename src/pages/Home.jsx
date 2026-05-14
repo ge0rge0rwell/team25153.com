@@ -61,12 +61,20 @@ export default function Home() {
               <strong>Cartesian Robotics #25153</strong> is a <strong>student-led</strong> FTC robotics team that believes in the power of thinking and creating.
             </p>
 
-            <p className="text-crimson font-semibold italic mb-6">
-              "I think, therefore I can."
+            <p className="text-crimson font-semibold italic mb-3 max-w-lg">
+              Our Motto: "I think, therefore I can." Our team aims to develop middle school students' skills in <strong>engineering, creativity, strategy, and teamwork</strong> while simultaneously <strong>spreading STEM culture</strong> within our community.
+            </p>
+
+            <p className="text-gray-600 text-sm leading-relaxed mb-3 max-w-lg">
+              Each season, we analyze the game to develop <strong>rational strategies</strong>, make <strong>data-driven design</strong> decisions, and build <strong>high-performance robots</strong>.
+            </p>
+
+            <p className="text-gray-600 text-sm leading-relaxed mb-3 max-w-lg">
+              We take pride in our national and international achievements; however, we see our true success in the <strong>young minds we inspire</strong> and the <strong>STEM ecosystem</strong> we cultivate.
             </p>
 
             <p className="text-gray-600 text-sm leading-relaxed mb-8 max-w-lg">
-              Each season, we analyze the game to develop <strong>rational strategies</strong>, make <strong>data-driven design</strong> decisions, and build <strong>high-performance robots</strong>.
+              For us, robotics is not just about building robots—it is about <strong>thinking, producing, and inspiring</strong>.
             </p>
 
             <div className="flex flex-wrap gap-3">
@@ -127,8 +135,11 @@ export default function Home() {
             <p className="text-gray-600 leading-relaxed mb-4">
               Our team aims to develop middle school students' skills in <strong>engineering, creativity, strategy, and teamwork</strong> while simultaneously <strong>spreading STEM culture</strong> within our community.
             </p>
-            <p className="text-gray-600 leading-relaxed">
+            <p className="text-gray-600 leading-relaxed mb-4">
               We take pride in our national and international achievements; however, we see our true success in the <strong>young minds we inspire</strong> and the <strong>STEM ecosystem</strong> we cultivate.
+            </p>
+            <p className="text-gray-600 leading-relaxed">
+              For us, robotics is not just about building robots—it is about <strong>thinking, producing, and inspiring</strong>.
             </p>
           </div>
         </div>

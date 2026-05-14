@@ -10,6 +10,9 @@
     <meta property="og:description" content="A student-led FTC robotics team from Ankara, Turkey. We think, therefore we can." />
     <title>Cartesian Robotics #25153</title>
     
+    <!-- Descartes AI Chatbot -->
+    <link rel="stylesheet" href="/descartes/assets/index.css" />
+
     <!-- Real3D Flipbook Assets -->
     <link rel="stylesheet" href="/dflip/css/flipbook.style.css" type="text/css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -24,6 +27,15 @@
   </head>
   <body>
     <div id="root"></div>
+
+    <!-- Descartes AI Chatbot Bootstrap -->
+    <script>
+      window.descartesConfig = {
+        pluginUrl: '/descartes/',
+        pdfUrl: '/descartes/game-manual.pdf'
+      };
+    </script>
+    <script type="module" src="/descartes/assets/index.js"></script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
