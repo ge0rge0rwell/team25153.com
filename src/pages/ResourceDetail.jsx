@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom'
 import PageBanner from '../components/ui/PageBanner'
 import { ArrowLeft, BookOpen, Code2, Box, Library } from 'lucide-react'
+import SoftwareDocs from '../components/resources/SoftwareDocs'
 
 const resourceData = {
   'decoding-ftc': {
@@ -51,7 +52,7 @@ export default function ResourceDetail() {
       />
       
       <section className="py-20 bg-white">
-        <div className="max-w-4xl mx-auto px-6">
+        <div className="max-w-6xl mx-auto px-6">
           <Link to="/resources" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-crimson mb-8 transition-colors">
             <ArrowLeft size={16} /> Back to Resources
           </Link>
@@ -65,10 +66,14 @@ export default function ResourceDetail() {
               {resource.content}
             </p>
             
-            <div className="p-6 bg-gray-50 rounded-xl text-gray-500 text-sm">
-              <p>Detailed documentation and links for this resource are currently being updated for the new season.</p>
-              <p className="mt-2">Check back soon or contact us for immediate access.</p>
-            </div>
+            {slug === 'software' ? (
+              <SoftwareDocs />
+            ) : (
+              <div className="p-6 bg-gray-50 rounded-xl text-gray-500 text-sm">
+                <p>Detailed documentation and links for this resource are currently being updated for the new season.</p>
+                <p className="mt-2">Check back soon or contact us for immediate access.</p>
+              </div>
+            )}
           </div>
         </div>
       </section>
