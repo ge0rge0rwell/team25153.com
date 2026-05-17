@@ -1,14 +1,51 @@
+import { useState } from 'react'
 import PageBanner from '../components/ui/PageBanner'
+import { X, ChevronLeft, ChevronRight } from 'lucide-react'
+import { FaInstagram } from 'react-icons/fa'
 
-const photos = [
-  'https://team25153.com/wp-content/uploads/2025/11/WhatsApp-Image-2025-11-01-at-19.43.57-1024x768.jpeg',
-  'https://team25153.com/wp-content/uploads/2025/12/I-9.png',
-  'https://team25153.com/wp-content/uploads/2026/04/logo-removebg-preview-300x300.png',
-  'https://team25153.com/wp-content/uploads/2026/04/Screenshot_2026-04-03_at_17.28.40-removebg-preview-300x247.png',
-  'https://team25153.com/wp-content/uploads/2026/04/Adsiz-tasarim-1-300x236.png',
+const groups = [
+  {
+    id: 'regional1',
+    label: 'Piri Reis Regional 1',
+    date: 'November 1, 2025',
+    photos: [
+      '/media/WhatsApp-Image-2025-11-01-at-10.04.46.jpeg',
+      '/media/WhatsApp-Image-2025-11-01-at-14.40.58.jpeg',
+      '/media/WhatsApp-Image-2025-11-01-at-19.43.57.jpeg',
+    ],
+  },
+  {
+    id: 'regional2',
+    label: 'Piri Reis Regional 2',
+    date: 'November 2, 2025',
+    photos: [
+      '/media/WhatsApp-Image-2025-11-02-at-09.28.37.jpeg',
+      '/media/WhatsApp-Image-2025-11-02-at-09.28.55.jpeg',
+      '/media/WhatsApp-Image-2025-11-02-at-10.12.14.jpeg',
+      '/media/WhatsApp-Image-2025-11-02-at-10.13.06.jpeg',
+      '/media/WhatsApp-Image-2025-11-02-at-10.15.32.jpeg',
+      '/media/WhatsApp-Image-2025-11-02-at-16.46.48.jpeg',
+      '/media/WhatsApp-Image-2025-11-02-at-18.03.06.jpeg',
+    ],
+  },
 ]
 
+const allPhotos = groups.flatMap((g) => g.photos.map((src) => ({ src, group: g.label })))
+
 export default function Media() {
+  const [activeGroup, setActiveGroup] = useState('all')
+  const [lightbox, setLightbox] = useState(null) // index into filtered list
+
+  const filtered =
+    activeGroup === 'all'
+      ? allPhotos
+      : allPhotos.filter((p) => p.group === groups.find((g) => g.id === activeGroup)?.label)
+
+  const openLightbox = (i) => setLightbox(i)
+  const closeLightbox = () => setLightbox(null)
+  const prev = () => setLightbox((i) => (i - 1 + filtered.length) % filtered.length)
+  const next = () => setLightbox((i) => (i + 1) % filtered.length)
+
   return (
     <div>
       <PageBanner
@@ -16,50 +53,169 @@ export default function Media() {
         breadcrumbs={[{ label: 'Team', to: '/team' }, { label: 'Media' }]}
       />
 
-      <section className="py-20 bg-white">
+      {/* ── Filter Tabs ─────────────────────────── */}
+      <div className="bg-white border-b border-gray-100 sticky top-0 z-20">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="mb-12">
-            <p className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-2 flex items-center gap-2">
-              <span className="w-6 h-px bg-crimson" /> Gallery
-            </p>
-            <h2 className="text-3xl font-medium text-navy mb-1">Media Gallery</h2>
-            <div className="w-10 h-0.5 bg-gold" />
-          </div>
-
-          {/* Masonry-style grid */}
-          <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
-            {photos.map((src, i) => (
-              <div
-                key={i}
-                className="break-inside-avoid overflow-hidden rounded-xl border border-gray-100 shadow-sm hover:shadow-lg transition-shadow duration-300 group cursor-zoom-in"
+          <div className="flex gap-1 overflow-x-auto py-3">
+            {[{ id: 'all', label: 'All Photos' }, ...groups].map((g) => (
+              <button
+                key={g.id}
+                onClick={() => setActiveGroup(g.id)}
+                className={`flex-shrink-0 px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-200 ${
+                  activeGroup === g.id
+                    ? 'bg-crimson text-white shadow-md'
+                    : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                }`}
               >
-                <img
-                  src={src}
-                  alt={`Gallery image ${i + 1}`}
-                  className="w-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  loading="lazy"
-                />
-              </div>
+                {g.label}
+              </button>
             ))}
           </div>
+        </div>
+      </div>
 
-          {/* Instagram CTA */}
-          <div className="mt-14 text-center">
-            <p className="text-gray-500 text-sm mb-4">Follow us on Instagram for more photos and updates</p>
-            <a
-              href="https://www.instagram.com/cartesian25153/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary inline-flex"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"/>
-              </svg>
-              @cartesian25153
-            </a>
-          </div>
+      {/* ── Gallery ─────────────────────────────── */}
+      <section className="py-16 bg-gray-50 min-h-[60vh]">
+        <div className="max-w-6xl mx-auto px-6">
+
+          {/* Group headers when showing all */}
+          {activeGroup === 'all' ? (
+            groups.map((group) => (
+              <div key={group.id} className="mb-14">
+                <div className="flex items-center gap-4 mb-6">
+                  <div>
+                    <p className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-0.5">{group.date}</p>
+                    <h2 className="text-2xl font-bold text-navy">{group.label}</h2>
+                  </div>
+                  <div className="flex-1 h-px bg-gray-200" />
+                  <span className="text-xs text-gray-400 font-medium">{group.photos.length} photos</span>
+                </div>
+                <div className="columns-1 sm:columns-2 lg:columns-3 gap-3 space-y-3">
+                  {group.photos.map((src, i) => {
+                    const globalIdx = allPhotos.findIndex((p) => p.src === src)
+                    return (
+                      <div
+                        key={i}
+                        className="break-inside-avoid overflow-hidden rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 cursor-zoom-in group relative"
+                        onClick={() => openLightbox(globalIdx)}
+                      >
+                        <img
+                          src={src}
+                          alt={`${group.label} photo ${i + 1}`}
+                          className="w-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-navy/0 group-hover:bg-navy/20 transition-colors duration-300 flex items-center justify-center">
+                          <span className="opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 text-navy text-xs font-bold px-3 py-1.5 rounded-full">
+                            View
+                          </span>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            ))
+          ) : (
+            <div>
+              {(() => {
+                const group = groups.find((g) => g.id === activeGroup)
+                return (
+                  <div className="mb-6 flex items-center gap-4">
+                    <div>
+                      <p className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-0.5">{group.date}</p>
+                      <h2 className="text-2xl font-bold text-navy">{group.label}</h2>
+                    </div>
+                    <div className="flex-1 h-px bg-gray-200" />
+                    <span className="text-xs text-gray-400 font-medium">{group.photos.length} photos</span>
+                  </div>
+                )
+              })()}
+              <div className="columns-1 sm:columns-2 lg:columns-3 gap-3 space-y-3">
+                {filtered.map((photo, i) => (
+                  <div
+                    key={i}
+                    className="break-inside-avoid overflow-hidden rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 cursor-zoom-in group relative"
+                    onClick={() => openLightbox(i)}
+                  >
+                    <img
+                      src={photo.src}
+                      alt={`Photo ${i + 1}`}
+                      className="w-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-navy/0 group-hover:bg-navy/20 transition-colors duration-300 flex items-center justify-center">
+                      <span className="opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 text-navy text-xs font-bold px-3 py-1.5 rounded-full">
+                        View
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Instagram CTA */}
+        <div className="max-w-6xl mx-auto px-6 mt-16 text-center">
+          <p className="text-gray-500 text-sm mb-4">Follow us on Instagram for more photos and updates</p>
+          <a
+            href="https://www.instagram.com/cartesian25153/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-crimson text-white px-6 py-3 rounded-full font-bold text-sm uppercase tracking-widest hover:bg-crimson-dark transition-colors"
+          >
+            <FaInstagram size={16} />
+            @cartesian25153
+          </a>
         </div>
       </section>
+
+      {/* ── Lightbox ─────────────────────────────── */}
+      {lightbox !== null && (
+        <div
+          className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center"
+          onClick={closeLightbox}
+        >
+          {/* Close */}
+          <button
+            className="absolute top-5 right-5 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full p-2 transition-all"
+            onClick={closeLightbox}
+          >
+            <X size={22} />
+          </button>
+
+          {/* Counter */}
+          <div className="absolute top-5 left-1/2 -translate-x-1/2 text-white/60 text-xs font-bold uppercase tracking-widest">
+            {lightbox + 1} / {filtered.length}
+            <span className="ml-3 text-white/40">{filtered[lightbox].group}</span>
+          </div>
+
+          {/* Prev */}
+          <button
+            className="absolute left-4 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full p-3 transition-all"
+            onClick={(e) => { e.stopPropagation(); prev() }}
+          >
+            <ChevronLeft size={24} />
+          </button>
+
+          {/* Image */}
+          <img
+            src={filtered[lightbox].src}
+            alt={`Photo ${lightbox + 1}`}
+            className="max-h-[85vh] max-w-[90vw] object-contain rounded-xl shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          />
+
+          {/* Next */}
+          <button
+            className="absolute right-4 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full p-3 transition-all"
+            onClick={(e) => { e.stopPropagation(); next() }}
+          >
+            <ChevronRight size={24} />
+          </button>
+        </div>
+      )}
     </div>
   )
 }
