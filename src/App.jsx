@@ -5,8 +5,6 @@ import Home from './pages/Home'
 import TeamOverview from './pages/TeamOverview'
 import RobotPage from './pages/RobotPage'
 import Awards from './pages/Awards'
-import Media from './pages/Media'
-import Portfolio from './pages/Portfolio'
 import Blog from './pages/Blog'
 import Sponsorship from './pages/Sponsorship'
 import Contact from './pages/Contact'
@@ -14,6 +12,7 @@ import Resources from './pages/Resources'
 import PortfolioDetail from './pages/PortfolioDetail'
 import ResourceDetail from './pages/ResourceDetail'
 import BlogPost from './pages/BlogPost'
+import DescartesChat from './components/descartes/DescartesChat'
 
 function ScrollToTop() {
   const { pathname } = window.location
@@ -36,14 +35,12 @@ export default function App() {
             <Route path="/robots/:slug" element={<RobotPage />} />
             <Route path="/awards" element={<Awards />} />
             <Route path="/awards/:season" element={<Awards />} />
-            <Route path="/media" element={<Media />} />
 
             {/* Resources */}
             <Route path="/resources" element={<Resources />} />
             <Route path="/resources/:slug" element={<ResourceDetail />} />
 
             {/* Portfolio */}
-            <Route path="/portfolio" element={<Portfolio />} />
             <Route path="/portfolio/:slug" element={<PortfolioDetail />} />
 
             {/* Blog */}
@@ -71,6 +68,7 @@ export default function App() {
           </Routes>
         </main>
         <Footer />
+        <DescartesChat />
       </div>
     </BrowserRouter>
   )

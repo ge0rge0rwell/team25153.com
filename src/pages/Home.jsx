@@ -10,6 +10,7 @@ const robots = [
     competition: 'FTC Decode',
     image: 'https://team25153.com/wp-content/uploads/2026/04/logo-removebg-preview-300x300.png',
     link: '/robots/cerberon',
+    seasonImage: '/decode-season.png',
   },
   {
     year: '2024 – 25',
@@ -17,6 +18,7 @@ const robots = [
     competition: 'FTC Into The Deep',
     image: 'https://team25153.com/wp-content/uploads/2026/04/Screenshot_2026-04-03_at_17.28.40-removebg-preview-300x247.png',
     link: '/robots/hilda',
+    seasonImage: '/into-the-deep-season.png',
   },
   {
     year: '2023 – 24',
@@ -25,6 +27,7 @@ const robots = [
     image: 'https://team25153.com/wp-content/uploads/2026/04/Adsiz-tasarim-1-300x236.png',
     link: '/robots/centerstage',
     blendMode: true,
+    seasonImage: '/centerstage-season.png',
   },
 ]
 

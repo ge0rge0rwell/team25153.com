@@ -24,7 +24,6 @@ const navItems = [
           { label: 'Centerstage', to: '/awards/centerstage' },
         ],
       },
-      { label: 'Media', to: '/media' },
     ],
   },
   {
@@ -40,8 +39,7 @@ const navItems = [
   {
     label: 'Portfolio',
     children: [
-      { label: 'All Portfolios', to: '/portfolio' },
-      { label: 'AGE – Decode', to: '/portfolio/age' },
+      { label: 'AGE – Decode Worlds', to: '/portfolio/age' },
       { label: 'DIVE – Into The Deep', to: '/portfolio/dive' },
       { label: 'SHOW – Centerstage', to: '/portfolio/show' },
     ],

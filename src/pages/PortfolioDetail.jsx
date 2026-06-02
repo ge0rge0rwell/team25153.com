@@ -4,9 +4,9 @@ import { ArrowLeft, Maximize2 } from 'lucide-react'
 import { useEffect, useRef } from 'react'
 const portfolioData = {
   age: {
-    title: 'AGE – Decode',
-    season: '2025–26 FTC Decode',
-    content: 'Our Engineering Portfolio for Cerberon documents our journey through the Decode season. We focused on building a robust, modular chassis and a highly efficient intake system. Key highlights include our autonomous path planning algorithms and custom 3D printed mechanisms.',
+    title: 'AGE – Decode Worlds',
+    season: '2025–26 FTC Decode Worlds',
+    content: 'Our Engineering Portfolio for Cerberon documents our journey through the Decode season up to the World Championship. We focused on building a robust, modular chassis and a highly efficient intake system. Key highlights include our autonomous path planning algorithms and custom 3D printed mechanisms.',
     image: 'https://team25153.com/wp-content/uploads/2026/04/logo-removebg-preview-300x300.png',
     pdfUrl: '/portfolios/decode.pdf'
   },
