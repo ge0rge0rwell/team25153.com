@@ -29,6 +29,8 @@ export default function TeamOverview() {
                 src="https://team25153.com/wp-content/uploads/2025/11/WhatsApp-Image-2025-11-01-at-19.43.57-1024x768.jpeg"
                 alt="Cartesian Robotics team working together"
                 className="rounded-2xl w-full object-cover shadow-xl"
+                loading="lazy"
+                decoding="async"
               />
             </div>
 

@@ -15,15 +15,7 @@ const navItems = [
           { label: 'Centerstage – X & Y', to: '/robots/centerstage' },
         ],
       },
-      {
-        label: 'Our Awards',
-        children: [
-          { label: 'All Awards', to: '/awards' },
-          { label: 'Decode', to: '/awards/decode' },
-          { label: 'Into The Deep', to: '/awards/into-the-deep' },
-          { label: 'Centerstage', to: '/awards/centerstage' },
-        ],
-      },
+      { label: 'Our Awards', to: '/awards' },
     ],
   },
   {
@@ -210,6 +202,8 @@ export default function Navbar() {
               src="https://team25153.com/wp-content/uploads/2025/11/Cartesian-Font-Vector-scaled-1.png"
               alt="Cartesian Robotics"
               className="h-10 w-auto"
+              fetchPriority="high"
+              decoding="async"
               onError={(e) => {
                 e.target.onerror = null
                 e.target.style.display = 'none'

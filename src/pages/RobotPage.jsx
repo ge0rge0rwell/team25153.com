@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router-dom'
-import { ArrowLeft, ArrowRight, Trophy, Cpu, ChevronRight } from 'lucide-react'
+import { Trophy, Cpu, ChevronRight } from 'lucide-react'
 
 const robotData = {
   cerberon: {
@@ -132,10 +132,6 @@ export default function RobotPage() {
               <span className="text-gold font-bold">{robot.name}</span>
             </div>
 
-            <div className="inline-flex items-center gap-2 bg-crimson/20 border border-crimson/40 text-crimson text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-5">
-              <span className="w-1.5 h-1.5 rounded-full bg-crimson" />
-              {robot.year} · {robot.competition}
-            </div>
 
             <h1
               className="text-7xl md:text-8xl font-black uppercase leading-none mb-4 text-white"
@@ -154,25 +150,7 @@ export default function RobotPage() {
               {robot.description}
             </p>
 
-            {/* Nav */}
-            <div className="flex gap-3 mt-10">
-              {robot.prev && (
-                <Link
-                  to={robot.prev.to}
-                  className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest border border-white/20 hover:border-crimson hover:text-crimson text-white/70 px-4 py-2 rounded-full transition-all"
-                >
-                  <ArrowLeft size={14} /> {robot.prev.label}
-                </Link>
-              )}
-              {robot.next && (
-                <Link
-                  to={robot.next.to}
-                  className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest border border-white/20 hover:border-crimson hover:text-crimson text-white/70 px-4 py-2 rounded-full transition-all"
-                >
-                  {robot.next.label} <ArrowRight size={14} />
-                </Link>
-              )}
-            </div>
+
           </div>
 
           {/* Right: robot image — clean, no glow ring */}
@@ -181,6 +159,7 @@ export default function RobotPage() {
               src={robot.image}
               alt={robot.name}
               className="w-64 h-64 lg:w-80 lg:h-80 object-contain drop-shadow-2xl"
+              decoding="async"
               style={{ mixBlendMode: robot.heroBgBlend }}
             />
           </div>
@@ -200,6 +179,8 @@ export default function RobotPage() {
                   src={robot.seasonImage}
                   alt={robot.competition + ' Season'}
                   className="h-32 object-contain"
+                  loading="lazy"
+                  decoding="async"
                   style={{ mixBlendMode: 'multiply' }}
                 />
                 <span className="text-navy/40 text-xs font-semibold uppercase tracking-widest">{robot.year}</span>
@@ -309,35 +290,7 @@ export default function RobotPage() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════
-          FOOTER NAV
-      ══════════════════════════════════════════ */}
-      <div className="border-t border-gray-100 bg-white">
-        <div className="max-w-6xl mx-auto px-6 py-8 flex justify-between items-center">
-          {robot.prev ? (
-            <Link
-              to={robot.prev.to}
-              className="group flex items-center gap-3 text-gray-500 hover:text-crimson transition-colors"
-            >
-              <div className="w-9 h-9 rounded-full border border-gray-200 group-hover:border-crimson flex items-center justify-center transition-colors">
-                <ArrowLeft size={16} />
-              </div>
-              <span className="text-sm font-medium">Previous: {robot.prev.label}</span>
-            </Link>
-          ) : <span />}
-          {robot.next ? (
-            <Link
-              to={robot.next.to}
-              className="group flex items-center gap-3 text-gray-500 hover:text-crimson transition-colors"
-            >
-              <span className="text-sm font-medium">Next: {robot.next.label}</span>
-              <div className="w-9 h-9 rounded-full border border-gray-200 group-hover:border-crimson flex items-center justify-center transition-colors">
-                <ArrowRight size={16} />
-              </div>
-            </Link>
-          ) : <span />}
-        </div>
-      </div>
+
 
     </div>
   )

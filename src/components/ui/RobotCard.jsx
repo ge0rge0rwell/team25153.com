@@ -4,19 +4,22 @@ export default function RobotCard({ year, name, competition, image, link, blendM
   return (
     <Link
       to={link}
-      className="group flex flex-col items-center px-6 py-6 border-r border-crimson/15 last:border-r-0 hover:bg-crimson/5 transition-colors duration-300"
+      className="group relative flex flex-col items-center px-6 py-6 border-r border-crimson/15 last:border-r-0 hover:bg-crimson/5 transition-colors duration-300 overflow-hidden"
     >
+
       {/* Robot Image */}
-      <div className="w-full h-52 flex items-end justify-center mb-4 overflow-hidden">
+      <div className="w-full h-52 flex items-end justify-center mb-4 overflow-hidden relative z-0">
         <img
           src={image}
           alt={name}
+          loading="lazy"
+          decoding="async"
           className={`w-full h-full object-contain object-bottom transition-transform duration-300 group-hover:-translate-y-2 group-hover:opacity-90 ${blendMode ? 'mix-blend-multiply' : ''}`}
         />
       </div>
 
       {/* Robot Info */}
-      <div className="flex flex-col items-center gap-1 text-center">
+      <div className="flex flex-col items-center gap-1 text-center relative z-0">
         <span className="font-mono text-[10px] tracking-[0.15em] text-crimson uppercase">
           {year}
         </span>

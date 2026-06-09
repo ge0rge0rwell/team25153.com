@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { ChevronRight } from 'lucide-react'
 
-export default function PageBanner({ title, breadcrumbs = [], bg = null }) {
+export default function PageBanner({ title, breadcrumbs = [], bg = null, children }) {
   return (
     <div
       className="relative bg-navy text-white py-20 overflow-hidden"
@@ -21,24 +21,33 @@ export default function PageBanner({ title, breadcrumbs = [], bg = null }) {
         }}
       />
 
-      <div className="relative max-w-7xl mx-auto px-6">
-        <h1 className="text-4xl md:text-5xl font-medium text-white mb-4">{title}</h1>
+      <div className="relative max-w-7xl mx-auto px-6 flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+        <div>
+          <h1 className="text-4xl md:text-5xl font-medium text-white mb-4">{title}</h1>
 
-        {/* Breadcrumbs */}
-        {breadcrumbs.length > 0 && (
-          <nav className="flex items-center gap-1.5 text-sm text-white/60">
-            <Link to="/" className="hover:text-gold transition-colors">Cartesian Robotics</Link>
-            {breadcrumbs.map((crumb, i) => (
-              <span key={i} className="flex items-center gap-1.5">
-                <ChevronRight size={14} />
-                {crumb.to ? (
-                  <Link to={crumb.to} className="hover:text-gold transition-colors">{crumb.label}</Link>
-                ) : (
-                  <span className="text-white/80">{crumb.label}</span>
-                )}
-              </span>
-            ))}
-          </nav>
+          {/* Breadcrumbs */}
+          {breadcrumbs.length > 0 && (
+            <nav className="flex items-center gap-1.5 text-sm text-white/60">
+              <Link to="/" className="hover:text-gold transition-colors">Cartesian Robotics</Link>
+              {breadcrumbs.map((crumb, i) => (
+                <span key={i} className="flex items-center gap-1.5">
+                  <ChevronRight size={14} />
+                  {crumb.to ? (
+                    <Link to={crumb.to} className="hover:text-gold transition-colors">{crumb.label}</Link>
+                  ) : (
+                    <span className="text-white/80">{crumb.label}</span>
+                  )}
+                </span>
+              ))}
+            </nav>
+          )}
+        </div>
+
+        {/* Right side children (e.g. banners) */}
+        {children && (
+          <div className="flex items-center gap-4 z-10 flex-shrink-0">
+            {children}
+          </div>
         )}
       </div>
     </div>

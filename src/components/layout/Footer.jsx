@@ -15,6 +15,8 @@ export default function Footer() {
             src="/cartesian-logo-transparent.png"
             alt="Cartesian Robotics"
             className="h-10 w-auto mb-4"
+            loading="lazy"
+            decoding="async"
             style={{ filter: 'brightness(0) invert(1)' }}
           />
           <p className="text-white/60 text-sm leading-relaxed mb-6">

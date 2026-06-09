@@ -1,6 +1,5 @@
 import PageBanner from '../components/ui/PageBanner'
 import { Trophy, Eye, X } from 'lucide-react'
-import { useParams } from 'react-router-dom'
 import { useState } from 'react'
 
 const allSeasons = [
@@ -13,13 +12,12 @@ const allSeasons = [
       { 
         title: 'Sustain Award', 
         event: 'FIRST Championship – Franklin Division', 
-        tier: 'championship',
-        image: '/media/sustain-award.png'
+        tier: 'championship'
       },
-      { title: 'Inspire Award', event: '1. Piri Reis Turnuvası', tier: 'regional' },
-      { title: 'Inspire Award 2nd Place', event: '2. Piri Reis Turnuvası', tier: 'regional' },
-      { title: 'Inspire Award', event: 'Türkiye Şampiyonası', tier: 'national' },
-      { title: 'Finalist Alliance – Captain', event: 'Türkiye Şampiyonası', tier: 'national' },
+      { title: 'Inspire Award', event: 'Piri Reis Regional I', tier: 'regional' },
+      { title: 'Inspire Award 2nd Place', event: 'Piri Reis Regional II', tier: 'regional' },
+      { title: 'Inspire Award', event: 'Turkey Championship', tier: 'national' },
+      { title: 'Finalist Alliance – Captain', event: 'Turkey Championship', tier: 'national' },
     ],
   },
   {
@@ -28,11 +26,11 @@ const allSeasons = [
     slug: 'into-the-deep',
     robot: 'HILDA',
     awards: [
-      { title: 'Control Award', event: 'Uluslararası FTC 1. Üsküdar Turnuvası', tier: 'regional' },
-      { title: 'Inspire Award 2nd Place', event: 'Uluslararası FTC 2. Üsküdar Turnuvası', tier: 'regional' },
-      { title: 'Finalist Alliance – 1st Team Selected', event: 'Uluslararası FTC 2. Üsküdar Turnuvası', tier: 'regional' },
-      { title: 'Winning Alliance – Captain', event: 'Türkiye Championship', tier: 'national' },
-      { title: 'Think Award', event: 'Türkiye Championship', tier: 'national' },
+      { title: 'Winning Alliance Captain', event: 'Turkey Championship', tier: 'national' },
+      { title: 'Think Award', event: 'Turkey Championship', tier: 'national' },
+      { title: 'Control Award', event: 'Üsküdar Regional I', tier: 'regional' },
+      { title: 'Inspire Award 2nd Place', event: 'Üsküdar Regional II', tier: 'regional' },
+      { title: 'Finalist Alliance', event: 'Üsküdar Regional II', tier: 'regional' },
     ],
   },
   {
@@ -41,8 +39,11 @@ const allSeasons = [
     slug: 'centerstage',
     robot: 'X & Y',
     awards: [
-      { title: 'Think Award 3rd Place', event: 'Greece National FTC Championship 2024', tier: 'international' },
-      { title: 'Innovate Award sponsored by RTX 2nd Place', event: 'Greece National FTC Championship 2024', tier: 'international' },
+      { title: 'Think Award 3rd Place', event: 'Greece National Championship', tier: 'international' },
+      { title: 'Finalist Alliance', event: 'Istanbul Off-Season I', tier: 'offseason' },
+      { title: 'Finalist Alliance', event: 'Istanbul Off-Season II', tier: 'offseason' },
+      { title: 'Design Award 2nd Place', event: 'Istanbul Off-Season II', tier: 'offseason' },
+      { title: 'Innovate Award', event: 'Istanbul Off-Season II', tier: 'offseason' },
     ],
   },
 ]
@@ -53,45 +54,60 @@ const tierBadge = {
   national:     'bg-crimson text-white',
   regional:     'bg-crimson/15 text-crimson',
   international:'bg-navy text-white',
+  offseason:    'bg-navy/15 text-navy',
 }
 const tierLabel = {
   championship: 'World',
   national:     'National',
   regional:     'Regional',
   international:'International',
+  offseason:    'Off-Season',
 }
 
 export default function Awards() {
-  const { season } = useParams()
   const [lightboxImage, setLightboxImage] = useState(null)
   
-  const displaySeasons = season 
-    ? allSeasons.filter(s => s.slug === season)
-    : allSeasons
+  const displaySeasons = allSeasons
 
   const total = displaySeasons.reduce((sum, s) => sum + s.awards.length, 0)
   
-  const pageTitle = season && displaySeasons.length > 0 
-    ? `${displaySeasons[0].game} Awards` 
-    : "Our Awards"
+  const pageTitle = "Our Awards"
 
-  const breadcrumbs = season 
-    ? [
-        { label: 'Team', to: '/team' }, 
-        { label: 'Our Awards', to: '/awards' }, 
-        { label: displaySeasons[0]?.game }
-      ]
-    : [
-        { label: 'Team', to: '/team' }, 
-        { label: 'Our Awards' }
-      ]
+  const breadcrumbs = [
+    { label: 'Team', to: '/team' }, 
+    { label: 'Our Awards' }
+  ]
 
   return (
     <div>
       <PageBanner
         title={pageTitle}
         breadcrumbs={breadcrumbs}
-      />
+      >
+        <div className="flex gap-6 sm:gap-8 items-center justify-end flex-wrap md:flex-nowrap">
+          <img
+            src="/media/banner-2.png"
+            alt="2025 Turkey Championship — Inspire Award"
+            decoding="async"
+            onClick={() => setLightboxImage({ src: '/media/banner-2.png', title: '2025 Turkey Championship — Inspire Award Banner' })}
+            className="h-44 sm:h-52 md:h-64 w-auto object-contain cursor-zoom-in hover:scale-105 hover:-translate-y-2 transition-all duration-300 drop-shadow-[0_8px_20px_rgba(0,0,0,0.5)]"
+          />
+          <img
+            src="/media/banner-3.png"
+            alt="2025 Piri Reis Regional I — Inspire Award"
+            decoding="async"
+            onClick={() => setLightboxImage({ src: '/media/banner-3.png', title: '2025 Piri Reis Regional I — Inspire Award Banner' })}
+            className="h-44 sm:h-52 md:h-64 w-auto object-contain cursor-zoom-in hover:scale-105 hover:-translate-y-2 transition-all duration-300 drop-shadow-[0_8px_20px_rgba(0,0,0,0.5)]"
+          />
+          <img
+            src="/media/banner-1.png"
+            alt="2024 Turkey Championship — Winner"
+            decoding="async"
+            onClick={() => setLightboxImage({ src: '/media/banner-1.png', title: '2024 Turkey Championship — Winner Banner' })}
+            className="h-44 sm:h-52 md:h-64 w-auto object-contain cursor-zoom-in hover:scale-105 hover:-translate-y-2 transition-all duration-300 drop-shadow-[0_8px_20px_rgba(0,0,0,0.5)]"
+          />
+        </div>
+      </PageBanner>
 
       {/* Total count strip */}
       <div className="bg-crimson text-white py-6">
@@ -206,9 +222,10 @@ export default function Awards() {
             className="relative max-w-4xl w-full flex flex-col items-center justify-center cursor-default"
             onClick={(e) => e.stopPropagation()}
           >
-            <img 
-              src={lightboxImage.src} 
-              alt={lightboxImage.title} 
+            <img
+              src={lightboxImage.src}
+              alt={lightboxImage.title}
+              decoding="async"
               className="max-h-[85vh] max-w-full object-contain rounded-xl shadow-2xl"
             />
             <div className="mt-4 text-center">

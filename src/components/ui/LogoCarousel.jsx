@@ -61,6 +61,8 @@ export default function LogoCarousel() {
                 <img
                   src={s.src}
                   alt={s.alt}
+                  loading="lazy"
+                  decoding="async"
                   className={`${logo} max-w-full object-contain`}
                 />
               </div>

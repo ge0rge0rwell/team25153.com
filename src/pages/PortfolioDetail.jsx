@@ -2,6 +2,7 @@ import { useParams, Link } from 'react-router-dom'
 import PageBanner from '../components/ui/PageBanner'
 import { ArrowLeft, Maximize2 } from 'lucide-react'
 import { useEffect, useRef } from 'react'
+import { loadFlipbook } from '../utils/loadFlipbook'
 const portfolioData = {
   age: {
     title: 'AGE – Decode Worlds',
@@ -33,16 +34,25 @@ export default function PortfolioDetail() {
   const buttonRef = useRef(null)
 
   useEffect(() => {
-    // Manually initialize the Real3D Flipbook on the button
-    if (window.jQuery && window.jQuery.fn.flipBook && buttonRef.current && portfolio) {
-      window.jQuery(buttonRef.current).flipBook({
-        pdfUrl: portfolio.pdfUrl,
-        lightBox: true,
-        rootFolder: '/dflip/',
-        name: portfolio.title,
-        lightboxBackground: '#000000'
+    if (!portfolio || !buttonRef.current) return
+    let cancelled = false
+
+    // Lazily fetch the ~2.7 MB flipbook engine only when this page mounts,
+    // then bind it to the button once ready.
+    loadFlipbook()
+      .then(() => {
+        if (cancelled || !buttonRef.current) return
+        window.jQuery(buttonRef.current).flipBook({
+          pdfUrl: portfolio.pdfUrl,
+          lightBox: true,
+          rootFolder: '/dflip/',
+          name: portfolio.title,
+          lightboxBackground: '#000000',
+        })
       })
-    }
+      .catch((err) => console.error('Flipbook failed to load:', err))
+
+    return () => { cancelled = true }
   }, [portfolio])
 
   if (!portfolio) {

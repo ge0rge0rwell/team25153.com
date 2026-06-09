@@ -43,9 +43,11 @@ export default function BlogPost() {
               </div>
             </div>
             
-            <img 
-              src={genericPost.image} 
-              alt="Blog Header" 
+            <img
+              src={genericPost.image}
+              alt="Blog Header"
+              loading="lazy"
+              decoding="async"
               className="w-full h-80 object-cover rounded-2xl mb-10 shadow-md"
             />
             
