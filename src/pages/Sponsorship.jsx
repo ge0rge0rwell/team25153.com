@@ -1,46 +1,18 @@
 import PageBanner from '../components/ui/PageBanner'
 import ContactForm from '../components/ui/ContactForm'
 import { Heart, Star, Package, Handshake } from 'lucide-react'
+import sponsorshipData from '../content/sponsorship.json'
 
-const tiers = [
-  {
-    icon: <Heart size={24} />,
-    name: 'Tier 01: Inspiration',
-    amount: '$500 – $1,000',
-    perks: ['Essential funding for core mechanical hardware and team development resources.'],
-    color: 'border-gray-200',
-    accent: 'text-navy',
-    bg: 'bg-white',
-  },
-  {
-    icon: <Star size={24} />,
-    name: 'Tier 02: Drive Control',
-    amount: '$1,000 – $2,500',
-    perks: ['Directly supports high-performance drivetrain systems and team apparel branding.'],
-    color: 'border-gray-200',
-    accent: 'text-navy',
-    bg: 'bg-white',
-  },
-  {
-    icon: <Package size={24} />,
-    name: 'Tier 03: Autonomous',
-    amount: '$2,500 – $5,000',
-    perks: ['Funds advanced sensor suites and computer vision research for autonomous tasks.'],
-    color: 'border-gray-200',
-    accent: 'text-navy',
-    bg: 'bg-white',
-  },
-  {
-    icon: <Handshake size={24} />,
-    name: 'Tier 04: Visionary',
-    amount: '$5,000+',
-    perks: ['Main Partnership status with maximum visibility on all platforms and robot chassis.'],
-    color: 'border-crimson',
-    accent: 'text-crimson',
-    bg: 'bg-crimson/5',
-    featured: true,
-  },
-]
+const iconMap = { Heart, Star, Package, Handshake }
+
+const tiers = sponsorshipData.tiers.map((t) => ({
+  ...t,
+  color: t.featured ? 'border-crimson' : 'border-gray-200',
+  accent: t.featured ? 'text-crimson' : 'text-navy',
+  bg: t.featured ? 'bg-crimson/5' : 'bg-white',
+}))
+
+const { intro, prospectusUrl, benefitMatrix, budget, budgetTotal, inKind } = sponsorshipData
 
 export default function Sponsorship() {
   return (
@@ -57,11 +29,11 @@ export default function Sponsorship() {
           <h2 className="text-3xl font-medium text-navy mb-2">Why Sponsor Cartesian?</h2>
           <div className="w-10 h-0.5 bg-gold mx-auto mb-8" />
           <p className="text-gray-600 leading-relaxed max-w-2xl mx-auto mb-4">
-            We invite you to support our engineering journey as we compete in international robotics challenges. Your partnership provides the technical infrastructure and resources necessary for our team to innovate and excel on the global stage.
+            {intro}
           </p>
           <div className="mt-8">
-            <a 
-              href="/Cartesian-Sponsorship-Prospectus.pdf" 
+            <a
+              href={prospectusUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary inline-flex uppercase tracking-widest text-xs"
@@ -77,12 +49,14 @@ export default function Sponsorship() {
         <div className="max-w-6xl mx-auto px-6">
           <h3 className="text-center text-xl font-medium text-navy mb-10">Sponsorship Tiers</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
-            {tiers.map((tier) => (
+            {tiers.map((tier) => {
+              const Icon = iconMap[tier.icon] || Heart
+              return (
               <div
                 key={tier.name}
                 className={`${tier.bg} border-2 ${tier.color} rounded-2xl p-6 flex flex-col ${tier.featured ? 'shadow-xl scale-105' : ''}`}
               >
-                <div className={`${tier.accent} mb-3`}>{tier.icon}</div>
+                <div className={`${tier.accent} mb-3`}><Icon size={24} /></div>
                 <h4 className="font-bold text-navy text-lg mb-1">{tier.name}</h4>
                 <p className={`text-2xl font-bold ${tier.accent} mb-5`}>{tier.amount}</p>
                 <ul className="space-y-2 flex-1">
@@ -94,7 +68,8 @@ export default function Sponsorship() {
                   ))}
                 </ul>
               </div>
-            ))}
+              )
+            })}
           </div>
 
           {/* Benefit Matrix */}
@@ -115,48 +90,19 @@ export default function Sponsorship() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100 text-gray-600">
-                  <tr className="hover:bg-gray-50">
-                    <td className="px-6 py-4 font-medium">Corporate Logo on Robot Chassis</td>
-                    <td className="px-6 py-4 text-center text-gray-300">—</td>
-                    <td className="px-6 py-4 text-center text-gray-300">—</td>
-                    <td className="px-6 py-4 text-center text-gray-300">—</td>
-                    <td className="px-6 py-4 text-center text-crimson font-bold text-lg">+</td>
-                  </tr>
-                  <tr className="hover:bg-gray-50">
-                    <td className="px-6 py-4 font-medium">Pit Area Brand Advertisement</td>
-                    <td className="px-6 py-4 text-center text-gray-300">—</td>
-                    <td className="px-6 py-4 text-center text-gray-300">—</td>
-                    <td className="px-6 py-4 text-center text-crimson font-bold text-lg">+</td>
-                    <td className="px-6 py-4 text-center text-crimson font-bold text-lg">+</td>
-                  </tr>
-                  <tr className="hover:bg-gray-50">
-                    <td className="px-6 py-4 font-medium">Dedicated PR & Media Spotlight</td>
-                    <td className="px-6 py-4 text-center text-gray-300">—</td>
-                    <td className="px-6 py-4 text-center text-gray-300">—</td>
-                    <td className="px-6 py-4 text-center text-crimson font-bold text-lg">+</td>
-                    <td className="px-6 py-4 text-center text-crimson font-bold text-lg">+</td>
-                  </tr>
-                  <tr className="hover:bg-gray-50">
-                    <td className="px-6 py-4 font-medium">Corporate Logo on Official Jersey</td>
-                    <td className="px-6 py-4 text-center text-gray-300">—</td>
-                    <td className="px-6 py-4 text-center text-crimson font-bold text-lg">+</td>
-                    <td className="px-6 py-4 text-center text-crimson font-bold text-lg">+</td>
-                    <td className="px-6 py-4 text-center text-crimson font-bold text-lg">+</td>
-                  </tr>
-                  <tr className="hover:bg-gray-50">
-                    <td className="px-6 py-4 font-medium">Social Media Recognition</td>
-                    <td className="px-6 py-4 text-center text-crimson font-bold text-lg">+</td>
-                    <td className="px-6 py-4 text-center text-crimson font-bold text-lg">+</td>
-                    <td className="px-6 py-4 text-center text-crimson font-bold text-lg">+</td>
-                    <td className="px-6 py-4 text-center text-crimson font-bold text-lg">+</td>
-                  </tr>
-                  <tr className="hover:bg-gray-50">
-                    <td className="px-6 py-4 font-medium">Engineering Portfolio Recognition</td>
-                    <td className="px-6 py-4 text-center text-crimson font-bold text-lg">+</td>
-                    <td className="px-6 py-4 text-center text-crimson font-bold text-lg">+</td>
-                    <td className="px-6 py-4 text-center text-crimson font-bold text-lg">+</td>
-                    <td className="px-6 py-4 text-center text-crimson font-bold text-lg">+</td>
-                  </tr>
+                  {benefitMatrix.map((row) => (
+                    <tr key={row.label} className="hover:bg-gray-50">
+                      <td className="px-6 py-4 font-medium">{row.label}</td>
+                      {row.tiers.map((included, i) => (
+                        <td
+                          key={i}
+                          className={`px-6 py-4 text-center ${included ? 'text-crimson font-bold text-lg' : 'text-gray-300'}`}
+                        >
+                          {included ? '+' : '—'}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
@@ -174,29 +120,15 @@ export default function Sponsorship() {
               </div>
               <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
                 <div className="space-y-4">
-                  <div className="flex justify-between items-center pb-4 border-b border-gray-100 border-dashed">
-                    <span className="text-gray-600">International Registration (FRC/FTC)</span>
-                    <span className="font-bold text-navy">18,000 $</span>
-                  </div>
-                  <div className="flex justify-between items-center pb-4 border-b border-gray-100 border-dashed">
-                    <span className="text-gray-600">Mechanical Manufacturing</span>
-                    <span className="font-bold text-navy">10,800 $</span>
-                  </div>
-                  <div className="flex justify-between items-center pb-4 border-b border-gray-100 border-dashed">
-                    <span className="text-gray-600">Control Systems & Avionics</span>
-                    <span className="font-bold text-navy">4,000 $</span>
-                  </div>
-                  <div className="flex justify-between items-center pb-4 border-b border-gray-100 border-dashed">
-                    <span className="text-gray-600">STEM Outreach Programs</span>
-                    <span className="font-bold text-navy">3,300 $</span>
-                  </div>
-                  <div className="flex justify-between items-center pb-4 border-b border-gray-100 border-dashed">
-                    <span className="text-gray-600">Operations & Logistics</span>
-                    <span className="font-bold text-navy">4,700 $</span>
-                  </div>
+                  {budget.map((item) => (
+                    <div key={item.label} className="flex justify-between items-center pb-4 border-b border-gray-100 border-dashed">
+                      <span className="text-gray-600">{item.label}</span>
+                      <span className="font-bold text-navy">{item.amount}</span>
+                    </div>
+                  ))}
                   <div className="flex justify-between items-center pt-2">
                     <span className="font-bold text-navy uppercase tracking-wider text-sm">Total Annual Requirement</span>
-                    <span className="font-black text-crimson text-xl">40,800 $</span>
+                    <span className="font-black text-crimson text-xl">{budgetTotal}</span>
                   </div>
                 </div>
               </div>
@@ -209,7 +141,7 @@ export default function Sponsorship() {
                 <div className="flex-1 h-px bg-gray-200" />
               </div>
               <p className="text-gray-600 leading-relaxed bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-                Beyond financial funding, we value technical partnerships. This includes CNC machining access, material procurement (Aluminum/Carbon Fiber), or professional mentorship in software architecture and systems engineering.
+                {inKind}
               </p>
             </div>
           </div>

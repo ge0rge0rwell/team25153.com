@@ -1,0 +1,51 @@
+{
+  "intro": "We invite you to support our engineering journey as we compete in international robotics challenges. Your partnership provides the technical infrastructure and resources necessary for our team to innovate and excel on the global stage.",
+  "prospectusUrl": "/Cartesian-Sponsorship-Prospectus.pdf",
+  "tiers": [
+    {
+      "icon": "Heart",
+      "name": "Tier 01: Inspiration",
+      "amount": "$500 – $1,000",
+      "perks": ["Essential funding for core mechanical hardware and team development resources."],
+      "featured": false
+    },
+    {
+      "icon": "Star",
+      "name": "Tier 02: Drive Control",
+      "amount": "$1,000 – $2,500",
+      "perks": ["Directly supports high-performance drivetrain systems and team apparel branding."],
+      "featured": false
+    },
+    {
+      "icon": "Package",
+      "name": "Tier 03: Autonomous",
+      "amount": "$2,500 – $5,000",
+      "perks": ["Funds advanced sensor suites and computer vision research for autonomous tasks."],
+      "featured": false
+    },
+    {
+      "icon": "Handshake",
+      "name": "Tier 04: Visionary",
+      "amount": "$5,000+",
+      "perks": ["Main Partnership status with maximum visibility on all platforms and robot chassis."],
+      "featured": true
+    }
+  ],
+  "benefitMatrix": [
+    { "label": "Corporate Logo on Robot Chassis", "tiers": [false, false, false, true] },
+    { "label": "Pit Area Brand Advertisement", "tiers": [false, false, true, true] },
+    { "label": "Dedicated PR & Media Spotlight", "tiers": [false, false, true, true] },
+    { "label": "Corporate Logo on Official Jersey", "tiers": [false, true, true, true] },
+    { "label": "Social Media Recognition", "tiers": [true, true, true, true] },
+    { "label": "Engineering Portfolio Recognition", "tiers": [true, true, true, true] }
+  ],
+  "budget": [
+    { "label": "International Registration (FRC/FTC)", "amount": "18,000 $" },
+    { "label": "Mechanical Manufacturing", "amount": "10,800 $" },
+    { "label": "Control Systems & Avionics", "amount": "4,000 $" },
+    { "label": "STEM Outreach Programs", "amount": "3,300 $" },
+    { "label": "Operations & Logistics", "amount": "4,700 $" }
+  ],
+  "budgetTotal": "40,800 $",
+  "inKind": "Beyond financial funding, we value technical partnerships. This includes CNC machining access, material procurement (Aluminum/Carbon Fiber), or professional mentorship in software architecture and systems engineering."
+}

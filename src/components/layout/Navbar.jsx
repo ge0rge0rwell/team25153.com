@@ -1,45 +1,9 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Menu, X, ChevronDown, Search } from 'lucide-react'
+import navigation from '../../content/navigation.json'
 
-const navItems = [
-  {
-    label: 'Team',
-    children: [
-      { label: 'Team Overview', to: '/team' },
-      {
-        label: 'Our Robots',
-        children: [
-          { label: 'Decode – Cerberon', to: '/robots/cerberon' },
-          { label: 'Into the Deep – HILDA', to: '/robots/hilda' },
-          { label: 'Centerstage – X & Y', to: '/robots/centerstage' },
-        ],
-      },
-      { label: 'Our Awards', to: '/awards' },
-    ],
-  },
-  {
-    label: 'Resources',
-    children: [
-      { label: 'All Resources', to: '/resources' },
-      { label: 'Decoding FTC', to: '/resources/decoding-ftc' },
-      { label: 'Software', to: '/resources/software' },
-      { label: 'CAD & Modeling', to: '/resources/cad' },
-      { label: 'Library', to: '/resources/library' },
-    ],
-  },
-  {
-    label: 'Portfolio',
-    children: [
-      { label: 'AGE – Decode Worlds', to: '/portfolio/age' },
-      { label: 'DIVE – Into The Deep', to: '/portfolio/dive' },
-      { label: 'SHOW – Centerstage', to: '/portfolio/show' },
-    ],
-  },
-  { label: 'Blog', to: '/blog' },
-  { label: 'Sponsorship', to: '/sponsorship' },
-  { label: 'Contact Us', to: '/contact' },
-]
+const navItems = navigation.navItems
 
 function DropdownItem({ item, depth = 0 }) {
   const [open, setOpen] = useState(false)

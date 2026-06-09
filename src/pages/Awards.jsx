@@ -1,52 +1,9 @@
 import PageBanner from '../components/ui/PageBanner'
 import { Trophy, Eye, X } from 'lucide-react'
 import { useState } from 'react'
+import awardsData from '../content/awards.json'
 
-const allSeasons = [
-  {
-    year: '2025',
-    game: 'DECODE',
-    slug: 'decode',
-    robot: 'Cerberon',
-    awards: [
-      { 
-        title: 'Sustain Award', 
-        event: 'FIRST Championship – Franklin Division', 
-        tier: 'championship'
-      },
-      { title: 'Inspire Award', event: 'Piri Reis Regional I', tier: 'regional' },
-      { title: 'Inspire Award 2nd Place', event: 'Piri Reis Regional II', tier: 'regional' },
-      { title: 'Inspire Award', event: 'Turkey Championship', tier: 'national' },
-      { title: 'Finalist Alliance – Captain', event: 'Turkey Championship', tier: 'national' },
-    ],
-  },
-  {
-    year: '2024',
-    game: 'INTO THE DEEP',
-    slug: 'into-the-deep',
-    robot: 'HILDA',
-    awards: [
-      { title: 'Winning Alliance Captain', event: 'Turkey Championship', tier: 'national' },
-      { title: 'Think Award', event: 'Turkey Championship', tier: 'national' },
-      { title: 'Control Award', event: 'Üsküdar Regional I', tier: 'regional' },
-      { title: 'Inspire Award 2nd Place', event: 'Üsküdar Regional II', tier: 'regional' },
-      { title: 'Finalist Alliance', event: 'Üsküdar Regional II', tier: 'regional' },
-    ],
-  },
-  {
-    year: '2023',
-    game: 'CENTERSTAGE',
-    slug: 'centerstage',
-    robot: 'X & Y',
-    awards: [
-      { title: 'Think Award 3rd Place', event: 'Greece National Championship', tier: 'international' },
-      { title: 'Finalist Alliance', event: 'Istanbul Off-Season I', tier: 'offseason' },
-      { title: 'Finalist Alliance', event: 'Istanbul Off-Season II', tier: 'offseason' },
-      { title: 'Design Award 2nd Place', event: 'Istanbul Off-Season II', tier: 'offseason' },
-      { title: 'Innovate Award', event: 'Istanbul Off-Season II', tier: 'offseason' },
-    ],
-  },
-]
+const allSeasons = awardsData.seasons
 
 // Badge colors per tier — all crimson / navy variants, no gold
 const tierBadge = {

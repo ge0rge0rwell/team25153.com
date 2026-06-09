@@ -2,38 +2,10 @@ import { Link } from 'react-router-dom'
 import { ArrowRight, ChevronRight } from 'lucide-react'
 import RobotCard from '../components/ui/RobotCard'
 import LogoCarousel from '../components/ui/LogoCarousel'
+import homeData from '../content/home.json'
 
-const robots = [
-  {
-    year: '2025 – 26',
-    name: 'Cerberon',
-    competition: 'FTC Decode',
-    image: 'https://team25153.com/wp-content/uploads/2026/04/logo-removebg-preview-300x300.png',
-    link: '/robots/cerberon',
-  },
-  {
-    year: '2024 – 25',
-    name: 'HILDA',
-    competition: 'FTC Into The Deep',
-    image: 'https://team25153.com/wp-content/uploads/2026/04/Screenshot_2026-04-03_at_17.28.40-removebg-preview-300x247.png',
-    link: '/robots/hilda',
-  },
-  {
-    year: '2023 – 24',
-    name: 'X & Y',
-    competition: 'FTC Centerstage',
-    image: 'https://team25153.com/wp-content/uploads/2026/04/Adsiz-tasarim-1-300x236.png',
-    link: '/robots/centerstage',
-    blendMode: true,
-  },
-]
-
-const stats = [
-  { number: '3+', label: 'FTC Seasons' },
-  { number: '25153', label: 'Team Number' },
-  { number: '10+', label: 'Awards Won' },
-  { number: '2022', label: 'Founded' },
-]
+const robots = homeData.robots
+const stats = homeData.stats
 
 export default function Home() {
   return (

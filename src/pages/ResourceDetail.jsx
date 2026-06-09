@@ -2,33 +2,18 @@ import { useParams, Link } from 'react-router-dom'
 import PageBanner from '../components/ui/PageBanner'
 import { ArrowLeft, BookOpen, Code2, Box, Library } from 'lucide-react'
 import SoftwareDocs from '../components/resources/SoftwareDocs'
+import resourcesData from '../content/resources.json'
 
-const resourceData = {
-  'decoding-ftc': {
-    title: 'Decoding FTC',
-    icon: <BookOpen size={48} />,
-    content: 'A comprehensive guide to understanding FTC rules, game analysis, and competition strategy. This living document is updated every season with our latest strategic insights and match analysis techniques.',
-  },
-  'software': {
-    title: 'Software',
-    icon: <Code2 size={48} />,
-    content: 'Our software stack relies heavily on Java and the official FTC SDK. Here you will find our libraries for autonomous path planning, PID control loops, and custom OpenCV pipelines for vision processing.',
-  },
-  'cad': {
-    title: 'CAD & Modeling',
-    icon: <Box size={48} />,
-    content: 'We use Onshape for all our robot designs. This resource contains links to our public CAD models, standard parts libraries, and tutorials on designing for 3D printing and CNC machining.',
-  },
-  'library': {
-    title: 'Library',
-    icon: <Library size={48} />,
-    content: 'A curated collection of papers, books, tutorials, and open-source tools that our team has found invaluable over the seasons. Topics range from advanced mechanics to team management.',
-  }
-}
+const iconMap = { BookOpen, Code2, Box, Library }
+
+const resourceData = Object.fromEntries(
+  resourcesData.resources.map((r) => [r.slug, r])
+)
 
 export default function ResourceDetail() {
   const { slug } = useParams()
   const resource = resourceData[slug]
+  const Icon = resource ? iconMap[resource.icon] || BookOpen : BookOpen
 
   if (!resource) {
     return (
@@ -59,7 +44,7 @@ export default function ResourceDetail() {
           
           <div className="bg-white rounded-2xl p-10 border border-gray-100 shadow-lg text-center">
             <div className="w-24 h-24 mx-auto bg-crimson/10 text-crimson rounded-full flex items-center justify-center mb-6">
-              {resource.icon}
+              <Icon size={48} />
             </div>
             <h2 className="text-3xl font-bold text-navy mb-6">{resource.title}</h2>
             <p className="text-gray-600 leading-relaxed text-lg max-w-2xl mx-auto mb-10">

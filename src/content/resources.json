@@ -1,0 +1,36 @@
+{
+  "resources": [
+    {
+      "icon": "BookOpen",
+      "title": "Decoding FTC",
+      "slug": "decoding-ftc",
+      "tag": "Guide",
+      "description": "A comprehensive guide to understanding FTC rules, game analysis, and competition strategy — written by our team for new competitors.",
+      "content": "A comprehensive guide to understanding FTC rules, game analysis, and competition strategy. This living document is updated every season with our latest strategic insights and match analysis techniques."
+    },
+    {
+      "icon": "Code2",
+      "title": "Software",
+      "slug": "software",
+      "tag": "Course",
+      "description": "Learn the software stack we use: Java-based FTC SDK, autonomous path planning, sensor integration, and computer vision with OpenCV.",
+      "content": "Our software stack relies heavily on Java and the official FTC SDK. Here you will find our libraries for autonomous path planning, PID control loops, and custom OpenCV pipelines for vision processing."
+    },
+    {
+      "icon": "Box",
+      "title": "CAD & Modeling",
+      "slug": "cad",
+      "tag": "Course",
+      "description": "From Onshape fundamentals to advanced robot modeling — our CAD curriculum for FTC teams at every skill level.",
+      "content": "We use Onshape for all our robot designs. This resource contains links to our public CAD models, standard parts libraries, and tutorials on designing for 3D printing and CNC machining."
+    },
+    {
+      "icon": "Library",
+      "title": "Library",
+      "slug": "library",
+      "tag": "Reference",
+      "description": "A curated collection of papers, books, tutorials, and open-source tools that our team has found invaluable over the seasons.",
+      "content": "A curated collection of papers, books, tutorials, and open-source tools that our team has found invaluable over the seasons. Topics range from advanced mechanics to team management."
+    }
+  ]
+}

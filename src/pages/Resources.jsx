@@ -1,37 +1,11 @@
 import PageBanner from '../components/ui/PageBanner'
 import { BookOpen, Code2, Box, Library } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import resourcesData from '../content/resources.json'
 
-const resources = [
-  {
-    icon: <BookOpen size={28} />,
-    title: 'Decoding FTC',
-    slug: 'decoding-ftc',
-    description: 'A comprehensive guide to understanding FTC rules, game analysis, and competition strategy — written by our team for new competitors.',
-    tag: 'Guide',
-  },
-  {
-    icon: <Code2 size={28} />,
-    title: 'Software',
-    slug: 'software',
-    description: 'Learn the software stack we use: Java-based FTC SDK, autonomous path planning, sensor integration, and computer vision with OpenCV.',
-    tag: 'Course',
-  },
-  {
-    icon: <Box size={28} />,
-    title: 'CAD & Modeling',
-    slug: 'cad',
-    description: 'From Onshape fundamentals to advanced robot modeling — our CAD curriculum for FTC teams at every skill level.',
-    tag: 'Course',
-  },
-  {
-    icon: <Library size={28} />,
-    title: 'Library',
-    slug: 'library',
-    description: 'A curated collection of papers, books, tutorials, and open-source tools that our team has found invaluable over the seasons.',
-    tag: 'Reference',
-  },
-]
+const iconMap = { BookOpen, Code2, Box, Library }
+
+const resources = resourcesData.resources
 
 const tagColors = {
   Guide: 'bg-crimson/10 text-crimson',
@@ -56,14 +30,16 @@ export default function Resources() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-7">
-            {resources.map((r) => (
+            {resources.map((r) => {
+              const Icon = iconMap[r.icon] || BookOpen
+              return (
               <Link
                 key={r.slug}
                 to={`/resources/${r.slug}`}
                 className="group card border border-gray-100 p-7 flex gap-5"
               >
                 <div className="w-12 h-12 rounded-xl bg-crimson/10 text-crimson flex items-center justify-center flex-shrink-0 group-hover:bg-crimson group-hover:text-white transition-colors duration-300">
-                  {r.icon}
+                  <Icon size={28} />
                 </div>
                 <div>
                   <div className="flex items-center gap-2 mb-2">
@@ -73,7 +49,8 @@ export default function Resources() {
                   <p className="text-gray-500 text-sm leading-relaxed">{r.description}</p>
                 </div>
               </Link>
-            ))}
+              )
+            })}
           </div>
         </div>
       </section>

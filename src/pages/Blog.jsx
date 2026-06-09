@@ -1,36 +1,9 @@
 import PageBanner from '../components/ui/PageBanner'
 import { Calendar, Clock, ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { getAllPosts } from '../utils/blog'
 
-const posts = [
-  {
-    id: 1,
-    date: 'April 2026',
-    readTime: '4 min read',
-    title: 'Reflecting on Decode: What We Learned Building Cerberon',
-    excerpt: "The 2025–26 FTC Decode season pushed us to our limits. Here's a deep-dive into the design decisions that shaped Cerberon and the lessons we took away from the competition floor.",
-    tag: 'Season Recap',
-    image: 'https://team25153.com/wp-content/uploads/2026/04/logo-removebg-preview-300x300.png',
-  },
-  {
-    id: 2,
-    date: 'January 2026',
-    readTime: '6 min read',
-    title: 'How We Approach Game Analysis Before Build Season',
-    excerpt: "Every season starts the same way: we watch the game reveal video and immediately start breaking it down. Here's our structured approach to game analysis and how it shapes our robot design.",
-    tag: 'Strategy',
-    image: 'https://team25153.com/wp-content/uploads/2025/11/WhatsApp-Image-2025-11-01-at-19.43.57-1024x768.jpeg',
-  },
-  {
-    id: 3,
-    date: 'October 2025',
-    readTime: '3 min read',
-    title: 'STEM Outreach: Our Workshop at ODTÜ Schools',
-    excerpt: 'We hosted a robotics introductory workshop for 6th graders at our school. Over 40 students got their first taste of FTC game design and robot programming.',
-    tag: 'Outreach',
-    image: 'https://team25153.com/wp-content/uploads/2025/11/WhatsApp-Image-2025-11-01-at-19.43.57-1024x768.jpeg',
-  },
-]
+const posts = getAllPosts()
 
 const tagColors = {
   'Season Recap': 'bg-crimson/10 text-crimson',
@@ -55,7 +28,7 @@ export default function Blog() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {posts.map((post) => (
-              <article key={post.id} className="card flex flex-col border border-gray-100 group cursor-pointer">
+              <Link to={`/blog/${post.slug}`} key={post.slug} className="card flex flex-col border border-gray-100 group cursor-pointer">
                 <div className="h-48 overflow-hidden bg-gray-50 flex items-center justify-center">
                   <img
                     src={post.image}
@@ -83,7 +56,7 @@ export default function Blog() {
                     Read more <ArrowRight size={13} />
                   </div>
                 </div>
-              </article>
+              </Link>
             ))}
           </div>
         </div>

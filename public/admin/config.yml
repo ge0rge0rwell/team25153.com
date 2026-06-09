@@ -1,0 +1,262 @@
+backend:
+  name: github
+  repo: ge0rge0rwell/team25153.com
+  branch: main
+
+# Uploaded images are committed here and referenced from the site as /media/...
+media_folder: public/media
+public_folder: /media
+
+collections:
+  # ─── Navigation menus (Navbar + Footer) ───────────────────────────────
+  - name: navigation
+    label: Navigation Menus
+    files:
+      - name: navigation
+        label: Menus
+        file: src/content/navigation.json
+        fields:
+          - label: Main Menu (Navbar)
+            name: navItems
+            widget: list
+            label_singular: Menu Item
+            summary: "{{fields.label}}"
+            fields:
+              - { label: Label, name: label, widget: string }
+              - { label: Link, name: to, widget: string, required: false, hint: "e.g. /awards — leave empty for a dropdown-only parent" }
+              - label: Dropdown Items
+                name: children
+                widget: list
+                required: false
+                label_singular: Dropdown Item
+                summary: "{{fields.label}}"
+                fields:
+                  - { label: Label, name: label, widget: string }
+                  - { label: Link, name: to, widget: string, required: false }
+                  - label: Sub-items
+                    name: children
+                    widget: list
+                    required: false
+                    label_singular: Sub-item
+                    summary: "{{fields.label}}"
+                    fields:
+                      - { label: Label, name: label, widget: string }
+                      - { label: Link, name: to, widget: string }
+          - label: Footer Quick Links
+            name: footerLinks
+            widget: list
+            label_singular: Link
+            summary: "{{fields.label}}"
+            fields:
+              - { label: Label, name: label, widget: string }
+              - { label: Link, name: to, widget: string }
+
+  # ─── Home page ────────────────────────────────────────────────────────
+  - name: home
+    label: Home Page
+    files:
+      - name: home
+        label: Home Content
+        file: src/content/home.json
+        fields:
+          - label: Robot Roster
+            name: robots
+            widget: list
+            summary: "{{fields.name}}"
+            fields:
+              - { label: Name, name: name, widget: string }
+              - { label: Year, name: year, widget: string }
+              - { label: Competition, name: competition, widget: string }
+              - { label: Image URL, name: image, widget: string }
+              - { label: Link, name: link, widget: string }
+              - { label: Blend Mode (transparent logo), name: blendMode, widget: boolean, default: false }
+          - label: Stats
+            name: stats
+            widget: list
+            summary: "{{fields.label}}"
+            fields:
+              - { label: Number, name: number, widget: string }
+              - { label: Label, name: label, widget: string }
+
+  # ─── Robots ───────────────────────────────────────────────────────────
+  - name: robots
+    label: Robots
+    files:
+      - name: robots
+        label: Robots
+        file: src/content/robots.json
+        fields:
+          - label: Robots
+            name: robots
+            widget: list
+            label_singular: Robot
+            summary: "{{fields.name}}"
+            fields:
+              - { label: Slug (URL), name: slug, widget: string, hint: "Used in /robots/SLUG" }
+              - { label: Name, name: name, widget: string }
+              - { label: Year, name: year, widget: string }
+              - { label: Competition, name: competition, widget: string }
+              - { label: Tagline, name: tagline, widget: string }
+              - { label: Description, name: description, widget: text }
+              - { label: Naming Story Title, name: whyTitle, widget: string }
+              - { label: Naming Story Text, name: whyText, widget: text }
+              - { label: Robot Image URL, name: image, widget: string }
+              - { label: Season Image, name: seasonImage, widget: string, required: false }
+              - { label: Hero Blend Mode, name: heroBgBlend, widget: select, options: ["normal", "screen", "multiply"], default: normal }
+              - { label: YouTube Video ID, name: youtubeId, widget: string }
+              - { label: YouTube Title, name: youtubeTitle, widget: string }
+              - { label: Game Title, name: gameTitle, widget: string }
+              - { label: Game Description, name: gameDescription, widget: text }
+              - label: Events Participated
+                name: participated
+                widget: list
+                summary: "{{fields.name}}"
+                fields:
+                  - { label: Event Name, name: name, widget: string }
+                  - { label: URL, name: url, widget: string }
+              - { label: Technical Features, name: features, widget: list, field: { label: Feature, name: feature, widget: string } }
+              - label: Previous Robot Link
+                name: prev
+                widget: object
+                required: false
+                fields:
+                  - { label: Label, name: label, widget: string }
+                  - { label: Link, name: to, widget: string }
+              - label: Next Robot Link
+                name: next
+                widget: object
+                required: false
+                fields:
+                  - { label: Label, name: label, widget: string }
+                  - { label: Link, name: to, widget: string }
+
+  # ─── Awards ───────────────────────────────────────────────────────────
+  - name: awards
+    label: Awards
+    files:
+      - name: awards
+        label: Award Seasons
+        file: src/content/awards.json
+        fields:
+          - label: Seasons
+            name: seasons
+            widget: list
+            label_singular: Season
+            summary: "{{fields.year}} — {{fields.game}}"
+            fields:
+              - { label: Year, name: year, widget: string }
+              - { label: Game, name: game, widget: string }
+              - { label: Slug, name: slug, widget: string }
+              - { label: Robot, name: robot, widget: string }
+              - label: Awards
+                name: awards
+                widget: list
+                summary: "{{fields.title}}"
+                fields:
+                  - { label: Title, name: title, widget: string }
+                  - { label: Event, name: event, widget: string }
+                  - label: Tier
+                    name: tier
+                    widget: select
+                    options: ["championship", "national", "regional", "international", "offseason"]
+
+  # ─── Resources ────────────────────────────────────────────────────────
+  - name: resources
+    label: Resources
+    files:
+      - name: resources
+        label: Resources
+        file: src/content/resources.json
+        fields:
+          - label: Resources
+            name: resources
+            widget: list
+            label_singular: Resource
+            summary: "{{fields.title}}"
+            fields:
+              - { label: Icon, name: icon, widget: select, options: ["BookOpen", "Code2", "Box", "Library"] }
+              - { label: Title, name: title, widget: string }
+              - { label: Slug, name: slug, widget: string }
+              - { label: Tag, name: tag, widget: select, options: ["Guide", "Course", "Reference"] }
+              - { label: Short Description, name: description, widget: text }
+              - { label: Detail Content, name: content, widget: text }
+
+  # ─── Portfolios ───────────────────────────────────────────────────────
+  - name: portfolios
+    label: Portfolios
+    files:
+      - name: portfolios
+        label: Portfolios
+        file: src/content/portfolios.json
+        fields:
+          - label: Portfolios
+            name: portfolios
+            widget: list
+            label_singular: Portfolio
+            summary: "{{fields.title}}"
+            fields:
+              - { label: Slug, name: slug, widget: string }
+              - { label: Title, name: title, widget: string }
+              - { label: Season, name: season, widget: string }
+              - { label: Content, name: content, widget: text }
+              - { label: Image URL, name: image, widget: string }
+              - { label: PDF URL, name: pdfUrl, widget: string }
+
+  # ─── Sponsorship ──────────────────────────────────────────────────────
+  - name: sponsorship
+    label: Sponsorship
+    files:
+      - name: sponsorship
+        label: Sponsorship Page
+        file: src/content/sponsorship.json
+        fields:
+          - { label: Intro, name: intro, widget: text }
+          - { label: Prospectus PDF URL, name: prospectusUrl, widget: string }
+          - label: Tiers
+            name: tiers
+            widget: list
+            summary: "{{fields.name}}"
+            fields:
+              - { label: Icon, name: icon, widget: select, options: ["Heart", "Star", "Package", "Handshake"] }
+              - { label: Name, name: name, widget: string }
+              - { label: Amount, name: amount, widget: string }
+              - { label: Perks, name: perks, widget: list, field: { label: Perk, name: perk, widget: string } }
+              - { label: Featured, name: featured, widget: boolean, default: false }
+          - label: Benefit Matrix
+            name: benefitMatrix
+            widget: list
+            summary: "{{fields.label}}"
+            fields:
+              - { label: Benefit, name: label, widget: string }
+              - label: Included In Tiers (T1–T4)
+                name: tiers
+                widget: list
+                field: { label: Included, name: included, widget: boolean }
+          - label: Budget Items
+            name: budget
+            widget: list
+            summary: "{{fields.label}}"
+            fields:
+              - { label: Label, name: label, widget: string }
+              - { label: Amount, name: amount, widget: string }
+          - { label: Budget Total, name: budgetTotal, widget: string }
+          - { label: In-Kind Support, name: inKind, widget: text }
+
+  # ─── Blog ─────────────────────────────────────────────────────────────
+  - name: blog
+    label: Blog Posts
+    folder: src/content/blog
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    summary: "{{title}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Date, name: date, widget: string, hint: "Displayed as-is, e.g. April 2026" }
+      - { label: Order, name: order, widget: number, default: 1, hint: "Lower numbers show first" }
+      - { label: Read Time, name: readTime, widget: string, default: "5 min read" }
+      - { label: Tag, name: tag, widget: select, options: ["Season Recap", "Strategy", "Outreach", "Team News"] }
+      - { label: Excerpt, name: excerpt, widget: text }
+      - { label: Header Image URL, name: image, widget: string }
+      - { label: Body, name: body, widget: markdown }

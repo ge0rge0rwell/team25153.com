@@ -3,29 +3,11 @@ import PageBanner from '../components/ui/PageBanner'
 import { ArrowLeft, Maximize2 } from 'lucide-react'
 import { useEffect, useRef } from 'react'
 import { loadFlipbook } from '../utils/loadFlipbook'
-const portfolioData = {
-  age: {
-    title: 'AGE – Decode Worlds',
-    season: '2025–26 FTC Decode Worlds',
-    content: 'Our Engineering Portfolio for Cerberon documents our journey through the Decode season up to the World Championship. We focused on building a robust, modular chassis and a highly efficient intake system. Key highlights include our autonomous path planning algorithms and custom 3D printed mechanisms.',
-    image: 'https://team25153.com/wp-content/uploads/2026/04/logo-removebg-preview-300x300.png',
-    pdfUrl: '/portfolios/decode.pdf'
-  },
-  dive: {
-    title: 'DIVE – Into The Deep',
-    season: '2024–25 FTC Into The Deep',
-    content: 'The DIVE portfolio covers the development of HILDA. This season challenged us to design a submersible intake arm. We documented our iterative design process, from early cardboard prototypes to the final carbon-fiber assembly.',
-    image: 'https://team25153.com/wp-content/uploads/2026/04/Screenshot_2026-04-03_at_17.28.40-removebg-preview-300x247.png',
-    pdfUrl: '/portfolios/dive.pdf'
-  },
-  show: {
-    title: 'SHOW – Centerstage',
-    season: '2023–24 FTC Centerstage',
-    content: 'Our first comprehensive engineering portfolio. SHOW details the coordinate-based movement system of our robot X & Y, along with our team outreach initiatives and strategic game analysis.',
-    image: 'https://team25153.com/wp-content/uploads/2026/04/Adsiz-tasarim-1-300x236.png',
-    pdfUrl: '/portfolios/centerstage.pdf'
-  }
-}
+import portfoliosData from '../content/portfolios.json'
+
+const portfolioData = Object.fromEntries(
+  portfoliosData.portfolios.map((p) => [p.slug, p])
+)
 
 export default function PortfolioDetail() {
   const { slug } = useParams()
