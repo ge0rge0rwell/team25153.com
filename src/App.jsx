@@ -123,7 +123,7 @@ const NotFound = (
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/ozi">
       <AppShell />
     </BrowserRouter>
   )

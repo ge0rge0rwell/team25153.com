@@ -242,8 +242,11 @@ app.use('/uploads', express.static(MEDIA_DIR))
 
 // ── Static site + SPA fallback ───────────────────────────────────────────────
 if (fs.existsSync(DIST)) {
-  app.use(express.static(DIST))
-  app.get(/^(?!\/(api|uploads)\/).*/, (_req, res) => {
+  app.use('/ozi', express.static(DIST))
+  // Redirect bare root to the app
+  app.get('/', (_req, res) => res.redirect('/ozi/'))
+  // SPA fallback: any /ozi/* path that isn't an asset serves index.html
+  app.get(/^\/ozi(\/.*)?$/, (_req, res) => {
     res.sendFile(path.join(DIST, 'index.html'))
   })
 } else {

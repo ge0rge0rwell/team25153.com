@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  base: '/ozi/',
   server: {
     // In dev the React app runs on Vite while the content/admin API runs on the
     // Express server (npm run server). Proxy API + uploaded media across so the
