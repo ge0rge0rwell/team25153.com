@@ -36,22 +36,19 @@ export default function TeamOverview() {
 
             {/* Text box */}
             <div className="flex-1 bg-gray-50 rounded-2xl p-8 border-l-4 border-crimson shadow-sm">
-              <h3 className="text-crimson text-2xl font-semibold mb-5">"I think, therefore I can!"</h3>
+              <h3 className="text-crimson text-2xl font-semibold mb-5">"I think, therefore I can."</h3>
 
               <p className="text-gray-700 leading-relaxed mb-4">
-                <strong>Cartesian Robotics #25153</strong> is a <strong>student-led</strong> FTC robotics team that believes in the power of thinking and creating.
+                <strong>Cartesian Robotics #25153</strong> is a <strong>student-led team of over 25 students</strong>, having grown each season. We like to emphasize to the minds we touch the importance of thought and creation, inspiring our motto: <em>"I think, therefore I can."</em>
               </p>
               <p className="text-gray-700 leading-relaxed mb-4">
-                Our motto: <em>"I think, therefore I can."</em> Our team aims to develop middle school students' skills in <strong>engineering, creativity, strategy, and teamwork</strong> while simultaneously <strong>spreading STEM culture</strong> within our community.
+                We have found that this motto aligns with our team because of the value we put into thinking. Our design process follows the philosophy of <em>"I think, therefore I can."</em> Over three years, we have come to establish a <strong>structured design process</strong> within our team, in which we have integrated our core philosophies, each year widening our perspective and striving towards the optimal design.
               </p>
               <p className="text-gray-700 leading-relaxed mb-4">
-                Each season, we analyze the game to develop <strong>rational strategies</strong>, make <strong>data-driven design</strong> decisions, and build <strong>high-performance robots</strong>.
-              </p>
-              <p className="text-gray-700 leading-relaxed mb-4">
-                We take pride in our national and international achievements; however, we see our true success in the <strong>young minds we inspire</strong> and the <strong>STEM ecosystem</strong> we cultivate.
+                René Descartes, the philosopher whom we choose to represent ourselves with, has famously argued that he had to exist because he could think, making a fully self-evident claim. We, recognizing that <strong>philosophy is the basis for all sciences</strong>, have committed ourselves to teaching how to think, observe and understand through hands-on experience with STEM.
               </p>
               <p className="text-gray-700 leading-relaxed">
-                For us, robotics is not just about building robots—it is about <strong>thinking, producing, and inspiring</strong>.
+                Our team aims to develop middle school students' skills in <strong>engineering, creativity, strategy, and teamwork</strong> while simultaneously <strong>spreading STEM culture</strong> within our community. In Turkey, where not every kid has the same access to science, we as a member of the FIRST community see ourselves to be a way for students to start to learn and wonder. We are proud of our international achievements, however, we measure our success by the <strong>people we impact</strong>.
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3">

@@ -15,6 +15,10 @@ dist-ssr
 .env.*
 .env.local
 
+# Runtime CMS data: live content, uploaded media, users (password hashes),
+# and the JWT secret. Seeded from src/content on first boot — never commit.
+data/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

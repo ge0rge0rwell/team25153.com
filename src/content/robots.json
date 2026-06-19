@@ -6,7 +6,7 @@
       "year": "2025 – 26",
       "competition": "FTC Decode",
       "tagline": "Power. Precision. Three Heads Forward.",
-      "description": "Cerberon is our most advanced robot to date, designed for the 2025–26 FTC Decode season. Built with a deep analysis of the game, Cerberon combines speed, accuracy, and reliability to compete at the highest level domestically and internationally.",
+      "description": "Cerberon is created with the most efficient methods to provide the maximized velocity, shooting ability and cycle sustainability.",
       "whyTitle": "Why Cerberon?",
       "whyText": "This season, we named our robot Cerberon, inspired by Cerberus — the mythological three-headed guardian — and cannon, symbolizing power and precision.",
       "image": "https://team25153.com/wp-content/uploads/2026/04/logo-removebg-preview-300x300.png",
@@ -20,6 +20,21 @@
         { "name": "Piri Reis Regional 1", "url": "https://ftc-events.firstinspires.org/2025/TRTUQ1" },
         { "name": "Piri Reis Regional 2", "url": "https://ftc-events.firstinspires.org/2025/TRTUQ2" },
         { "name": "Türkiye Championship", "url": "https://ftc-events.firstinspires.org/2025/TRTUCH" }
+      ],
+      "robotOverview": "Cerberon is created with the most efficient methods to provide the maximized velocity, shooting ability and cycle sustainability.",
+      "breakdownImage": "/media/cerberon-breakdown.png",
+      "specs": {
+        "name": "Cerberon",
+        "weight": "39 lbs",
+        "size": "45\" L × 43\" W × 42\" H"
+      },
+      "abilities": [
+        "Optimal movement with Pedro Pathing",
+        "Accurate positioning with Dead Wheel Odometry",
+        "Full parking with less axle width",
+        "Specialized artifact slots for perfect positioning",
+        "Maximized gripping with rubber bands while intaking",
+        "Accurate patterning with three flywheeled shooting system & using RGB color sensors"
       ],
       "features": [
         "High-speed Intake Mechanism",
@@ -49,6 +64,38 @@
       "participated": [
         { "name": "Türkiye Regional", "url": "https://ftc-events.firstinspires.org/2024/TRTUQ1" },
         { "name": "Türkiye Championship", "url": "https://ftc-events.firstinspires.org/2024/TRTUCH" }
+      ],
+      "robotOverview": "Behind every smooth motion and successful score lies a network of carefully designed and fine-tuned subsystems. At Cartesian Robotics, we treat each subsystem not as an isolated part, but as a piece of a unified machine — each one optimized for speed, stability, and synergy.",
+      "breakdownImage": "/media/hilda-breakdown.png",
+      "specs": {
+        "name": "Hilda V.II",
+        "weight": "13 kg"
+      },
+      "abilities": [
+        {
+          "name": "Chassis",
+          "desc": "Transitioned to a lightweight mecanum chassis with a 3 mm aluminum frame, polycarbonate shell, and GoBilda wheels for better control and reliable high hangs."
+        },
+        {
+          "name": "In-Drop and In-Drop Grabber",
+          "desc": "Dual parallel 4-stage slider with a polycarbonate frame and servo-powered herringbone grabber, enabling high chamber scoring via forward motion."
+        },
+        {
+          "name": "Intake",
+          "desc": "Dual 3-stage slider design replacing the original single slider, reducing wobble and improving specimen collection accuracy and cycle speed."
+        },
+        {
+          "name": "Odometry",
+          "desc": "Switched from optical odometry to dead wheel tracking for reduced positional drift and more precise autonomous pathing."
+        },
+        {
+          "name": "Card Yoyo (Cable Management)",
+          "desc": "Badge reel system keeping wires retractable and tangle-free, reducing mechanical interference and improving overall reliability."
+        },
+        {
+          "name": "Sliders",
+          "desc": "Locally manufactured sliders upgraded with bearing-equipped motor holders and a custom limit switch for improved accuracy and reliability."
+        }
       ],
       "features": [
         "Submersible Intake Arm",

@@ -1,12 +1,10 @@
 import { useParams, Link } from 'react-router-dom'
-import { Trophy, Cpu, ChevronRight } from 'lucide-react'
-import robotsData from '../content/robots.json'
-
-const robotData = Object.fromEntries(robotsData.robots.map((r) => [r.slug, r]))
+import { Trophy, ChevronRight } from 'lucide-react'
+import { useCollection } from '../context/ContentContext'
 
 export default function RobotPage() {
   const { slug } = useParams()
-  const robot = robotData[slug]
+  const robot = useCollection('robots').robots.find((r) => r.slug === slug)
 
   if (!robot) return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -82,54 +80,90 @@ export default function RobotPage() {
       </section>
 
       {/* ══════════════════════════════════════════
-          GAME — Video + DECODE image + info
+          ROBOT BREAKDOWN IMAGE
       ══════════════════════════════════════════ */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="mb-12">
-            <p className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-5">The Game</p>
-            {robot.seasonImage ? (
-              <div className="flex flex-col items-start gap-3">
-                <img
-                  src={robot.seasonImage}
-                  alt={robot.competition + ' Season'}
-                  className="h-32 object-contain"
-                  loading="lazy"
-                  decoding="async"
-                  style={{ mixBlendMode: 'multiply' }}
-                />
-                <span className="text-navy/40 text-xs font-semibold uppercase tracking-widest">{robot.year}</span>
-              </div>
-            ) : (
-              <h2 className="text-3xl font-bold text-navy">{robot.gameTitle}</h2>
-            )}
+      {robot.breakdownImage && (
+        <section className="py-16 bg-white border-t border-gray-100">
+          <div className="max-w-5xl mx-auto px-6">
+            <img
+              src={robot.breakdownImage}
+              alt={`${robot.name} component breakdown`}
+              className="w-full object-contain rounded-2xl"
+              loading="lazy"
+              decoding="async"
+            />
           </div>
+        </section>
+      )}
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-            {/* Left: game description */}
-            <div className="flex flex-col gap-6">
-              <div className="bg-white rounded-2xl p-7 shadow-sm ring-1 ring-gray-100 flex-1">
-                <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">Game Overview</p>
-                <p className="text-gray-700 leading-relaxed">{robot.gameDescription}</p>
-              </div>
+      {/* ══════════════════════════════════════════
+          ROBOT OVERVIEW + QUICK FACTS
+      ══════════════════════════════════════════ */}
+      {(robot.robotOverview || robot.specs || robot.abilities) && (
+        <section className="py-20 bg-gray-50">
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="mb-10">
+              <p className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-2">The Robot</p>
+              <h2 className="text-3xl font-bold text-navy mb-1">Quick Facts</h2>
+              <div className="w-10 h-0.5 bg-gold" />
             </div>
 
-            {/* Right: YouTube embed */}
-            <div className="rounded-2xl overflow-hidden shadow-xl bg-black ring-1 ring-black/10">
-              <div className="relative" style={{ paddingBottom: '56.25%' }}>
-                <iframe
-                  className="absolute inset-0 w-full h-full"
-                  src={`https://www.youtube-nocookie.com/embed/${robot.youtubeId}?rel=0&modestbranding=1`}
-                  title={robot.youtubeTitle}
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+              {/* Left: overview + specs */}
+              <div className="flex flex-col gap-6">
+                {robot.robotOverview && (
+                  <div className="bg-white rounded-2xl p-7 ring-1 ring-gray-100">
+                    <p className="text-gray-700 leading-relaxed text-base">{robot.robotOverview}</p>
+                  </div>
+                )}
+                {robot.specs && (
+                  <div className="bg-navy rounded-2xl p-7">
+                    <p className="text-gold text-xs font-bold uppercase tracking-[0.3em] mb-5">Specifications</p>
+                    <div className="flex flex-col gap-3">
+                      {Object.entries(robot.specs).map(([key, val]) => (
+                        <div key={key} className="flex items-center justify-between border-b border-white/10 pb-3 last:border-0 last:pb-0">
+                          <span className="text-white/50 text-xs uppercase tracking-widest font-semibold">{key}</span>
+                          <span className="text-white font-bold text-sm">{val}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
+
+              {/* Right: abilities */}
+              {robot.abilities && (
+                <div className="bg-white rounded-2xl p-7 ring-1 ring-gray-100">
+                  <p className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-5">Abilities</p>
+                  <div className="flex flex-col gap-3">
+                    {robot.abilities.map((ability, i) =>
+                      typeof ability === 'string' ? (
+                        <div key={i} className="flex items-start gap-4 bg-gray-50 rounded-xl px-5 py-3.5 ring-1 ring-gray-100 shadow-sm">
+                          <span className="text-crimson font-black text-sm w-6 flex-shrink-0 mt-0.5">
+                            {String(i + 1).padStart(2, '0')}
+                          </span>
+                          <span className="text-gray-700 text-sm leading-relaxed">{ability}</span>
+                        </div>
+                      ) : (
+                        <div key={i} className="bg-gray-50 rounded-xl px-5 py-4 ring-1 ring-gray-100 shadow-sm">
+                          <div className="flex items-center gap-3 mb-2">
+                            <span className="text-crimson font-black text-sm w-6 flex-shrink-0">
+                              {String(i + 1).padStart(2, '0')}
+                            </span>
+                            <span className="text-navy font-bold text-sm">{ability.name}</span>
+                          </div>
+                          <p className="text-gray-600 text-sm leading-relaxed pl-9">{ability.desc}</p>
+                        </div>
+                      )
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
+
 
       {/* ══════════════════════════════════════════
           WHY NAMED + PARTICIPATED — two column
@@ -176,34 +210,6 @@ export default function RobotPage() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════
-          TECH FEATURES — clean dark section
-      ══════════════════════════════════════════ */}
-      <section className="py-20 bg-navy text-white">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="mb-10">
-            <p className="text-gold text-xs font-bold uppercase tracking-[0.3em] mb-2">
-              <Cpu size={12} className="inline mr-1 mb-0.5" />
-              Engineering
-            </p>
-            <h2 className="text-3xl font-bold">Key Technical Features</h2>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {robot.features.map((f, i) => (
-              <div
-                key={f}
-                className="flex items-center gap-4 bg-white/5 border border-white/10 rounded-xl px-6 py-4 hover:bg-white/10 hover:border-crimson/50 transition-all"
-              >
-                <span className="text-crimson font-black text-sm w-6 flex-shrink-0">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <span className="text-white/85 font-medium text-sm">{f}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
 
 

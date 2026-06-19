@@ -4,6 +4,15 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  server: {
+    // In dev the React app runs on Vite while the content/admin API runs on the
+    // Express server (npm run server). Proxy API + uploaded media across so the
+    // admin panel and live-content fetch work without CORS juggling.
+    proxy: {
+      '/api': 'http://localhost:4000',
+      '/uploads': 'http://localhost:4000',
+    },
+  },
   build: {
     // Modern browsers only — ships less transpiled/polyfilled output.
     target: 'es2020',

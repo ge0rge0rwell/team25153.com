@@ -2,12 +2,10 @@ import { Link } from 'react-router-dom'
 import { ArrowRight, ChevronRight } from 'lucide-react'
 import RobotCard from '../components/ui/RobotCard'
 import LogoCarousel from '../components/ui/LogoCarousel'
-import homeData from '../content/home.json'
-
-const robots = homeData.robots
-const stats = homeData.stats
+import { useCollection } from '../context/ContentContext'
 
 export default function Home() {
+  const { robots } = useCollection('home')
   return (
     <div>
       {/* ── Hero ─────────────────────────────────── */}
@@ -30,23 +28,19 @@ export default function Home() {
             </h1>
 
             <p className="text-navy/70 text-base leading-relaxed mb-3 max-w-lg">
-              <strong>Cartesian Robotics #25153</strong> is a <strong>student-led</strong> FTC robotics team that believes in the power of thinking and creating.
-            </p>
-
-            <p className="text-crimson font-semibold italic mb-3 max-w-lg">
-              Our Motto: "I think, therefore I can." Our team aims to develop middle school students' skills in <strong>engineering, creativity, strategy, and teamwork</strong> while simultaneously <strong>spreading STEM culture</strong> within our community.
+              <strong>Cartesian Robotics #25153</strong> is a <strong>student-led team of over 25 students</strong>, having grown each season. We like to emphasize to the minds we touch the importance of thought and creation, inspiring our motto: <em>"I think, therefore I can."</em>
             </p>
 
             <p className="text-gray-600 text-sm leading-relaxed mb-3 max-w-lg">
-              Each season, we analyze the game to develop <strong>rational strategies</strong>, make <strong>data-driven design</strong> decisions, and build <strong>high-performance robots</strong>.
+              Our design process follows the philosophy of <em>"I think, therefore I can."</em> Over three years, we have established a <strong>structured design process</strong> within our team, integrating our core philosophies and each year striving towards the optimal design.
             </p>
 
             <p className="text-gray-600 text-sm leading-relaxed mb-3 max-w-lg">
-              We take pride in our national and international achievements; however, we see our true success in the <strong>young minds we inspire</strong> and the <strong>STEM ecosystem</strong> we cultivate.
+              René Descartes, the philosopher we represent ourselves with, argued that he had to exist because he could think. We, recognizing that <strong>philosophy is the basis for all sciences</strong>, teach how to think, observe, and understand through hands-on STEM experience.
             </p>
 
             <p className="text-gray-600 text-sm leading-relaxed mb-8 max-w-lg">
-              For us, robotics is not just about building robots—it is about <strong>thinking, producing, and inspiring</strong>.
+              Our team aims to develop middle school students' skills in <strong>engineering, creativity, strategy, and teamwork</strong> while <strong>spreading STEM culture</strong> within our community. We are proud of our international achievements, but we measure our success by the <strong>people we impact</strong>.
             </p>
 
             <div className="flex flex-wrap gap-3">
@@ -64,7 +58,7 @@ export default function Home() {
           </div>
 
           {/* Right – Hero Image */}
-          <div className="flex justify-center lg:justify-end relative">
+          <div className="flex justify-center lg:justify-end relative lg:-mt-72">
             <div className="relative">
               {/* Decorative ring */}
               <div className="absolute -inset-4 rounded-3xl border-2 border-crimson/10 rotate-3" />

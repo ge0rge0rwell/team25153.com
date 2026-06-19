@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Menu, X, ChevronDown, Search } from 'lucide-react'
-import navigation from '../../content/navigation.json'
-
-const navItems = navigation.navItems
+import { useCollection } from '../../context/ContentContext'
 
 function DropdownItem({ item, depth = 0 }) {
   const [open, setOpen] = useState(false)
@@ -131,6 +129,7 @@ function MobileNavItem({ item, onClose }) {
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const navItems = useCollection('navigation').navItems || []
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 50)
@@ -165,7 +164,7 @@ export default function Navbar() {
             <img
               src="https://team25153.com/wp-content/uploads/2025/11/Cartesian-Font-Vector-scaled-1.png"
               alt="Cartesian Robotics"
-              className="h-10 w-auto"
+              className="h-10 w-48"
               fetchPriority="high"
               decoding="async"
               onError={(e) => {

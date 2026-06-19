@@ -1,20 +1,19 @@
 import PageBanner from '../components/ui/PageBanner'
 import ContactForm from '../components/ui/ContactForm'
 import { Heart, Star, Package, Handshake } from 'lucide-react'
-import sponsorshipData from '../content/sponsorship.json'
+import { useCollection } from '../context/ContentContext'
 
 const iconMap = { Heart, Star, Package, Handshake }
 
-const tiers = sponsorshipData.tiers.map((t) => ({
-  ...t,
-  color: t.featured ? 'border-crimson' : 'border-gray-200',
-  accent: t.featured ? 'text-crimson' : 'text-navy',
-  bg: t.featured ? 'bg-crimson/5' : 'bg-white',
-}))
-
-const { intro, prospectusUrl, benefitMatrix, budget, budgetTotal, inKind } = sponsorshipData
-
 export default function Sponsorship() {
+  const sponsorshipData = useCollection('sponsorship')
+  const { intro, prospectusUrl, benefitMatrix, budget, budgetTotal, inKind } = sponsorshipData
+  const tiers = sponsorshipData.tiers.map((t) => ({
+    ...t,
+    color: t.featured ? 'border-crimson' : 'border-gray-200',
+    accent: t.featured ? 'text-crimson' : 'text-navy',
+    bg: t.featured ? 'bg-crimson/5' : 'bg-white',
+  }))
   return (
     <div>
       <PageBanner

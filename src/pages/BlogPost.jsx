@@ -2,11 +2,11 @@ import { useParams, Link } from 'react-router-dom'
 import { marked } from 'marked'
 import PageBanner from '../components/ui/PageBanner'
 import { ArrowLeft, Calendar, Clock } from 'lucide-react'
-import { getPostBySlug } from '../utils/blog'
+import { useCollection } from '../context/ContentContext'
 
 export default function BlogPost() {
   const { slug } = useParams()
-  const post = getPostBySlug(slug)
+  const post = useCollection('blog').find((p) => p.slug === slug) || null
 
   if (!post) {
     return (

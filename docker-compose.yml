@@ -1,0 +1,89 @@
+services:
+  # ── Nginx reverse proxy + SSL ─────────────────────────────────────────────
+  nginx:
+    image: nginx:alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./nginx/certbot/conf:/etc/letsencrypt
+      - ./nginx/certbot/www:/var/www/certbot
+    depends_on:
+      - app
+      - moodle
+
+  # Renews SSL certificates automatically every 12 hours
+  certbot:
+    image: certbot/certbot
+    restart: unless-stopped
+    volumes:
+      - ./nginx/certbot/conf:/etc/letsencrypt
+      - ./nginx/certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+
+  # ── Cartesian Robotics site ───────────────────────────────────────────────
+  app:
+    build: .
+    restart: unless-stopped
+    environment:
+      PORT: 4000
+      DATA_DIR: /data
+      # ADMIN_USERNAME: admin
+      # ADMIN_PASSWORD: changeme
+    volumes:
+      - app-data:/data
+    depends_on:
+      - moodle
+
+  # ── Moodle LMS ────────────────────────────────────────────────────────────
+  moodle:
+    image: bitnami/moodle:4
+    restart: unless-stopped
+    environment:
+      MOODLE_DATABASE_HOST: mariadb
+      MOODLE_DATABASE_PORT_NUMBER: 3306
+      MOODLE_DATABASE_NAME: moodle
+      MOODLE_DATABASE_USER: moodle
+      MOODLE_DATABASE_PASSWORD: moodlepass
+      MOODLE_USERNAME: iatakan
+      MOODLE_PASSWORD: "123456"
+      MOODLE_EMAIL: admin@cartesian.local
+      MOODLE_SITE_NAME: "Cartesian Robotics LMS"
+      MOODLE_LANG: en
+      MOODLE_HOST: lms.team25153.com
+      MOODLE_REVERSEPROXY: "yes"
+      MOODLE_SSLPROXY: "yes"
+      PHP_MEMORY_LIMIT: 256M
+      PHP_MAX_EXECUTION_TIME: 300
+    volumes:
+      - moodle-data:/bitnami/moodle
+      - moodledata-data:/bitnami/moodledata
+    depends_on:
+      mariadb:
+        condition: service_healthy
+
+  # ── MariaDB (Moodle database) ──────────────────────────────────────────────
+  mariadb:
+    image: mariadb:10.11
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: rootpassword
+      MARIADB_DATABASE: moodle
+      MARIADB_USER: moodle
+      MARIADB_PASSWORD: moodlepass
+    volumes:
+      - mariadb-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  app-data:
+  moodle-data:
+  moodledata-data:
+  mariadb-data:

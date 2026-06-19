@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom'
 import { Mail, MapPin, ArrowUp } from 'lucide-react'
 import { FaInstagram } from 'react-icons/fa'
-import navigation from '../../content/navigation.json'
+import { useCollection } from '../../context/ContentContext'
 
 export default function Footer() {
   const scrollTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
+  const footerLinks = useCollection('navigation').footerLinks || []
 
   return (
     <footer className="bg-navy text-white">
@@ -32,7 +33,7 @@ export default function Footer() {
             <span className="w-6 h-0.5 bg-gold inline-block"></span> Quick Links
           </h3>
           <ul className="space-y-2.5">
-            {navigation.footerLinks.map((link) => (
+            {footerLinks.map((link) => (
               <li key={link.to}>
                 <Link
                   to={link.to}

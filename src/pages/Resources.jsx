@@ -1,11 +1,9 @@
 import PageBanner from '../components/ui/PageBanner'
 import { BookOpen, Code2, Box, Library } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import resourcesData from '../content/resources.json'
+import { useCollection } from '../context/ContentContext'
 
 const iconMap = { BookOpen, Code2, Box, Library }
-
-const resources = resourcesData.resources
 
 const tagColors = {
   Guide: 'bg-crimson/10 text-crimson',
@@ -14,6 +12,7 @@ const tagColors = {
 }
 
 export default function Resources() {
+  const resources = useCollection('resources').resources
   return (
     <div>
       <PageBanner title="Resources" breadcrumbs={[{ label: 'Resources' }]} />

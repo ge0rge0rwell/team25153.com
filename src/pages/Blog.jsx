@@ -1,9 +1,7 @@
 import PageBanner from '../components/ui/PageBanner'
 import { Calendar, Clock, ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { getAllPosts } from '../utils/blog'
-
-const posts = getAllPosts()
+import { useCollection } from '../context/ContentContext'
 
 const tagColors = {
   'Season Recap': 'bg-crimson/10 text-crimson',
@@ -12,6 +10,7 @@ const tagColors = {
 }
 
 export default function Blog() {
+  const posts = useCollection('blog')
   return (
     <div>
       <PageBanner title="Blog" breadcrumbs={[{ label: 'Blog' }]} />
@@ -40,7 +39,7 @@ export default function Blog() {
                 </div>
                 <div className="p-6 flex flex-col flex-1">
                   <div className="flex items-center gap-3 mb-3">
-                    <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${tagColors[post.tag]}`}>
+                    <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${tagColors[post.tag] || 'bg-gray-100 text-gray-600'}`}>
                       {post.tag}
                     </span>
                   </div>

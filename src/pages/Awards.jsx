@@ -1,9 +1,7 @@
 import PageBanner from '../components/ui/PageBanner'
 import { Trophy, Eye, X } from 'lucide-react'
 import { useState } from 'react'
-import awardsData from '../content/awards.json'
-
-const allSeasons = awardsData.seasons
+import { useCollection } from '../context/ContentContext'
 
 // Badge colors per tier — all crimson / navy variants, no gold
 const tierBadge = {
@@ -23,8 +21,8 @@ const tierLabel = {
 
 export default function Awards() {
   const [lightboxImage, setLightboxImage] = useState(null)
-  
-  const displaySeasons = allSeasons
+
+  const displaySeasons = useCollection('awards').seasons
 
   const total = displaySeasons.reduce((sum, s) => sum + s.awards.length, 0)
   

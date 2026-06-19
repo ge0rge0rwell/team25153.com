@@ -3,15 +3,11 @@ import PageBanner from '../components/ui/PageBanner'
 import { ArrowLeft, Maximize2 } from 'lucide-react'
 import { useEffect, useRef } from 'react'
 import { loadFlipbook } from '../utils/loadFlipbook'
-import portfoliosData from '../content/portfolios.json'
-
-const portfolioData = Object.fromEntries(
-  portfoliosData.portfolios.map((p) => [p.slug, p])
-)
+import { useCollection } from '../context/ContentContext'
 
 export default function PortfolioDetail() {
   const { slug } = useParams()
-  const portfolio = portfolioData[slug]
+  const portfolio = useCollection('portfolios').portfolios.find((p) => p.slug === slug)
 
   const buttonRef = useRef(null)
 

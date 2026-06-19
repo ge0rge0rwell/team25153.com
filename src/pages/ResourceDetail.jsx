@@ -2,17 +2,13 @@ import { useParams, Link } from 'react-router-dom'
 import PageBanner from '../components/ui/PageBanner'
 import { ArrowLeft, BookOpen, Code2, Box, Library } from 'lucide-react'
 import SoftwareDocs from '../components/resources/SoftwareDocs'
-import resourcesData from '../content/resources.json'
+import { useCollection } from '../context/ContentContext'
 
 const iconMap = { BookOpen, Code2, Box, Library }
 
-const resourceData = Object.fromEntries(
-  resourcesData.resources.map((r) => [r.slug, r])
-)
-
 export default function ResourceDetail() {
   const { slug } = useParams()
-  const resource = resourceData[slug]
+  const resource = useCollection('resources').resources.find((r) => r.slug === slug)
   const Icon = resource ? iconMap[resource.icon] || BookOpen : BookOpen
 
   if (!resource) {

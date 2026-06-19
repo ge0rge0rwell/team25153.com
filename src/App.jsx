@@ -20,6 +20,8 @@ const routeImports = [
   () => import('./pages/Resources'),
   () => import('./pages/ResourceDetail'),
   () => import('./pages/PortfolioDetail'),
+  () => import('./pages/Join'),
+  () => import('./pages/LMS'),
 ]
 const [
   importTeamOverview,
@@ -32,6 +34,8 @@ const [
   importResources,
   importResourceDetail,
   importPortfolioDetail,
+  importJoin,
+  importLMS,
 ] = routeImports
 
 const TeamOverview = lazy(importTeamOverview)
@@ -44,11 +48,17 @@ const Contact = lazy(importContact)
 const Resources = lazy(importResources)
 const ResourceDetail = lazy(importResourceDetail)
 const PortfolioDetail = lazy(importPortfolioDetail)
+const Join = lazy(importJoin)
+const LMS = lazy(importLMS)
 
 // The Descartes chat widget bundles an Adobe PDF viewer, an LLM client and a
 // 350 KB+ search index. It is closed by default, so we keep it out of the
 // critical path entirely and mount it after the page is interactive.
 const DescartesChat = lazy(() => import('./components/descartes/DescartesChat'))
+
+// The admin panel is a separate app tree, lazy-loaded so its code never ships to
+// public visitors. It renders full-screen without the site chrome.
+const AdminApp = lazy(() => import('./admin/AdminApp'))
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -111,9 +121,32 @@ const NotFound = (
 )
 
 export default function App() {
-  useRoutePrefetch()
   return (
     <BrowserRouter>
+      <AppShell />
+    </BrowserRouter>
+  )
+}
+
+function AppShell() {
+  const { pathname } = useLocation()
+
+  // The admin panel owns everything under /admin and renders without site chrome.
+  if (pathname.startsWith('/admin')) {
+    return (
+      <Suspense fallback={<RouteFallback />}>
+        <AdminApp />
+      </Suspense>
+    )
+  }
+
+  return <PublicSite />
+}
+
+function PublicSite() {
+  useRoutePrefetch()
+  return (
+    <>
       <ScrollToTop />
       <div className="flex flex-col min-h-screen font-roboto">
         <Navbar />
@@ -141,6 +174,8 @@ export default function App() {
               {/* Other */}
               <Route path="/sponsorship" element={<Sponsorship />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/join" element={<Join />} />
+              <Route path="/lms" element={<LMS />} />
 
               {/* 404 */}
               <Route path="*" element={NotFound} />
@@ -154,6 +189,6 @@ export default function App() {
           </Suspense>
         </DeferredMount>
       </div>
-    </BrowserRouter>
+    </>
   )
 }
