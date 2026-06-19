@@ -75,6 +75,19 @@ function TopNavItem({ item }) {
     )
   }
 
+  if (item.newTab) {
+    return (
+      <a
+        href={item.to}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="px-3 py-2 text-sm font-medium uppercase tracking-wider transition-colors text-navy hover:text-navy-mid"
+      >
+        {item.label}
+      </a>
+    )
+  }
+
   return (
     <Link
       to={item.to}
@@ -112,6 +125,20 @@ function MobileNavItem({ item, onClose }) {
           </div>
         )}
       </div>
+    )
+  }
+
+  if (item.newTab) {
+    return (
+      <a
+        href={item.to}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={onClose}
+        className="block px-8 py-3 text-white/80 text-sm uppercase tracking-wider border-b border-navy-mid/20 hover:text-gold hover:bg-navy-light transition-colors"
+      >
+        {item.label}
+      </a>
     )
   }
 

@@ -36,16 +36,16 @@ function Gate() {
   return (
     <Layout>
       <Routes>
-        <Route path="/admin" element={<Dashboard />} />
-        <Route path="/admin/collections/:name" element={<DocumentEditor />} />
-        <Route path="/admin/blog" element={<BlogList />} />
-        <Route path="/admin/blog/new" element={<BlogEditor />} />
-        <Route path="/admin/blog/:slug" element={<BlogEditor />} />
-        <Route path="/admin/applications" element={<Applications />} />
-        <Route path="/admin/media" element={<MediaLibrary />} />
-        <Route path="/admin/users" element={<Users />} />
-        <Route path="/admin/settings" element={<Settings />} />
-        <Route path="*" element={<Navigate to="/admin" replace />} />
+        <Route path="/cms" element={<Dashboard />} />
+        <Route path="/cms/collections/:name" element={<DocumentEditor />} />
+        <Route path="/cms/blog" element={<BlogList />} />
+        <Route path="/cms/blog/new" element={<BlogEditor />} />
+        <Route path="/cms/blog/:slug" element={<BlogEditor />} />
+        <Route path="/cms/applications" element={<Applications />} />
+        <Route path="/cms/media" element={<MediaLibrary />} />
+        <Route path="/cms/users" element={<Users />} />
+        <Route path="/cms/settings" element={<Settings />} />
+        <Route path="*" element={<Navigate to="/cms" replace />} />
       </Routes>
     </Layout>
   )

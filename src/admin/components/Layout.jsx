@@ -16,7 +16,7 @@ export default function Layout({ children }) {
 
   const doLogout = () => {
     logout()
-    navigate('/admin')
+    navigate('/cms')
   }
 
   const link = ({ isActive }) =>
@@ -43,7 +43,7 @@ export default function Layout({ children }) {
         </div>
 
         <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-2">
-          <NavLink to="/admin" end className={link} onClick={() => setOpen(false)}>
+          <NavLink to="/cms" end className={link} onClick={() => setOpen(false)}>
             <Home size={17} /> Dashboard
           </NavLink>
 
@@ -51,26 +51,26 @@ export default function Layout({ children }) {
           {collectionOrder.map((name) => {
             const Icon = icons[schemas[name].icon] || FileText
             return (
-              <NavLink key={name} to={`/admin/collections/${name}`} className={link} onClick={() => setOpen(false)}>
+              <NavLink key={name} to={`/cms/collections/${name}`} className={link} onClick={() => setOpen(false)}>
                 <Icon size={17} /> {schemas[name].label}
               </NavLink>
             )
           })}
-          <NavLink to="/admin/blog" className={link} onClick={() => setOpen(false)}>
+          <NavLink to="/cms/blog" className={link} onClick={() => setOpen(false)}>
             <Newspaper size={17} /> Blog Posts
           </NavLink>
-          <NavLink to="/admin/applications" className={link} onClick={() => setOpen(false)}>
+          <NavLink to="/cms/applications" className={link} onClick={() => setOpen(false)}>
             <Users2 size={17} /> Applications
           </NavLink>
 
           <p className="px-3 pb-1 pt-4 text-[10px] font-bold uppercase tracking-wider text-white/30">Site</p>
-          <NavLink to="/admin/media" className={link} onClick={() => setOpen(false)}>
+          <NavLink to="/cms/media" className={link} onClick={() => setOpen(false)}>
             <Image size={17} /> Media
           </NavLink>
-          <NavLink to="/admin/users" className={link} onClick={() => setOpen(false)}>
+          <NavLink to="/cms/users" className={link} onClick={() => setOpen(false)}>
             <Users size={17} /> Users
           </NavLink>
-          <NavLink to="/admin/settings" className={link} onClick={() => setOpen(false)}>
+          <NavLink to="/cms/settings" className={link} onClick={() => setOpen(false)}>
             <Settings size={17} /> Settings
           </NavLink>
         </nav>

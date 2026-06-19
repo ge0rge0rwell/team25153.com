@@ -57,7 +57,7 @@ export default function BlogEditor() {
       setTimeout(() => setSaved(false), 2500)
       // If creating (or the slug changed), move to the canonical edit URL.
       if (result?.slug && result.slug !== slug) {
-        navigate(`/admin/blog/${result.slug}`, { replace: true })
+        navigate(`/cms/blog/${result.slug}`, { replace: true })
       }
     } catch (e) {
       setError(e.message)
@@ -76,7 +76,7 @@ export default function BlogEditor() {
   return (
     <div>
       <div className="mb-6 flex items-center justify-between">
-        <Link to="/admin/blog" className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-crimson">
+        <Link to="/cms/blog" className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-crimson">
           <ArrowLeft size={16} /> All posts
         </Link>
         <SaveButton saving={saving} saved={saved} onSave={save} />

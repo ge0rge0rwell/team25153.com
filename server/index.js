@@ -253,5 +253,5 @@ if (fs.existsSync(DIST)) {
 }
 
 app.listen(PORT, () => {
-  console.log(`\n  ➜  Server running at http://localhost:${PORT}\n     Admin panel:  http://localhost:${PORT}/admin\n`)
+  console.log(`\n  ➜  Server running at http://localhost:${PORT}\n     CMS panel:    http://localhost:${PORT}/cms\n     Moodle admin: http://localhost:${PORT}/admin\n`)
 })

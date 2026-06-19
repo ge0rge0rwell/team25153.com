@@ -35,13 +35,7 @@
     },
     { "label": "Blog", "to": "/blog" },
     { "label": "Sponsorship", "to": "/sponsorship" },
-    {
-      "label": "Join Us",
-      "children": [
-        { "label": "Apply", "to": "/join" },
-        { "label": "Moodle LMS", "to": "/lms" }
-      ]
-    },
+    { "label": "Learn", "to": "https://lms.team25153.com", "newTab": true },
     { "label": "Contact Us", "to": "/contact" }
   ],
   "footerLinks": [
@@ -51,8 +45,8 @@
     { "label": "Resources", "to": "/resources/decoding-ftc" },
     { "label": "Blog", "to": "/blog" },
     { "label": "Sponsorship", "to": "/sponsorship" },
-    { "label": "Apply", "to": "/join" },
-    { "label": "Moodle LMS", "to": "/lms" },
+    { "label": "Join Us", "to": "/join" },
+    { "label": "Learn", "to": "https://lms.team25153.com", "newTab": true },
     { "label": "Contact Us", "to": "/contact" }
   ]
 }

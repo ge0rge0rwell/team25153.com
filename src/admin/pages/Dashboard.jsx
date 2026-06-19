@@ -13,15 +13,15 @@ export default function Dashboard() {
 
   const cards = [
     ...collectionOrder.map((name) => ({
-      to: `/admin/collections/${name}`,
+      to: `/cms/collections/${name}`,
       label: schemas[name].label,
       Icon: icons[schemas[name].icon] || FileText,
       desc: 'Edit content',
     })),
-    { to: '/admin/blog', label: 'Blog Posts', Icon: Newspaper, desc: 'Write & manage posts' },
-    { to: '/admin/applications', label: 'Applications', Icon: Users2, desc: 'View membership submissions' },
-    { to: '/admin/media', label: 'Media', Icon: Image, desc: 'Upload images' },
-    { to: '/admin/users', label: 'Users', Icon: Users, desc: 'Manage editors' },
+    { to: '/cms/blog', label: 'Blog Posts', Icon: Newspaper, desc: 'Write & manage posts' },
+    { to: '/cms/applications', label: 'Applications', Icon: Users2, desc: 'View membership submissions' },
+    { to: '/cms/media', label: 'Media', Icon: Image, desc: 'Upload images' },
+    { to: '/cms/users', label: 'Users', Icon: Users, desc: 'Manage editors' },
   ]
 
   return (

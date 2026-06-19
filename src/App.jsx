@@ -56,9 +56,10 @@ const LMS = lazy(importLMS)
 // critical path entirely and mount it after the page is interactive.
 const DescartesChat = lazy(() => import('./components/descartes/DescartesChat'))
 
-// The admin panel is a separate app tree, lazy-loaded so its code never ships to
+// The CMS panel is a separate app tree, lazy-loaded so its code never ships to
 // public visitors. It renders full-screen without the site chrome.
 const AdminApp = lazy(() => import('./admin/AdminApp'))
+const MoodleAdmin = lazy(() => import('./pages/MoodleAdmin'))
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -131,11 +132,20 @@ export default function App() {
 function AppShell() {
   const { pathname } = useLocation()
 
-  // The admin panel owns everything under /admin and renders without site chrome.
-  if (pathname.startsWith('/admin')) {
+  // The CMS panel owns everything under /cms and renders without site chrome.
+  if (pathname.startsWith('/cms')) {
     return (
       <Suspense fallback={<RouteFallback />}>
         <AdminApp />
+      </Suspense>
+    )
+  }
+
+  // /admin renders the Moodle admin panel full-screen, no site chrome.
+  if (pathname === '/admin') {
+    return (
+      <Suspense fallback={<RouteFallback />}>
+        <MoodleAdmin />
       </Suspense>
     )
   }
