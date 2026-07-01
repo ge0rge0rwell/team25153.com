@@ -17,7 +17,7 @@ export default function Resources() {
     <div>
       <PageBanner title="Resources" breadcrumbs={[{ label: 'Resources' }]} />
 
-      <section className="py-20 bg-white">
+      <section className="py-12 md:py-20 bg-white">
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center mb-14">
             <p className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-2">Knowledge Base</p>

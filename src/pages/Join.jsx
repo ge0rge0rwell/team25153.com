@@ -169,7 +169,7 @@ export default function Join() {
       <PageBanner title="Join Cartesian Robotics" breadcrumbs={[{ label: 'Join' }]} />
 
       {/* How to join — step cards */}
-      <section className="py-20 bg-white">
+      <section className="py-12 md:py-20 bg-white">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-12">
             <p className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-2">Membership</p>
@@ -216,14 +216,14 @@ export default function Join() {
       </section>
 
       {/* Application form */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-12 md:py-20 bg-gray-50">
         <div className="max-w-2xl mx-auto px-6">
           <div className="text-center mb-10">
             <p className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-2">Get Started</p>
             <h2 className="text-3xl font-medium text-navy mb-2">Submit Your Interest</h2>
             <div className="w-10 h-0.5 bg-gold mx-auto" />
           </div>
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 sm:p-8">
             <ApplicationForm />
           </div>
         </div>

@@ -29,8 +29,8 @@ export default function BlogPost() {
         ]}
       />
 
-      <section className="py-20 bg-white">
-        <div className="max-w-3xl mx-auto px-6">
+      <section className="py-12 md:py-20 bg-white">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <Link to="/blog" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-crimson mb-8 transition-colors">
             <ArrowLeft size={16} /> Back to Blog
           </Link>
@@ -40,7 +40,7 @@ export default function BlogPost() {
               <span className="text-[10px] font-bold uppercase px-3 py-1 rounded-full bg-crimson/10 text-crimson inline-block mb-4">
                 {post.tag}
               </span>
-              <h1 className="text-4xl font-bold text-navy mb-4 leading-tight">{post.title}</h1>
+              <h1 className="text-2xl sm:text-4xl font-bold text-navy mb-4 leading-tight">{post.title}</h1>
               <div className="flex items-center gap-4 text-sm text-gray-500">
                 <span className="flex items-center gap-1.5"><Calendar size={14} /> {post.date}</span>
                 <span className="flex items-center gap-1.5"><Clock size={14} /> {post.readTime}</span>

@@ -12,8 +12,8 @@ export default function Contact() {
         breadcrumbs={[{ label: 'Contact' }, { label: 'Contact Us' }]}
       />
 
-      <section className="py-20 bg-white">
-        <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-5 gap-12">
+      <section className="py-12 md:py-20 bg-white">
+        <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-5 gap-6 md:gap-12">
           {/* Left – Contact Info */}
           <div className="lg:col-span-2">
             <p className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-2 flex items-center gap-2">
@@ -82,7 +82,7 @@ export default function Contact() {
 
           {/* Right – Form */}
           <div className="lg:col-span-3">
-            <div className="bg-gray-50 rounded-2xl p-8 border border-gray-100 shadow-sm">
+            <div className="bg-gray-50 rounded-2xl p-5 sm:p-8 border border-gray-100 shadow-sm">
               <h3 className="text-xl font-medium text-navy mb-6 flex items-center gap-3">
                 <span className="w-1 h-6 bg-crimson rounded inline-block" />
                 Send Us a Message

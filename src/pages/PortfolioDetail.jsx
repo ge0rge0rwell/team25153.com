@@ -60,12 +60,12 @@ export default function PortfolioDetail() {
         ]}
       />
       
-      <section className="py-20 bg-white">
+      <section className="py-12 md:py-20 bg-white">
         <div className="max-w-4xl mx-auto px-6">
           <Link to="/portfolio" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-crimson mb-8 transition-colors">
             <ArrowLeft size={16} /> Back to Portfolios
           </Link>
-          <div className="bg-gray-50 rounded-2xl p-8 border border-gray-100 shadow-sm flex flex-col md:flex-row gap-8 items-center">
+          <div className="bg-gray-50 rounded-2xl p-5 sm:p-8 border border-gray-100 shadow-sm flex flex-col md:flex-row gap-8 items-center">
             <div className="w-full md:w-1/3 flex justify-center">
               <img src={portfolio.image} alt={portfolio.title} className="w-48 h-48 object-contain mix-blend-multiply drop-shadow-xl" />
             </div>

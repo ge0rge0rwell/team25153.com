@@ -66,7 +66,7 @@ export default function Awards() {
 
       {/* Total count strip */}
       <div className="bg-crimson text-white py-6">
-        <div className="max-w-5xl mx-auto px-6 flex items-center gap-4">
+        <div className="max-w-5xl mx-auto px-6 flex flex-wrap items-center gap-4">
           <Trophy size={28} className="text-white/70" />
           <div>
             <p className="text-white/70 text-xs font-bold uppercase tracking-widest">Total Awards</p>
@@ -86,7 +86,7 @@ export default function Awards() {
         </div>
       </div>
 
-      <section className="py-16 bg-gray-50">
+      <section className="py-10 md:py-16 bg-gray-50">
         <div className="max-w-5xl mx-auto px-6 space-y-14">
           {displaySeasons.map((season) => (
             <div key={season.year}>

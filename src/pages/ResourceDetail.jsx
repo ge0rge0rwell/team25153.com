@@ -32,13 +32,13 @@ export default function ResourceDetail() {
         ]}
       />
       
-      <section className="py-20 bg-white">
+      <section className="py-12 md:py-20 bg-white">
         <div className="max-w-6xl mx-auto px-6">
           <Link to="/resources" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-crimson mb-8 transition-colors">
             <ArrowLeft size={16} /> Back to Resources
           </Link>
           
-          <div className="bg-white rounded-2xl p-10 border border-gray-100 shadow-lg text-center">
+          <div className="bg-white rounded-2xl p-5 sm:p-10 border border-gray-100 shadow-lg text-center">
             <div className="w-24 h-24 mx-auto bg-crimson/10 text-crimson rounded-full flex items-center justify-center mb-6">
               <Icon size={48} />
             </div>

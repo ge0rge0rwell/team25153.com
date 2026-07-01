@@ -33,7 +33,7 @@ export default function RobotPage() {
         {/* Crimson accent bar left edge */}
         <div className="absolute left-0 top-0 bottom-0 w-1 bg-crimson" />
 
-        <div className="relative max-w-6xl mx-auto px-6 py-20 flex flex-col lg:flex-row items-center gap-12">
+        <div className="relative max-w-6xl mx-auto px-6 py-12 md:py-20 flex flex-col lg:flex-row items-center gap-6 md:gap-12">
           {/* Left: text */}
           <div className="flex-1 text-white z-10">
             {/* Breadcrumb */}
@@ -47,7 +47,7 @@ export default function RobotPage() {
 
 
             <h1
-              className="text-7xl md:text-8xl font-black uppercase leading-none mb-4 text-white"
+              className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase leading-none mb-4 text-white"
               style={{ fontFamily: 'Rajdhani, Roboto, sans-serif', letterSpacing: '-0.02em' }}
             >
               {robot.name}
@@ -83,7 +83,7 @@ export default function RobotPage() {
           ROBOT BREAKDOWN IMAGE
       ══════════════════════════════════════════ */}
       {robot.breakdownImage && (
-        <section className="py-16 bg-white border-t border-gray-100">
+        <section className="py-10 md:py-16 bg-white border-t border-gray-100">
           <div className="max-w-5xl mx-auto px-6">
             <img
               src={robot.breakdownImage}
@@ -100,7 +100,7 @@ export default function RobotPage() {
           ROBOT OVERVIEW + QUICK FACTS
       ══════════════════════════════════════════ */}
       {(robot.robotOverview || robot.specs || robot.abilities) && (
-        <section className="py-20 bg-gray-50">
+        <section className="py-12 md:py-20 bg-gray-50">
           <div className="max-w-6xl mx-auto px-6">
             <div className="mb-10">
               <p className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-2">The Robot</p>
@@ -168,19 +168,19 @@ export default function RobotPage() {
       {/* ══════════════════════════════════════════
           WHY NAMED + PARTICIPATED — two column
       ══════════════════════════════════════════ */}
-      <section className="py-20 bg-white">
+      <section className="py-12 md:py-20 bg-white">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
             {/* Why card */}
-            <div className="bg-gray-50 rounded-2xl p-8 ring-1 ring-gray-100">
+            <div className="bg-gray-50 rounded-2xl p-5 sm:p-8 ring-1 ring-gray-100">
               <p className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-3">Naming Story</p>
               <h3 className="text-2xl font-bold text-navy mb-4">{robot.whyTitle}</h3>
               <p className="text-gray-600 leading-relaxed">{robot.whyText}</p>
             </div>
 
             {/* Participated In — vertical crimson list */}
-            <div className="bg-gray-50 rounded-2xl p-8 ring-1 ring-gray-100">
+            <div className="bg-gray-50 rounded-2xl p-5 sm:p-8 ring-1 ring-gray-100">
               <p className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-3">
                 <Trophy size={12} className="inline mr-1 mb-0.5" />
                 Events

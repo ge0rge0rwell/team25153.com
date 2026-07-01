@@ -22,7 +22,7 @@ export default function Sponsorship() {
       />
 
       {/* Why Sponsor */}
-      <section className="py-20 bg-white">
+      <section className="py-12 md:py-20 bg-white">
         <div className="max-w-5xl mx-auto px-6 text-center">
           <p className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-2">Partner With Us</p>
           <h2 className="text-3xl font-medium text-navy mb-2">Why Sponsor Cartesian?</h2>
@@ -53,7 +53,7 @@ export default function Sponsorship() {
               return (
               <div
                 key={tier.name}
-                className={`${tier.bg} border-2 ${tier.color} rounded-2xl p-6 flex flex-col ${tier.featured ? 'shadow-xl scale-105' : ''}`}
+                className={`${tier.bg} border-2 ${tier.color} rounded-2xl p-6 flex flex-col ${tier.featured ? 'shadow-xl sm:scale-105' : ''}`}
               >
                 <div className={`${tier.accent} mb-3`}><Icon size={24} /></div>
                 <h4 className="font-bold text-navy text-lg mb-1">{tier.name}</h4>
@@ -110,7 +110,7 @@ export default function Sponsorship() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12">
             {/* Technical Aligned Budget */}
             <div>
               <div className="flex items-center gap-4 mb-6">
@@ -148,14 +148,14 @@ export default function Sponsorship() {
       </section>
 
       {/* Contact CTA */}
-      <section className="py-20 bg-white">
+      <section className="py-12 md:py-20 bg-white">
         <div className="max-w-2xl mx-auto px-6">
           <div className="text-center mb-10">
             <p className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-2">Get In Touch</p>
             <h2 className="text-3xl font-medium text-navy mb-2">Become a Sponsor</h2>
             <div className="w-10 h-0.5 bg-gold mx-auto" />
           </div>
-          <div className="bg-gray-50 rounded-2xl p-8 border border-gray-100 shadow-sm">
+          <div className="bg-gray-50 rounded-2xl p-5 sm:p-8 border border-gray-100 shadow-sm">
             <ContactForm />
           </div>
         </div>

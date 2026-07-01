@@ -4,7 +4,7 @@ import { ChevronRight } from 'lucide-react'
 export default function PageBanner({ title, breadcrumbs = [], bg = null, children }) {
   return (
     <div
-      className="relative bg-navy text-white py-20 overflow-hidden"
+      className="relative bg-navy text-white py-12 md:py-20 overflow-hidden"
       style={bg ? { backgroundImage: `url(${bg})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}
     >
       {/* Overlay */}
@@ -23,7 +23,7 @@ export default function PageBanner({ title, breadcrumbs = [], bg = null, childre
 
       <div className="relative max-w-7xl mx-auto px-6 flex flex-col md:flex-row md:items-center md:justify-between gap-8">
         <div>
-          <h1 className="text-4xl md:text-5xl font-medium text-white mb-4">{title}</h1>
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-medium text-white mb-4">{title}</h1>
 
           {/* Breadcrumbs */}
           {breadcrumbs.length > 0 && (
@@ -45,7 +45,7 @@ export default function PageBanner({ title, breadcrumbs = [], bg = null, childre
 
         {/* Right side children (e.g. banners) */}
         {children && (
-          <div className="flex items-center gap-4 z-10 flex-shrink-0">
+          <div className="flex items-center gap-2 sm:gap-4 z-10 overflow-x-auto max-w-full">
             {children}
           </div>
         )}

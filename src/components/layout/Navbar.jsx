@@ -191,7 +191,7 @@ export default function Navbar() {
             <img
               src="https://team25153.com/wp-content/uploads/2025/11/Cartesian-Font-Vector-scaled-1.png"
               alt="Cartesian Robotics"
-              className="h-10 w-48"
+              className="h-8 sm:h-10 w-auto max-w-[160px] sm:max-w-[192px]"
               fetchPriority="high"
               decoding="async"
               onError={(e) => {

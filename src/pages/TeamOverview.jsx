@@ -10,7 +10,7 @@ export default function TeamOverview() {
         breadcrumbs={[{ label: 'Team', to: '/team' }, { label: 'Team Overview' }]}
       />
 
-      <section className="py-20 bg-white">
+      <section className="py-12 md:py-20 bg-white">
         <div className="max-w-6xl mx-auto px-6">
           {/* Heading */}
           <div className="mb-12">
@@ -35,7 +35,7 @@ export default function TeamOverview() {
             </div>
 
             {/* Text box */}
-            <div className="flex-1 bg-gray-50 rounded-2xl p-8 border-l-4 border-crimson shadow-sm">
+            <div className="flex-1 bg-gray-50 rounded-2xl p-5 sm:p-8 border-l-4 border-crimson shadow-sm">
               <h3 className="text-crimson text-2xl font-semibold mb-5">"I think, therefore I can."</h3>
 
               <p className="text-gray-700 leading-relaxed mb-4">
@@ -65,7 +65,7 @@ export default function TeamOverview() {
       </section>
 
       {/* Values */}
-      <section className="py-16 bg-navy/3 border-t border-gray-100">
+      <section className="py-10 md:py-16 bg-navy/3 border-t border-gray-100">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-12">
             <p className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-2">What Drives Us</p>

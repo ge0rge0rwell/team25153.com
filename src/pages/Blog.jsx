@@ -15,7 +15,7 @@ export default function Blog() {
     <div>
       <PageBanner title="Blog" breadcrumbs={[{ label: 'Blog' }]} />
 
-      <section className="py-20 bg-white">
+      <section className="py-12 md:py-20 bg-white">
         <div className="max-w-6xl mx-auto px-6">
           <div className="mb-12">
             <p className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-2 flex items-center gap-2">

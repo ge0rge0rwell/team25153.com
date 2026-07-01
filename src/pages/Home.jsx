@@ -14,7 +14,7 @@ export default function Home() {
         <div className="absolute top-0 right-0 w-1/2 h-full bg-crimson/3 clip-diagonal pointer-events-none" />
         <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-gold/10 blur-3xl pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
           {/* Left – Text + Robots */}
           <div className="animate-fade-up">
             <p className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-4 flex items-center gap-2">
@@ -58,7 +58,7 @@ export default function Home() {
           </div>
 
           {/* Right – Hero Image */}
-          <div className="flex justify-center lg:justify-end relative lg:-mt-72">
+          <div className="flex justify-center lg:justify-end relative lg:-mt-72 mt-4 lg:mt-0">
             <div className="relative">
               {/* Decorative ring */}
               <div className="absolute -inset-4 rounded-3xl border-2 border-crimson/10 rotate-3" />
@@ -80,7 +80,7 @@ export default function Home() {
       </section>
 
       {/* ── About Strip ───────────────────────────── */}
-      <section className="py-20 bg-white">
+      <section className="py-12 md:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-3">Our Mission</p>
