@@ -1,0 +1,159 @@
+<?php
+
+class __Mustache_82c61a2a8ddc066ad19cad27d2032f49 extends \Mustache\Template
+{
+    private $lambdaHelper;
+    protected $strictCallables = true;
+
+    public function renderInternal(\Mustache\Context $context, $indent = '')
+    {
+        $this->lambdaHelper = new \Mustache\LambdaHelper($this->mustache, $context);
+        $buffer = '';
+
+        $buffer .= $indent . '<a class="btn btn-link p-0 me-2 icon-no-margin" role="button"
+';
+        $buffer .= $indent . '    data-bs-container="body" data-bs-toggle="popover"
+';
+        $buffer .= $indent . '    data-bs-placement="';
+        $value = $context->find('ltr');
+        $buffer .= $this->section6f33152a41341e2c397de871a1796b75($context, $indent, $value);
+        $value = $context->find('ltr');
+        if (empty($value)) {
+            
+            $buffer .= 'left';
+        }
+        $buffer .= '" data-bs-content="';
+        $value = $this->resolveValue($context->find('text'), $context);
+        $buffer .= ($value === null ? '' : call_user_func($this->mustache->getEscape(), $value));
+        $buffer .= ' ';
+        $value = $this->resolveValue($context->find('completedoclink'), $context);
+        $buffer .= ($value === null ? '' : call_user_func($this->mustache->getEscape(), $value));
+        $buffer .= '"
+';
+        $buffer .= $indent . '    data-bs-html="true" tabindex="0" data-bs-trigger="focus" aria-label="';
+        $value = $context->find('str');
+        $buffer .= $this->sectionC729b9f763949c5dccbfae0365cf941f($context, $indent, $value);
+        $buffer .= '">
+';
+        $buffer .= $indent . '  ';
+        $value = $context->find('pix');
+        $buffer .= $this->section0cf85a5f7cf8ea38cb83cc6d8218f1b5($context, $indent, $value);
+        $buffer .= '
+';
+        $buffer .= $indent . '</a>
+';
+
+        return $buffer;
+    }
+
+    private function section6f33152a41341e2c397de871a1796b75(\Mustache\Context $context, $indent, $value)
+    {
+        $buffer = '';
+    
+        if (is_object($value) && is_callable($value)) {
+            $source = 'right';
+            $value = call_user_func($value, $source, $this->lambdaHelper);
+    
+            if ($value instanceof \Mustache\RenderedString) {
+                return $value->getValue();
+            }
+    
+            if (is_string($value)) {
+                if (strpos($value, '{{') === false) {
+                    return $value;
+                }
+    
+                return $this->mustache
+                    ->loadLambda($value)
+                    ->renderInternal($context);
+            }
+        }
+    
+        if (!empty($value)) {
+            $values = $this->isIterable($value) ? $value : [$value];
+            foreach ($values as $value) {
+                $context->push($value);
+                
+                $buffer .= 'right';
+                $context->pop();
+            }
+        }
+    
+        return $buffer;
+    }
+
+    private function sectionC729b9f763949c5dccbfae0365cf941f(\Mustache\Context $context, $indent, $value)
+    {
+        $buffer = '';
+    
+        if (is_object($value) && is_callable($value)) {
+            $source = ' help ';
+            $value = call_user_func($value, $source, $this->lambdaHelper);
+    
+            if ($value instanceof \Mustache\RenderedString) {
+                return $value->getValue();
+            }
+    
+            if (is_string($value)) {
+                if (strpos($value, '{{') === false) {
+                    return $value;
+                }
+    
+                return $this->mustache
+                    ->loadLambda($value)
+                    ->renderInternal($context);
+            }
+        }
+    
+        if (!empty($value)) {
+            $values = $this->isIterable($value) ? $value : [$value];
+            foreach ($values as $value) {
+                $context->push($value);
+                
+                $buffer .= ' help ';
+                $context->pop();
+            }
+        }
+    
+        return $buffer;
+    }
+
+    private function section0cf85a5f7cf8ea38cb83cc6d8218f1b5(\Mustache\Context $context, $indent, $value)
+    {
+        $buffer = '';
+    
+        if (is_object($value) && is_callable($value)) {
+            $source = 'help, core, {{{alt}}}';
+            $value = call_user_func($value, $source, $this->lambdaHelper);
+    
+            if ($value instanceof \Mustache\RenderedString) {
+                return $value->getValue();
+            }
+    
+            if (is_string($value)) {
+                if (strpos($value, '{{') === false) {
+                    return $value;
+                }
+    
+                return $this->mustache
+                    ->loadLambda($value)
+                    ->renderInternal($context);
+            }
+        }
+    
+        if (!empty($value)) {
+            $values = $this->isIterable($value) ? $value : [$value];
+            foreach ($values as $value) {
+                $context->push($value);
+                
+                $buffer .= 'help, core, ';
+                $value = $this->resolveValue($context->find('alt'), $context);
+                $buffer .= ($value === null ? '' : $value);
+                $context->pop();
+            }
+        }
+    
+        return $buffer;
+    }
+
+}
