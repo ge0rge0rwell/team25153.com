@@ -15,10 +15,12 @@ const DescartesChat = () => {
   const [pdfPage, setPdfPage] = useState(1)
   const [activeTab, setActiveTab] = useState('chat')
   const [isTyping, setIsTyping] = useState(false)
-  const messagesEndRef = useRef(null)
+  const messagesContainerRef = useRef(null)
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight
+    }
   }, [messages])
 
   const handleSend = async () => {
@@ -113,7 +115,7 @@ const DescartesChat = () => {
             </div>
 
             <div className={`descartes-chat-pane ${activeTab === 'chat' ? 'active' : ''}`}>
-              <div className="descartes-messages">
+              <div className="descartes-messages" ref={messagesContainerRef}>
                 {messages.filter(m => m.role !== 'system').map((msg, i) => (
                   <div key={i} className={`descartes-message ${msg.role}`}>
                     <div className="descartes-bubble">
@@ -128,7 +130,6 @@ const DescartesChat = () => {
                     </div>
                   </div>
                 )}
-                <div ref={messagesEndRef} />
               </div>
 
               <div className="descartes-input">
