@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import {
   Home, Menu as MenuIcon, Bot, Trophy, BookOpen, FileText, HandCoins,
-  Newspaper, Image, Users, Users2, Settings, LogOut, ExternalLink, X, PanelLeft,
+  Newspaper, Image, Users, Users2, Settings, LogOut, ExternalLink, X, PanelLeft, Upload,
 } from 'lucide-react'
 import { useAuth } from '../AuthContext'
 import { schemas, collectionOrder } from '../schemas'
@@ -61,6 +61,9 @@ export default function Layout({ children }) {
           </NavLink>
           <NavLink to="/cms/applications" className={link} onClick={() => setOpen(false)}>
             <Users2 size={17} /> Applications
+          </NavLink>
+          <NavLink to="/cms/submissions" className={link} onClick={() => setOpen(false)}>
+            <Upload size={17} /> Course Submissions
           </NavLink>
 
           <p className="px-3 pb-1 pt-4 text-[10px] font-bold uppercase tracking-wider text-white/30">Site</p>

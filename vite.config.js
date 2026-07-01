@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/ozi/',
+  base: '/',
   server: {
     // In dev the React app runs on Vite while the content/admin API runs on the
     // Express server (npm run server). Proxy API + uploaded media across so the
@@ -12,6 +12,11 @@ export default defineConfig({
     proxy: {
       '/api': 'http://localhost:4000',
       '/uploads': 'http://localhost:4000',
+      '/moodle-api': {
+        target: 'http://localhost:8081',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/moodle-api/, ''),
+      },
     },
   },
   build: {

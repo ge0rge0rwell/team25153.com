@@ -35,7 +35,7 @@
     },
     { "label": "Blog", "to": "/blog" },
     { "label": "Sponsorship", "to": "/sponsorship" },
-    { "label": "Learn", "to": "https://lms.team25153.com", "newTab": true },
+    { "label": "Learn", "to": "/lms" },
     { "label": "Contact Us", "to": "/contact" }
   ],
   "footerLinks": [
@@ -46,7 +46,7 @@
     { "label": "Blog", "to": "/blog" },
     { "label": "Sponsorship", "to": "/sponsorship" },
     { "label": "Join Us", "to": "/join" },
-    { "label": "Learn", "to": "https://lms.team25153.com", "newTab": true },
+    { "label": "Learn", "to": "/lms" },
     { "label": "Contact Us", "to": "/contact" }
   ]
 }

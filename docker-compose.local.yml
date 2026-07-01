@@ -1,0 +1,42 @@
+services:
+  nginx:
+    profiles: ["prod"]
+
+  certbot:
+    profiles: ["prod"]
+
+  app:
+    ports:
+      - "4000:4000"
+
+  moodle:
+    image: elestio/moodle:latest
+    ports:
+      - "8081:80"
+    environment:
+      MOODLE_DATABASE_HOST: mariadb
+      MOODLE_DATABASE_PORT_NUMBER: 3306
+      MOODLE_DATABASE_NAME: moodle
+      MOODLE_DATABASE_USER: moodle
+      MOODLE_DATABASE_PASSWORD: moodlepass
+      MOODLE_USERNAME: iatakan
+      MOODLE_PASSWORD: "123456"
+      MOODLE_EMAIL: admin@cartesian.local
+      MOODLE_SITE_NAME: "Cartesian Robotics LMS"
+      MOODLE_HOST: "http://localhost:8081"
+      PHP_MEMORY_LIMIT: 256M
+      PHP_MAX_EXECUTION_TIME: 300
+    volumes:
+      - ./docker/moodle-data:/var/www/html/public
+      - ./docker/moodledata:/var/moodledata
+      - ./scripts/moodle/config.php:/var/www/html/config.php:ro
+
+  mariadb:
+    environment:
+      MARIADB_ROOT_PASSWORD: rootpassword
+      MARIADB_DATABASE: moodle
+      MARIADB_USER: moodle
+      MARIADB_PASSWORD: moodlepass
+    volumes:
+      - mariadb-data:/var/lib/mysql
+      - ./docker/mariadb-init:/docker-entrypoint-initdb.d:ro

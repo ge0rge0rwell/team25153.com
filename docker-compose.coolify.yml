@@ -1,0 +1,90 @@
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    environment:
+      PORT: 4000
+      DATA_DIR: /data
+      MOODLE_URL: http://moodle:8080
+    volumes:
+      - app-data:/data
+    depends_on:
+      - moodle
+    networks:
+      - coolify
+      - internal
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.team25153-app.rule=Host(`team25153.com`) || Host(`www.team25153.com`)"
+      - "traefik.http.routers.team25153-app.entrypoints=https"
+      - "traefik.http.routers.team25153-app.tls=true"
+      - "traefik.http.routers.team25153-app.tls.certresolver=letsencrypt"
+      - "traefik.http.services.team25153-app.loadbalancer.server.port=4000"
+      - "traefik.docker.network=coolify"
+
+  moodle:
+    image: bitnami/moodle:4
+    restart: unless-stopped
+    environment:
+      MOODLE_DATABASE_HOST: mariadb
+      MOODLE_DATABASE_PORT_NUMBER: 3306
+      MOODLE_DATABASE_NAME: moodle
+      MOODLE_DATABASE_USER: moodle
+      MOODLE_DATABASE_PASSWORD: moodlepass
+      MOODLE_USERNAME: iatakan
+      MOODLE_PASSWORD: "123456"
+      MOODLE_EMAIL: admin@cartesian.local
+      MOODLE_SITE_NAME: "Cartesian Robotics LMS"
+      MOODLE_HOST: lms.team25153.com
+      MOODLE_REVERSEPROXY: "yes"
+      MOODLE_SSLPROXY: "yes"
+      PHP_MEMORY_LIMIT: 256M
+      PHP_MAX_EXECUTION_TIME: 300
+    volumes:
+      - moodle-data:/bitnami/moodle
+      - moodledata-data:/bitnami/moodledata
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    networks:
+      - coolify
+      - internal
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.team25153-lms.rule=Host(`lms.team25153.com`)"
+      - "traefik.http.routers.team25153-lms.entrypoints=https"
+      - "traefik.http.routers.team25153-lms.tls=true"
+      - "traefik.http.routers.team25153-lms.tls.certresolver=letsencrypt"
+      - "traefik.http.services.team25153-lms.loadbalancer.server.port=8080"
+      - "traefik.docker.network=coolify"
+
+  mariadb:
+    image: mariadb:10.11
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: rootpassword
+      MARIADB_DATABASE: moodle
+      MARIADB_USER: moodle
+      MARIADB_PASSWORD: moodlepass
+    volumes:
+      - mariadb-data:/var/lib/mysql
+    networks:
+      - internal
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+networks:
+  coolify:
+    external: true
+  internal:
+    internal: true
+
+volumes:
+  app-data:
+  moodle-data:
+  moodledata-data:
+  mariadb-data:

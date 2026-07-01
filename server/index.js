@@ -189,6 +189,63 @@ api.post('/media', requireAuth, upload.single('file'), (req, res) => {
   res.json({ name: req.file.filename, url: `/uploads/${req.file.filename}` })
 })
 
+// ── Course submissions ─────────────────────────────────────────────────────
+const SUBMISSIONS_DIR = path.join(DATA_DIR, 'course-submissions')
+const SUBMISSIONS_FILE = path.join(DATA_DIR, 'course-submissions.json')
+
+if (!fs.existsSync(SUBMISSIONS_DIR)) fs.mkdirSync(SUBMISSIONS_DIR, { recursive: true })
+
+const submissionStorage = multer.diskStorage({
+  destination: (_req, _file, cb) => cb(null, SUBMISSIONS_DIR),
+  filename: (_req, file, cb) => {
+    const ext = path.extname(file.originalname).toLowerCase()
+    const base = path.basename(file.originalname, ext).toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 40)
+    cb(null, `${base}-${crypto.randomBytes(6).toString('hex')}${ext}`)
+  },
+})
+const submissionUpload = multer({ storage: submissionStorage, limits: { fileSize: 20 * 1024 * 1024 } })
+
+function readSubmissions() {
+  try { return JSON.parse(fs.readFileSync(SUBMISSIONS_FILE, 'utf8')) } catch { return [] }
+}
+
+api.post('/course-submissions', submissionUpload.single('file'), async (req, res, next) => {
+  try {
+    const { name, email, message, courseId, courseName } = req.body || {}
+    if (!name?.trim() || !email?.trim() || !courseId) {
+      return res.status(400).json({ error: 'Name, email, and course are required.' })
+    }
+    const entry = {
+      id: crypto.randomBytes(8).toString('hex'),
+      name: name.trim(),
+      email: email.trim().toLowerCase(),
+      message: (message || '').trim(),
+      courseId,
+      courseName: (courseName || '').trim(),
+      file: req.file ? { name: req.file.originalname, stored: req.file.filename, size: req.file.size } : null,
+      submittedAt: new Date().toISOString(),
+    }
+    const all = readSubmissions()
+    all.push(entry)
+    await fsp.writeFile(SUBMISSIONS_FILE, JSON.stringify(all, null, 2) + '\n', 'utf8')
+    res.status(201).json({ ok: true })
+  } catch (e) { next(e) }
+})
+
+api.get('/course-submissions', requireAuth, (_req, res) => res.json(readSubmissions()))
+
+app.get('/course-files/:filename', (req, res, next) => {
+  // Accept token from Authorization header OR ?token= query param (for direct download links)
+  const header = req.headers.authorization
+  if (!header && req.query.token) {
+    req.headers.authorization = `Bearer ${req.query.token}`
+  }
+  next()
+}, requireAuth, (req, res) => {
+  const filename = path.basename(req.params.filename)
+  res.sendFile(path.join(SUBMISSIONS_DIR, filename))
+})
+
 // ── Membership applications ────────────────────────────────────────────────
 const APPLICATIONS_FILE = path.join(DATA_DIR, 'applications.json')
 
@@ -240,13 +297,58 @@ api.use((err, _req, res, _next) => {
 app.use('/api', api)
 app.use('/uploads', express.static(MEDIA_DIR))
 
+// ── Moodle LMS helpers ────────────────────────────────────────────────────────
+const MOODLE_ORIGIN = process.env.MOODLE_URL || 'http://localhost:8081'
+const MOODLE_ADMIN_TOKEN = process.env.MOODLE_ADMIN_TOKEN || '0e48191b69d234498919719ecc9a362b'
+
+app.post('/api/lms/change-password', express.json(), async (req, res) => {
+  const { userToken, newPassword } = req.body || {}
+  if (!userToken || !newPassword) return res.status(400).json({ error: 'Missing fields' })
+  try {
+    // Verify user token is valid and get user id
+    const infoRes = await fetch(`${MOODLE_ORIGIN}/webservice/rest/server.php?wstoken=${userToken}&wsfunction=core_webservice_get_siteinfo&moodlewsrestformat=json`)
+    const info = await infoRes.json()
+    if (info?.exception) return res.status(401).json({ error: 'Invalid session' })
+
+    // Update password via admin token
+    const body = new URLSearchParams({
+      wstoken: MOODLE_ADMIN_TOKEN,
+      wsfunction: 'core_user_update_users',
+      moodlewsrestformat: 'json',
+      'users[0][id]': info.userid,
+      'users[0][password]': newPassword,
+    })
+    const updRes = await fetch(`${MOODLE_ORIGIN}/webservice/rest/server.php`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/x-www-form-urlencoded' },
+      body: body.toString(),
+    })
+    const result = await updRes.json()
+    if (result?.exception) return res.status(400).json({ error: result.message })
+    res.json({ ok: true, username: info.username })
+  } catch (e) {
+    res.status(500).json({ error: e.message })
+  }
+})
+
+// ── Moodle API proxy (avoids CORS) ───────────────────────────────────────────
+app.use('/moodle-api', async (req, res, next) => {
+  try {
+    const qs = new URLSearchParams(req.query).toString()
+    const target = `${MOODLE_ORIGIN}${req.path}${qs ? `?${qs}` : ''}`
+    const upstream = await fetch(target)
+    const body = await upstream.text()
+    res.status(upstream.status).set('content-type', upstream.headers.get('content-type') || 'application/json').send(body)
+  } catch (e) {
+    next(e)
+  }
+})
+
 // ── Static site + SPA fallback ───────────────────────────────────────────────
 if (fs.existsSync(DIST)) {
-  app.use('/ozi', express.static(DIST))
-  // Redirect bare root to the app
-  app.get('/', (_req, res) => res.redirect('/ozi/'))
-  // SPA fallback: any /ozi/* path that isn't an asset serves index.html
-  app.get(/^\/ozi(\/.*)?$/, (_req, res) => {
+  app.use(express.static(DIST))
+  // SPA fallback
+  app.use((_req, res) => {
     res.sendFile(path.join(DIST, 'index.html'))
   })
 } else {
