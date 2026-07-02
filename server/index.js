@@ -374,11 +374,16 @@ app.post('/api/lms/register', express.json(), async (req, res) => {
 })
 
 // ── Moodle API proxy (avoids CORS) ───────────────────────────────────────────
-app.use('/moodle-api', async (req, res, next) => {
+app.use('/moodle-api', express.urlencoded({ extended: false }), async (req, res, next) => {
   try {
     const qs = new URLSearchParams(req.query).toString()
     const target = `${MOODLE_ORIGIN}${req.path}${qs ? `?${qs}` : ''}`
-    const upstream = await fetch(target)
+    const init = { method: req.method }
+    if (req.method !== 'GET' && req.method !== 'HEAD') {
+      init.headers = { 'content-type': 'application/x-www-form-urlencoded' }
+      init.body = new URLSearchParams(req.body || {}).toString()
+    }
+    const upstream = await fetch(target, init)
     const body = await upstream.text()
     res.status(upstream.status).set('content-type', upstream.headers.get('content-type') || 'application/json').send(body)
   } catch (e) {
