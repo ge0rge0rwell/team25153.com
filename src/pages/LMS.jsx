@@ -19,16 +19,46 @@ async function moodleGet(wsfunction, params = {}, token = ADMIN_TOKEN) {
 }
 
 async function moodleLogin(username, password) {
-  const qs = new URLSearchParams({ username, password, service: 'moodle_mobile_app' })
-  const res = await fetch(`/moodle-api/login/token.php?${qs}`)
+  // POST so credentials never appear in URLs or access logs
+  const res = await fetch('/moodle-api/login/token.php', {
+    method: 'POST',
+    headers: { 'content-type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({ username, password, service: 'moodle_mobile_app' }).toString(),
+  })
   const data = await res.json()
-  if (data.error) throw new Error(data.error)
+  if (data.error) throw new Error(data.errorcode === 'invalidlogin' ? 'invalidlogin' : data.error)
   return data.token
 }
 
 function stripHtml(html) {
   if (!html) return ''
   return html.replace(/<[^>]*>/g, '').replace(/&[a-z]+;/g, ' ').trim()
+}
+
+// Moodle label editor often emits <video><source src="https://youtu.be/ID"></video>,
+// which no browser can actually play — swap those for real YouTube iframes.
+function embedYoutube(html) {
+  if (!html) return html
+  const idFrom = (s) => {
+    const m = s.match(/(?:youtu\.be\/|youtube\.com\/watch\?v=)([\w-]{11})/)
+    return m ? m[1] : null
+  }
+  let out = html.replace(/<video[^>]*>([\s\S]*?)<\/video>/gi, (match, inner) => {
+    const id = idFrom(inner)
+    if (!id) return match
+    return `<div style="position:relative;padding-top:56.25%;margin:12px 0;border-radius:12px;overflow:hidden">` +
+      `<iframe style="position:absolute;inset:0;width:100%;height:100%;border:0" src="https://www.youtube.com/embed/${id}" ` +
+      `title="YouTube video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`
+  })
+  // Bare youtube links not already wrapped in an iframe/anchor we just built
+  out = out.replace(/<a [^>]*href="(https?:\/\/(?:www\.)?(?:youtu\.be|youtube\.com)\/[^"]+)"[^>]*>[\s\S]*?<\/a>/gi, (match, href) => {
+    const id = idFrom(href)
+    if (!id) return match
+    return `<div style="position:relative;padding-top:56.25%;margin:12px 0;border-radius:12px;overflow:hidden">` +
+      `<iframe style="position:absolute;inset:0;width:100%;height:100%;border:0" src="https://www.youtube.com/embed/${id}" ` +
+      `title="YouTube video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`
+  })
+  return out
 }
 
 // ── Session helpers ───────────────────────────────────────────────────────────
@@ -480,7 +510,7 @@ function CourseViewer({ course, session, onBack }) {
                     {section.modules?.filter(m => m.modname === 'label').map(mod => (
                       mod.description ? (
                         <div key={mod.id} className="px-5 py-3 text-sm text-gray-500 bg-gray-50/50"
-                          dangerouslySetInnerHTML={{ __html: mod.description }} />
+                          dangerouslySetInnerHTML={{ __html: embedYoutube(mod.description) }} />
                       ) : null
                     ))}
 
