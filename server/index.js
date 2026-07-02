@@ -299,14 +299,14 @@ app.use('/uploads', express.static(MEDIA_DIR))
 
 // ── Moodle LMS helpers ────────────────────────────────────────────────────────
 const MOODLE_ORIGIN = process.env.MOODLE_URL || 'http://localhost:8081'
-const MOODLE_ADMIN_TOKEN = process.env.MOODLE_ADMIN_TOKEN || '0e48191b69d234498919719ecc9a362b'
+const MOODLE_ADMIN_TOKEN = process.env.MOODLE_ADMIN_TOKEN || ''
 
 app.post('/api/lms/change-password', express.json(), async (req, res) => {
   const { userToken, newPassword } = req.body || {}
   if (!userToken || !newPassword) return res.status(400).json({ error: 'Missing fields' })
   try {
     // Verify user token is valid and get user id
-    const infoRes = await fetch(`${MOODLE_ORIGIN}/webservice/rest/server.php?wstoken=${userToken}&wsfunction=core_webservice_get_siteinfo&moodlewsrestformat=json`)
+    const infoRes = await fetch(`${MOODLE_ORIGIN}/webservice/rest/server.php?wstoken=${userToken}&wsfunction=core_webservice_get_site_info&moodlewsrestformat=json`)
     const info = await infoRes.json()
     if (info?.exception) return res.status(401).json({ error: 'Invalid session' })
 
@@ -328,6 +328,48 @@ app.post('/api/lms/change-password', express.json(), async (req, res) => {
     res.json({ ok: true, username: info.username })
   } catch (e) {
     res.status(500).json({ error: e.message })
+  }
+})
+
+app.post('/api/lms/register', express.json(), async (req, res) => {
+  const { username, password, firstname, lastname, email } = req.body || {}
+  if (!username || !password || !firstname || !lastname || !email) {
+    return res.status(400).json({ error: 'Missing fields' })
+  }
+  if (!MOODLE_ADMIN_TOKEN) return res.status(503).json({ error: 'Registration service is not configured (MOODLE_ADMIN_TOKEN missing)' })
+  const wsCall = async (wsfunction, params) => {
+    const body = new URLSearchParams({ wstoken: MOODLE_ADMIN_TOKEN, wsfunction, moodlewsrestformat: 'json', ...params })
+    const r = await fetch(`${MOODLE_ORIGIN}/webservice/rest/server.php`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/x-www-form-urlencoded' },
+      body: body.toString(),
+    })
+    const data = await r.json()
+    if (data?.exception) throw new Error(data.message || wsfunction + ' failed')
+    return data
+  }
+  try {
+    const created = await wsCall('core_user_create_users', {
+      'users[0][username]': username,
+      'users[0][password]': password,
+      'users[0][firstname]': firstname,
+      'users[0][lastname]': lastname,
+      'users[0][email]': email,
+    })
+    const userId = created[0].id
+
+    const courses = await wsCall('core_course_get_courses_by_field', { field: 'shortname', value: 'FTC101' })
+    const course = courses.courses?.[0]
+    if (course) {
+      await wsCall('enrol_manual_enrol_users', {
+        'enrolments[0][roleid]': 5, // student
+        'enrolments[0][userid]': userId,
+        'enrolments[0][courseid]': course.id,
+      })
+    }
+    res.json({ ok: true, username })
+  } catch (e) {
+    res.status(400).json({ error: e.message })
   }
 })
 

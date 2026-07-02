@@ -64,21 +64,38 @@ const ACCENT = [
 
 // ── Login Screen ──────────────────────────────────────────────────────────────
 function LoginScreen({ onLogin }) {
+  const [mode, setMode] = useState('login') // 'login' | 'register'
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [firstname, setFirstname] = useState('')
+  const [lastname, setLastname] = useState('')
+  const [email, setEmail] = useState('')
   const [show, setShow] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+
+  const loginWith = async (u, p) => {
+    const token = await moodleLogin(u.trim(), p)
+    const info = await moodleGet('core_webservice_get_site_info', {}, token)
+    const session = { token, username: info.username, fullname: info.fullname, userId: info.userid }
+    saveSession(session)
+    onLogin(session)
+  }
 
   const submit = async (e) => {
     e.preventDefault()
     setLoading(true); setError('')
     try {
-      const token = await moodleLogin(username.trim(), password)
-      const info = await moodleGet('core_webservice_get_siteinfo', {}, token)
-      const session = { token, username: info.username, fullname: info.fullname, userId: info.userid }
-      saveSession(session)
-      onLogin(session)
+      if (mode === 'register') {
+        const res = await fetch('/api/lms/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: username.trim(), password, firstname, lastname, email }),
+        })
+        const data = await res.json()
+        if (!res.ok) throw new Error(data.error || 'Kayıt başarısız.')
+      }
+      await loginWith(username, password)
     } catch (err) {
       setError(err.message === 'invalidlogin' ? 'Kullanıcı adı veya şifre hatalı.' : err.message)
     } finally {
@@ -95,12 +112,43 @@ function LoginScreen({ onLogin }) {
             <GraduationCap size={28} className="text-gold" />
           </div>
           <h1 className="text-2xl font-bold text-navy">Öğrenme Merkezi</h1>
-          <p className="text-gray-500 text-sm mt-1">Devam etmek için giriş yapın</p>
+          <p className="text-gray-500 text-sm mt-1">
+            {mode === 'login' ? 'Devam etmek için giriş yapın' : 'Yeni hesap oluşturun'}
+          </p>
         </div>
 
         {/* Card */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
           <form onSubmit={submit} className="space-y-5">
+            {mode === 'register' && (
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">Ad</label>
+                  <input
+                    type="text" required value={firstname} onChange={e => setFirstname(e.target.value)}
+                    className="w-full h-11 px-4 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">Soyad</label>
+                  <input
+                    type="text" required value={lastname} onChange={e => setLastname(e.target.value)}
+                    className="w-full h-11 px-4 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition"
+                  />
+                </div>
+              </div>
+            )}
+
+            {mode === 'register' && (
+              <div>
+                <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">E-posta</label>
+                <input
+                  type="email" required value={email} onChange={e => setEmail(e.target.value)}
+                  className="w-full h-11 px-4 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition"
+                />
+              </div>
+            )}
+
             <div>
               <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">
                 Kullanıcı Adı
@@ -152,13 +200,23 @@ function LoginScreen({ onLogin }) {
               disabled={loading}
               className="w-full h-11 bg-navy text-white font-semibold rounded-xl hover:bg-navy-light transition disabled:opacity-60 flex items-center justify-center gap-2"
             >
-              {loading ? <><Loader2 size={16} className="animate-spin" /> Giriş yapılıyor…</> : 'Giriş Yap'}
+              {loading
+                ? <><Loader2 size={16} className="animate-spin" /> {mode === 'login' ? 'Giriş yapılıyor…' : 'Kayıt oluyor…'}</>
+                : (mode === 'login' ? 'Giriş Yap' : 'Kayıt Ol')}
             </button>
           </form>
         </div>
 
         <p className="text-center text-xs text-gray-400 mt-6">
-          Hesabınız yoksa yöneticinizle iletişime geçin.
+          {mode === 'login' ? (
+            <>Hesabın yok mu?{' '}
+              <button type="button" onClick={() => { setMode('register'); setError('') }} className="text-crimson font-medium hover:underline">Kayıt ol</button>
+            </>
+          ) : (
+            <>Zaten hesabın var mı?{' '}
+              <button type="button" onClick={() => { setMode('login'); setError('') }} className="text-crimson font-medium hover:underline">Giriş yap</button>
+            </>
+          )}
         </p>
       </div>
     </div>
