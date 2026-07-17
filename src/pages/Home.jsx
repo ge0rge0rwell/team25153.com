@@ -63,7 +63,7 @@ export default function Home() {
               {/* Decorative ring */}
               <div className="absolute -inset-4 rounded-3xl border-2 border-crimson/10 rotate-3" />
               <img
-                src="https://team25153.com/wp-content/uploads/2025/12/I-9.png"
+                src="/media/hero-descartes.png"
                 alt="Cartesian Robotics Hero"
                 className="relative w-full max-w-sm lg:max-w-md rounded-2xl object-cover shadow-2xl"
                 fetchPriority="high"
