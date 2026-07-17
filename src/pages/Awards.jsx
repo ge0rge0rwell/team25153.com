@@ -26,11 +26,10 @@ export default function Awards() {
 
   const total = displaySeasons.reduce((sum, s) => sum + s.awards.length, 0)
   
-  const pageTitle = "Our Awards"
+  const pageTitle = "Team & Awards"
 
   const breadcrumbs = [
-    { label: 'Team', to: '/team' }, 
-    { label: 'Our Awards' }
+    { label: 'Team & Awards' }
   ]
 
   return (
@@ -63,6 +62,19 @@ export default function Awards() {
           />
         </div>
       </PageBanner>
+
+      {/* Team overview */}
+      <section className="py-10 md:py-14 bg-white border-b border-gray-100">
+        <div className="max-w-5xl mx-auto px-6">
+          <p className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-2 flex items-center gap-2">
+            <span className="w-6 h-px bg-crimson" /> About Us
+          </p>
+          <h2 className="text-2xl font-medium text-navy mb-4">Team Overview</h2>
+          <p className="text-gray-700 leading-relaxed max-w-3xl">
+            <strong>Cartesian Robotics #25153</strong> is a student-led team of over 25 students, guided by our motto <em>"I think, therefore I can."</em> We aim to develop middle school students' skills in engineering, creativity, strategy, and teamwork while spreading STEM culture within our community — and we measure our success by the people we impact.
+          </p>
+        </div>
+      </section>
 
       {/* Total count strip */}
       <div className="bg-crimson text-white py-6">

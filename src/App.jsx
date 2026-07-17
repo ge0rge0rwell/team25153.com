@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useState } from 'react'
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import Navbar from './components/layout/Navbar'
 import Footer from './components/layout/Footer'
 import Home from './pages/Home'
@@ -10,7 +10,6 @@ import Home from './pages/Home'
 // shared between lazy() and the idle prefetcher (see prefetchRoutes) so a chunk
 // is fetched at most once.
 const routeImports = [
-  () => import('./pages/TeamOverview'),
   () => import('./pages/RobotPage'),
   () => import('./pages/Awards'),
   () => import('./pages/Blog'),
@@ -24,7 +23,6 @@ const routeImports = [
   () => import('./pages/LMS'),
 ]
 const [
-  importTeamOverview,
   importRobotPage,
   importAwards,
   importBlog,
@@ -38,7 +36,6 @@ const [
   importLMS,
 ] = routeImports
 
-const TeamOverview = lazy(importTeamOverview)
 const RobotPage = lazy(importRobotPage)
 const Awards = lazy(importAwards)
 const Blog = lazy(importBlog)
@@ -166,7 +163,7 @@ function PublicSite() {
               <Route path="/" element={<Home />} />
 
               {/* Team */}
-              <Route path="/team" element={<TeamOverview />} />
+              <Route path="/team" element={<Navigate to="/awards" replace />} />
               <Route path="/robots/:slug" element={<RobotPage />} />
               <Route path="/awards" element={<Awards />} />
 
