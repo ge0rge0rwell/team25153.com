@@ -29,7 +29,7 @@ function DropdownItem({ item, depth = 0 }) {
               initial={{ opacity: 0, x: -8 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -8 }}
-              transition={{ duration: 0.18 }}
+              transition={{ type: 'spring', stiffness: 380, damping: 30 }}
               className="absolute left-full top-0 min-w-[200px] bg-navy shadow-2xl py-2 z-50 border-t-2 border-gold"
             >
               {item.children.map((child) => (
@@ -79,7 +79,7 @@ function TopNavItem({ item }) {
               initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.18 }}
+              transition={{ type: 'spring', stiffness: 380, damping: 30 }}
               className="absolute top-full left-0 min-w-[200px] bg-navy shadow-2xl py-2 z-50 border-t-2 border-gold"
             >
               {item.children.map((child) => (
@@ -275,7 +275,7 @@ export default function Navbar() {
               className="absolute top-0 right-0 bottom-0 w-72 bg-navy overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
               variants={{ hidden: { x: '100%' }, show: { x: 0 } }}
-              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ type: 'spring', stiffness: 320, damping: 32 }}
             >
               <div className="flex items-center justify-between px-6 py-4 border-b border-navy-mid/50">
                 <span className="text-white font-bold uppercase tracking-wider text-sm">Menu</span>

@@ -1,7 +1,7 @@
 import PageBanner from '../components/ui/PageBanner'
-import { Trophy, Eye, X } from 'lucide-react'
+import { Trophy } from 'lucide-react'
 import { useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { DialogContent, DialogTitle } from '../components/ui/dialog'
 import Reveal from '../components/motion/Reveal'
 import { StaggerGroup, StaggerItem } from '../components/motion/Stagger'
 import { useCollection } from '../context/ContentContext'
@@ -180,45 +180,23 @@ export default function Awards() {
         </div>
       </section>
 
-      {/* Lightbox Modal */}
-      <AnimatePresence>
+      {/* Lightbox Modal — shadcn Dialog primitive (Radix a11y) + framer-motion visuals */}
+      <DialogContent open={!!lightboxImage} onOpenChange={(o) => !o && setLightboxImage(null)}>
         {lightboxImage && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-4 cursor-pointer"
-            onClick={() => setLightboxImage(null)}
-          >
-            <button
-              onClick={() => setLightboxImage(null)}
-              className="absolute top-6 right-6 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 p-2.5 rounded-full transition-all duration-200 cursor-pointer z-50"
-            >
-              <X size={24} />
-            </button>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-              className="relative max-w-4xl w-full flex flex-col items-center justify-center cursor-default"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <img
-                src={lightboxImage.src}
-                alt={lightboxImage.title}
-                decoding="async"
-                className="max-h-[85vh] max-w-full object-contain rounded-xl shadow-2xl"
-              />
-              <div className="mt-4 text-center">
-                <p className="text-crimson text-xs font-black uppercase tracking-widest mb-1">Physical Award Photo</p>
-                <h3 className="text-white font-black text-xl">{lightboxImage.title}</h3>
-              </div>
-            </motion.div>
-          </motion.div>
+          <>
+            <img
+              src={lightboxImage.src}
+              alt={lightboxImage.title}
+              decoding="async"
+              className="max-h-[85vh] max-w-full object-contain rounded-xl shadow-2xl"
+            />
+            <div className="mt-4 text-center">
+              <p className="text-crimson text-xs font-black uppercase tracking-widest mb-1">Physical Award Photo</p>
+              <DialogTitle className="text-white font-black text-xl">{lightboxImage.title}</DialogTitle>
+            </div>
+          </>
         )}
-      </AnimatePresence>
+      </DialogContent>
     </div>
   )
 }

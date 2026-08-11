@@ -36,7 +36,7 @@ export default function Blog() {
                 <MotionLink
                   to={`/blog/${post.slug}`}
                   whileHover={{ y: -6 }}
-                  transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ type: 'spring', stiffness: 350, damping: 24 }}
                   className="card flex flex-col border border-gray-100 group cursor-pointer"
                 >
                   <div className="h-48 overflow-hidden bg-gray-50 flex items-center justify-center">

@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
-import { AnimatePresence, motion, MotionConfig } from 'framer-motion'
+import { AnimatePresence, motion, MotionConfig, LayoutGroup } from 'framer-motion'
 import Navbar from './components/layout/Navbar'
 import Footer from './components/layout/Footer'
 import Home from './pages/Home'
@@ -160,11 +160,16 @@ function PublicSite() {
   return (
     <>
       <ScrollToTop />
+      <LayoutGroup>
       <div className="flex flex-col min-h-screen font-roboto">
         <Navbar />
         <main className="flex-1">
           <Suspense fallback={<RouteFallback />}>
-            <AnimatePresence mode="wait" initial={false}>
+            {/* No mode="wait": entering/exiting pages briefly overlap, which is
+                what lets the robot-image layoutId morph between the roster
+                thumbnail (Home) and the hero image (RobotPage) instead of a
+                flat cut. */}
+            <AnimatePresence initial={false}>
               <motion.div key={location.pathname} {...pageTransition}>
                 <Routes location={location}>
                   <Route path="/" element={<Home />} />
@@ -205,6 +210,7 @@ function PublicSite() {
           </Suspense>
         </DeferredMount>
       </div>
+      </LayoutGroup>
     </>
   )
 }

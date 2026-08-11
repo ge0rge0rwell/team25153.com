@@ -1,5 +1,6 @@
 import { useParams, Link } from 'react-router-dom'
 import { Trophy, ChevronRight } from 'lucide-react'
+import { motion } from 'framer-motion'
 import Reveal from '../components/motion/Reveal'
 import { StaggerGroup, StaggerItem } from '../components/motion/Stagger'
 import { useCollection } from '../context/ContentContext'
@@ -68,16 +69,20 @@ export default function RobotPage() {
 
           </StaggerGroup>
 
-          {/* Right: robot image — clean, no glow ring */}
-          <Reveal direction="left" delay={0.25} className="flex-1 flex justify-center lg:justify-end z-10">
-            <img
+          {/* Right: robot image — shared layoutId morphs in from the roster thumbnail */}
+          <div className="flex-1 flex justify-center lg:justify-end z-10">
+            <motion.img
+              layoutId={`robot-image-${robot.slug}`}
               src={robot.image}
               alt={robot.name}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ opacity: { duration: 0.4, delay: 0.15 }, layout: { type: 'spring', stiffness: 220, damping: 26 } }}
               className="w-64 h-64 lg:w-80 lg:h-80 object-contain drop-shadow-2xl"
               decoding="async"
               style={{ mixBlendMode: robot.heroBgBlend }}
             />
-          </Reveal>
+          </div>
         </div>
       </section>
 

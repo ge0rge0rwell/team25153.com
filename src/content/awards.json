@@ -30,7 +30,7 @@
       "year": "2023",
       "game": "CENTERSTAGE",
       "slug": "centerstage",
-      "robot": "X & Y",
+      "robot": "X",
       "awards": [
         { "title": "Think Award 3rd Place", "event": "Greece National Championship", "tier": "international" },
         { "title": "Finalist Alliance", "event": "Istanbul Off-Season I", "tier": "offseason" },

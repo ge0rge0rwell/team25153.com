@@ -6,7 +6,7 @@
       "children": [
         { "label": "Decode – Cerberon", "to": "/robots/cerberon" },
         { "label": "Into the Deep – HILDA", "to": "/robots/hilda" },
-        { "label": "Centerstage – X & Y", "to": "/robots/centerstage" }
+        { "label": "Centerstage – X", "to": "/robots/centerstage" }
       ]
     },
     {

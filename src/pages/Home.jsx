@@ -1,68 +1,113 @@
+import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, ChevronRight } from 'lucide-react'
-import { motion } from 'framer-motion'
+import { ArrowRight } from 'lucide-react'
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
 import RobotCard from '../components/ui/RobotCard'
 import LogoCarousel from '../components/ui/LogoCarousel'
 import Reveal from '../components/motion/Reveal'
 import { StaggerGroup, StaggerItem } from '../components/motion/Stagger'
+import { TypewriterText, TypewriterCycle } from '../components/motion/Typewriter'
+import ScrollVelocitySkew from '../components/motion/ScrollVelocitySkew'
 import { useCollection } from '../context/ContentContext'
 
 export default function Home() {
-  const { robots } = useCollection('home')
+  const { robots, stats } = useCollection('home')
+  const [firstWordDone, setFirstWordDone] = useState(false)
+  const reducedMotion = useReducedMotion()
+
+  const heroRef = useRef(null)
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] })
+
+  // Layered "3D planes" parallax — each element moves at its own rate as the
+  // hero scrolls past, so the composition has real depth instead of a flat
+  // scroll. Back plane (diagonal wash) drifts slowest, mid plane (blur
+  // circle) drifts + rotates, front plane (hero image) zooms + lifts.
+  const backPlaneY = useTransform(scrollYProgress, [0, 1], reducedMotion ? [0, 0] : [0, 70])
+  const midPlaneY = useTransform(scrollYProgress, [0, 1], reducedMotion ? [0, 0] : [0, -110])
+  const midPlaneRotate = useTransform(scrollYProgress, [0, 1], reducedMotion ? [0, 0] : [0, 25])
+  const heroImageY = useTransform(scrollYProgress, [0, 1], reducedMotion ? [0, 0] : [0, -60])
+  const heroImageScale = useTransform(scrollYProgress, [0, 1], reducedMotion ? [1, 1] : [1, 1.12])
+  const heroImageRotateX = useTransform(scrollYProgress, [0, 1], reducedMotion ? [0, 0] : [0, 10])
+
+  const statPhrases = (stats || []).map((s) => `${s.number} ${s.label}`)
+
   return (
     <div>
       {/* ── Hero ─────────────────────────────────── */}
-      <section className="min-h-[88vh] flex items-center bg-gradient-to-br from-[#fdf8f7] to-white relative overflow-hidden">
-        {/* Background decoration */}
-        <div className="absolute top-0 right-0 w-1/2 h-full bg-crimson/3 clip-diagonal pointer-events-none" />
-        <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-gold/10 blur-3xl pointer-events-none" />
+      <section ref={heroRef} className="min-h-[88vh] flex items-center bg-gradient-to-br from-[#fdf8f7] to-white relative overflow-hidden">
+        {/* Background decoration — back plane */}
+        <motion.div style={{ y: backPlaneY }} className="absolute top-0 right-0 w-1/2 h-full bg-crimson/3 clip-diagonal pointer-events-none" />
+        {/* Mid plane */}
+        <motion.div
+          style={{ y: midPlaneY, rotate: midPlaneRotate }}
+          className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-gold/10 blur-3xl pointer-events-none"
+        />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
           {/* Left – Text + Robots */}
-          <StaggerGroup as="div" staggerChildren={0.15} amount={0.3}>
-            <StaggerItem as="p" className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-4 flex items-center gap-2">
+          <div>
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+              className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-4 flex items-center gap-2"
+            >
               <span className="w-8 h-px bg-crimson inline-block" />
               FTC Team #25153
-            </StaggerItem>
+            </motion.p>
 
-            <StaggerItem as="h1" className="text-4xl md:text-5xl lg:text-6xl font-medium text-navy leading-tight mb-4">
-              Cartesian<br />
-              <span className="text-crimson">Robotics</span>
-            </StaggerItem>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium text-navy leading-tight mb-2 min-h-[2.4em] sm:min-h-0">
+              <TypewriterText text="Cartesian" startDelay={150} onComplete={() => setFirstWordDone(true)} />
+              <br />
+              {firstWordDone && <TypewriterText text="Robotics" className="text-crimson" />}
+            </h1>
 
-            <StaggerItem as="p" className="text-navy/70 text-base leading-relaxed mb-3 max-w-lg">
-              <strong>Cartesian Robotics #25153</strong> is a <strong>student-led team of over 25 students</strong>, having grown each season. We like to emphasize to the minds we touch the importance of thought and creation, inspiring our motto: <em>"I think, therefore I can."</em>
-            </StaggerItem>
+            {statPhrases.length > 0 && (
+              <p className="text-navy/50 text-sm font-medium mb-6 h-6">
+                <TypewriterCycle phrases={statPhrases} />
+              </p>
+            )}
 
-            <StaggerItem as="p" className="text-gray-600 text-sm leading-relaxed mb-3 max-w-lg">
-              Our design process follows the philosophy of <em>"I think, therefore I can."</em> Over three years, we have established a <strong>structured design process</strong> within our team, integrating our core philosophies and each year striving towards the optimal design.
-            </StaggerItem>
+            <StaggerGroup as="div" staggerChildren={0.12} delayChildren={1.1} amount={0.3}>
+              <StaggerItem as="p" className="text-navy/70 text-base leading-relaxed mb-3 max-w-lg">
+                <strong>Cartesian Robotics #25153</strong> is a <strong>student-led team of over 25 students</strong>, having grown each season. We like to emphasize to the minds we touch the importance of thought and creation, inspiring our motto: <em>"I think, therefore I can."</em>
+              </StaggerItem>
 
-            <StaggerItem as="p" className="text-gray-600 text-sm leading-relaxed mb-3 max-w-lg">
-              René Descartes, the philosopher we represent ourselves with, argued that he had to exist because he could think. We, recognizing that <strong>philosophy is the basis for all sciences</strong>, teach how to think, observe, and understand through hands-on STEM experience.
-            </StaggerItem>
+              <StaggerItem as="p" className="text-gray-600 text-sm leading-relaxed mb-3 max-w-lg">
+                Our design process follows the philosophy of <em>"I think, therefore I can."</em> Over three years, we have established a <strong>structured design process</strong> within our team, integrating our core philosophies and each year striving towards the optimal design.
+              </StaggerItem>
 
-            <StaggerItem as="p" className="text-gray-600 text-sm leading-relaxed mb-8 max-w-lg">
-              Our team aims to develop middle school students' skills in <strong>engineering, creativity, strategy, and teamwork</strong> while <strong>spreading STEM culture</strong> within our community. We are proud of our international achievements, but we measure our success by the <strong>people we impact</strong>.
-            </StaggerItem>
+              <StaggerItem as="p" className="text-gray-600 text-sm leading-relaxed mb-3 max-w-lg">
+                René Descartes, the philosopher we represent ourselves with, argued that he had to exist because he could think. We, recognizing that <strong>philosophy is the basis for all sciences</strong>, teach how to think, observe, and understand through hands-on STEM experience.
+              </StaggerItem>
 
-            <StaggerItem className="flex flex-wrap gap-3">
-              <Link to="/team" className="btn-primary">
-                Team Overview <ArrowRight size={16} />
-              </Link>
-            </StaggerItem>
+              <StaggerItem as="p" className="text-gray-600 text-sm leading-relaxed mb-8 max-w-lg">
+                Our team aims to develop middle school students' skills in <strong>engineering, creativity, strategy, and teamwork</strong> while <strong>spreading STEM culture</strong> within our community. We are proud of our international achievements, but we measure our success by the <strong>people we impact</strong>.
+              </StaggerItem>
 
-            {/* Robot Roster */}
-            <StaggerItem className="mt-12 border border-crimson/15 rounded-xl overflow-hidden grid grid-cols-3 bg-white shadow-sm">
-              {robots.map((r) => (
-                <RobotCard key={r.name} {...r} />
-              ))}
-            </StaggerItem>
-          </StaggerGroup>
+              <StaggerItem className="flex flex-wrap gap-3">
+                <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} transition={{ type: 'spring', stiffness: 400, damping: 20 }}>
+                  <Link to="/team" className="btn-primary">
+                    Team Overview <ArrowRight size={16} />
+                  </Link>
+                </motion.div>
+              </StaggerItem>
 
-          {/* Right – Hero Image */}
-          <Reveal direction="left" delay={0.2} className="flex justify-center lg:justify-end relative lg:-mt-72 mt-4 lg:mt-0">
-            <div className="relative">
+              {/* Robot Roster */}
+              <StaggerItem className="mt-12 border border-crimson/15 rounded-xl overflow-hidden grid grid-cols-3 bg-white shadow-sm">
+                {robots.map((r) => (
+                  <RobotCard key={r.name} {...r} />
+                ))}
+              </StaggerItem>
+            </StaggerGroup>
+          </div>
+
+          {/* Right – Hero Image — front plane: scroll zoom + 3D tilt */}
+          <Reveal direction="left" delay={0.2} className="flex justify-center lg:justify-end relative lg:-mt-72 mt-4 lg:mt-0" style={{ perspective: 1200 }}>
+            <motion.div
+              className="relative"
+              style={{ y: heroImageY, scale: heroImageScale, rotateX: heroImageRotateX, transformStyle: 'preserve-3d' }}
+            >
               {/* Decorative ring */}
               <div className="absolute -inset-4 rounded-3xl border-2 border-crimson/10 rotate-3" />
               <img
@@ -76,13 +121,13 @@ export default function Home() {
               <motion.div
                 initial={{ opacity: 0, scale: 0.6 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.6, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ delay: 0.6, type: 'spring', stiffness: 260, damping: 18 }}
                 className="absolute -bottom-4 -left-4 bg-crimson text-white rounded-xl px-5 py-3 shadow-lg"
               >
                 <p className="text-xs font-bold uppercase tracking-widest">Team</p>
                 <p className="text-2xl font-bold leading-none">#25153</p>
               </motion.div>
-            </div>
+            </motion.div>
           </Reveal>
         </div>
       </section>
@@ -90,19 +135,21 @@ export default function Home() {
       {/* ── About Strip ───────────────────────────── */}
       <section className="py-12 md:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-6">
-          <Reveal className="max-w-3xl mx-auto text-center">
-            <p className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-3">Our Mission</p>
-            <h2 className="text-3xl font-medium text-navy mb-6">Not Just Building Robots</h2>
-            <p className="text-gray-600 leading-relaxed mb-4">
+          <StaggerGroup as="div" staggerChildren={0.15} className="max-w-3xl mx-auto text-center">
+            <StaggerItem as="p" className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-3">Our Mission</StaggerItem>
+            <StaggerItem as="h2" className="text-3xl font-medium text-navy mb-6">
+              <ScrollVelocitySkew as="span" className="inline-block">Not Just Building Robots</ScrollVelocitySkew>
+            </StaggerItem>
+            <StaggerItem as="p" className="text-gray-600 leading-relaxed mb-4">
               Our team aims to develop middle school students' skills in <strong>engineering, creativity, strategy, and teamwork</strong> while simultaneously <strong>spreading STEM culture</strong> within our community.
-            </p>
-            <p className="text-gray-600 leading-relaxed mb-4">
+            </StaggerItem>
+            <StaggerItem as="p" className="text-gray-600 leading-relaxed mb-4">
               We take pride in our national and international achievements; however, we see our true success in the <strong>young minds we inspire</strong> and the <strong>STEM ecosystem</strong> we cultivate.
-            </p>
-            <p className="text-gray-600 leading-relaxed">
+            </StaggerItem>
+            <StaggerItem as="p" className="text-gray-600 leading-relaxed">
               For us, robotics is not just about building robots—it is about <strong>thinking, producing, and inspiring</strong>.
-            </p>
-          </Reveal>
+            </StaggerItem>
+          </StaggerGroup>
         </div>
       </section>
 

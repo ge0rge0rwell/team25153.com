@@ -41,7 +41,7 @@ export default function Resources() {
                 <MotionLink
                   to={`/resources/${r.slug}`}
                   whileHover={{ y: -4 }}
-                  transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ type: 'spring', stiffness: 350, damping: 24 }}
                   className="group card border border-gray-100 p-7 flex gap-5"
                 >
                   <div className="w-12 h-12 rounded-xl bg-crimson/10 text-crimson flex items-center justify-center flex-shrink-0 group-hover:bg-crimson group-hover:text-white transition-colors duration-300">

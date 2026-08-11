@@ -3,30 +3,39 @@
     {
       "slug": "cerberon",
       "name": "Cerberon",
-      "year": "2025 – 26",
+      "year": "2025 \u2013 26",
       "competition": "FTC Decode",
       "tagline": "Power. Precision. Three Heads Forward.",
       "description": "Cerberon is created with the most efficient methods to provide the maximized velocity, shooting ability and cycle sustainability.",
       "whyTitle": "Why Cerberon?",
-      "whyText": "This season, we named our robot Cerberon, inspired by Cerberus — the mythological three-headed guardian — and cannon, symbolizing power and precision.",
-      "image": "https://team25153.com/wp-content/uploads/2026/04/logo-removebg-preview-300x300.png",
+      "whyText": "This season, we named our robot Cerberon, inspired by Cerberus \u2014 the mythological three-headed guardian \u2014 and cannon, symbolizing power and precision.",
+      "image": "/uploads/cerberon.png",
       "seasonImage": "/decode-season.png",
       "heroBgBlend": "normal",
       "youtubeId": "LCqWA6gSCXA",
       "youtubeTitle": "2025-2026 DECODE presented by RTX Game Animation",
-      "gameTitle": "DECODE — 2025–2026",
+      "gameTitle": "DECODE \u2014 2025\u20132026",
       "gameDescription": "Two alliances of three robots each work to score foam balls into goals. At the end of the match, robots climb a structure to earn additional points.",
       "participated": [
-        { "name": "Piri Reis Regional 1", "url": "https://ftc-events.firstinspires.org/2025/TRTUQ1" },
-        { "name": "Piri Reis Regional 2", "url": "https://ftc-events.firstinspires.org/2025/TRTUQ2" },
-        { "name": "Türkiye Championship", "url": "https://ftc-events.firstinspires.org/2025/TRTUCH" }
+        {
+          "name": "Piri Reis Regional 1",
+          "url": "https://ftc-events.firstinspires.org/2025/TRTUQ1"
+        },
+        {
+          "name": "Piri Reis Regional 2",
+          "url": "https://ftc-events.firstinspires.org/2025/TRTUQ2"
+        },
+        {
+          "name": "T\u00fcrkiye Championship",
+          "url": "https://ftc-events.firstinspires.org/2025/TRTUCH"
+        }
       ],
       "robotOverview": "Cerberon is created with the most efficient methods to provide the maximized velocity, shooting ability and cycle sustainability.",
       "breakdownImage": "/media/cerberon-breakdown.png",
       "specs": {
         "name": "Cerberon",
         "weight": "39 lbs",
-        "size": "45\" L × 43\" W × 42\" H"
+        "size": "45\" L \u00d7 43\" W \u00d7 42\" H"
       },
       "abilities": [
         "Optimal movement with Pedro Pathing",
@@ -43,29 +52,38 @@
         "Modular Chassis Design"
       ],
       "prev": null,
-      "next": { "label": "HILDA", "to": "/robots/hilda" }
+      "next": {
+        "label": "HILDA",
+        "to": "/robots/hilda"
+      }
     },
     {
       "slug": "hilda",
       "name": "HILDA",
-      "year": "2024 – 25",
+      "year": "2024 \u2013 25",
       "competition": "FTC Into The Deep",
       "tagline": "Into the Deep, Beyond All Limits.",
-      "description": "HILDA was built for the 2024–25 FTC Into The Deep season. Featuring an innovative arm and intake system designed for submersible game pieces, HILDA demonstrated exceptional performance throughout the season.",
+      "description": "HILDA was built for the 2024\u201325 FTC Into The Deep season. Featuring an innovative arm and intake system designed for submersible game pieces, HILDA demonstrated exceptional performance throughout the season.",
       "whyTitle": "Why HILDA?",
       "whyText": "HILDA stands for Highly Intelligent Linear Drive Assembly. The name captures both the clever engineering and the season's deep-sea theme, built to retrieve game pieces from below the surface.",
-      "image": "https://team25153.com/wp-content/uploads/2026/04/Screenshot_2026-04-03_at_17.28.40-removebg-preview-300x247.png",
+      "image": "/uploads/hilda.png",
       "seasonImage": "/into-the-deep-season.jpg",
       "heroBgBlend": "normal",
       "youtubeId": "ewlDPvRK4U4",
       "youtubeTitle": "2024-2025 FIRST Tech Challenge Into The Deep Game Animation",
-      "gameTitle": "INTO THE DEEP — 2024–2025",
+      "gameTitle": "INTO THE DEEP \u2014 2024\u20132025",
       "gameDescription": "Two alliances compete to collect and deliver samples, score specimens on the chamber, and ascend the submersible structure at the end of the match.",
       "participated": [
-        { "name": "Türkiye Regional", "url": "https://ftc-events.firstinspires.org/2024/TRTUQ1" },
-        { "name": "Türkiye Championship", "url": "https://ftc-events.firstinspires.org/2024/TRTUCH" }
+        {
+          "name": "T\u00fcrkiye Regional",
+          "url": "https://ftc-events.firstinspires.org/2024/TRTUQ1"
+        },
+        {
+          "name": "T\u00fcrkiye Championship",
+          "url": "https://ftc-events.firstinspires.org/2024/TRTUCH"
+        }
       ],
-      "robotOverview": "Behind every smooth motion and successful score lies a network of carefully designed and fine-tuned subsystems. At Cartesian Robotics, we treat each subsystem not as an isolated part, but as a piece of a unified machine — each one optimized for speed, stability, and synergy.",
+      "robotOverview": "Behind every smooth motion and successful score lies a network of carefully designed and fine-tuned subsystems. At Cartesian Robotics, we treat each subsystem not as an isolated part, but as a piece of a unified machine \u2014 each one optimized for speed, stability, and synergy.",
       "breakdownImage": "/media/hilda-breakdown.png",
       "specs": {
         "name": "Hilda V.II",
@@ -103,28 +121,40 @@
         "Autonomous Path Planning",
         "Lightweight Carbon Fiber Frame"
       ],
-      "prev": { "label": "X & Y", "to": "/robots/centerstage" },
-      "next": { "label": "Cerberon", "to": "/robots/cerberon" }
+      "prev": {
+        "label": "X",
+        "to": "/robots/centerstage"
+      },
+      "next": {
+        "label": "Cerberon",
+        "to": "/robots/cerberon"
+      }
     },
     {
       "slug": "centerstage",
-      "name": "X & Y",
-      "year": "2023 – 24",
+      "name": "X",
+      "year": "2023 \u2013 24",
       "competition": "FTC Centerstage",
       "tagline": "Precision on Every Axis.",
-      "description": "X & Y was our breakthrough robot for the 2023–24 FTC Centerstage season. Named after the Cartesian coordinate axes, it embodies our team's identity through precise, coordinate-based movement and strategic gameplay.",
-      "whyTitle": "Why X & Y?",
-      "whyText": "X & Y is named after the Cartesian axes — a direct nod to our team identity. The name reflects our philosophy: every move is calculated, every position is precise, and every strategy is data-driven.",
-      "image": "https://team25153.com/wp-content/uploads/2026/04/Adsiz-tasarim-1-300x236.png",
+      "description": "X was our breakthrough robot for the 2023\u201324 FTC Centerstage season. Named after the Cartesian coordinate axes, it embodies our team's identity through precise, coordinate-based movement and strategic gameplay.",
+      "whyTitle": "Why X?",
+      "whyText": "X is named after the Cartesian axes \u2014 a direct nod to our team identity. The name reflects our philosophy: every move is calculated, every position is precise, and every strategy is data-driven.",
+      "image": "/uploads/centerstage.png",
       "seasonImage": "/centerstage-season.png",
       "heroBgBlend": "screen",
       "youtubeId": "6e-5Uo1dRic",
       "youtubeTitle": "2023-2024 FIRST Tech Challenge CENTERSTAGE Game Animation",
-      "gameTitle": "CENTERSTAGE — 2023–2024",
+      "gameTitle": "CENTERSTAGE \u2014 2023\u20132024",
       "gameDescription": "Alliances work together to place pixels on the backdrop, launch paper airplanes across the field, and hang from the rigging at the end of the match.",
       "participated": [
-        { "name": "Türkiye Regional", "url": "https://ftc-events.firstinspires.org/2023/TRTUQ1" },
-        { "name": "Türkiye Championship", "url": "https://ftc-events.firstinspires.org/2023/TRTUCH" }
+        {
+          "name": "T\u00fcrkiye Regional",
+          "url": "https://ftc-events.firstinspires.org/2023/TRTUQ1"
+        },
+        {
+          "name": "T\u00fcrkiye Championship",
+          "url": "https://ftc-events.firstinspires.org/2023/TRTUCH"
+        }
       ],
       "features": [
         "Coordinate-based Movement System",
@@ -133,7 +163,10 @@
         "Reliable Field Navigation"
       ],
       "prev": null,
-      "next": { "label": "HILDA", "to": "/robots/hilda" }
+      "next": {
+        "label": "HILDA",
+        "to": "/robots/hilda"
+      }
     }
   ]
 }

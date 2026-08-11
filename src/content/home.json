@@ -1,34 +1,46 @@
 {
   "robots": [
     {
-      "year": "2025 – 26",
+      "year": "2025 \u2013 26",
       "name": "Cerberon",
       "competition": "FTC Decode",
-      "image": "https://team25153.com/wp-content/uploads/2026/04/logo-removebg-preview-300x300.png",
+      "image": "/uploads/cerberon.png",
       "link": "/robots/cerberon",
       "blendMode": false
     },
     {
-      "year": "2024 – 25",
+      "year": "2024 \u2013 25",
       "name": "HILDA",
       "competition": "FTC Into The Deep",
-      "image": "https://team25153.com/wp-content/uploads/2026/04/Screenshot_2026-04-03_at_17.28.40-removebg-preview-300x247.png",
+      "image": "/uploads/hilda.png",
       "link": "/robots/hilda",
       "blendMode": false
     },
     {
-      "year": "2023 – 24",
-      "name": "X & Y",
+      "year": "2023 \u2013 24",
+      "name": "X",
       "competition": "FTC Centerstage",
-      "image": "https://team25153.com/wp-content/uploads/2026/04/Adsiz-tasarim-1-300x236.png",
+      "image": "/uploads/centerstage.png",
       "link": "/robots/centerstage",
       "blendMode": true
     }
   ],
   "stats": [
-    { "number": "3+", "label": "FTC Seasons" },
-    { "number": "25153", "label": "Team Number" },
-    { "number": "10+", "label": "Awards Won" },
-    { "number": "2022", "label": "Founded" }
+    {
+      "number": "3+",
+      "label": "FTC Seasons"
+    },
+    {
+      "number": "25153",
+      "label": "Team Number"
+    },
+    {
+      "number": "10+",
+      "label": "Awards Won"
+    },
+    {
+      "number": "2022",
+      "label": "Founded"
+    }
   ]
 }
