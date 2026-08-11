@@ -4,6 +4,7 @@ import { AnimatePresence, motion, MotionConfig, LayoutGroup } from 'framer-motio
 import Navbar from './components/layout/Navbar'
 import Footer from './components/layout/Footer'
 import Home from './pages/Home'
+import Loader from './components/ui/Loader'
 import { pageTransition } from './components/motion/variants'
 
 // Route-level code splitting: every page below ships as its own chunk and is
@@ -23,6 +24,7 @@ const routeImports = [
   () => import('./pages/PortfolioDetail'),
   () => import('./pages/Join'),
   () => import('./pages/LMS'),
+  () => import('./pages/NotFound'),
 ]
 const [
   importRobotPage,
@@ -36,6 +38,7 @@ const [
   importPortfolioDetail,
   importJoin,
   importLMS,
+  importNotFound,
 ] = routeImports
 
 const RobotPage = lazy(importRobotPage)
@@ -49,6 +52,7 @@ const ResourceDetail = lazy(importResourceDetail)
 const PortfolioDetail = lazy(importPortfolioDetail)
 const Join = lazy(importJoin)
 const LMS = lazy(importLMS)
+const NotFound = lazy(importNotFound)
 
 // The Descartes chat widget bundles an Adobe PDF viewer, an LLM client and a
 // 350 KB+ search index. It is closed by default, so we keep it out of the
@@ -82,7 +86,7 @@ function DeferredMount({ children }) {
 }
 
 function RouteFallback() {
-  return <div className="min-h-screen" aria-hidden="true" />
+  return <Loader />
 }
 
 // Once the landing page is idle, warm the cache with every route chunk in the
@@ -108,17 +112,6 @@ function useRoutePrefetch() {
     return () => clearTimeout(timer)
   }, [])
 }
-
-const NotFound = (
-  <div className="min-h-screen flex items-center justify-center bg-gray-50">
-    <div className="text-center px-6">
-      <div className="text-8xl font-bold text-crimson/20 mb-4">404</div>
-      <h1 className="text-2xl font-medium text-navy mb-2">Page Not Found</h1>
-      <p className="text-gray-500 text-sm mb-6">The page you're looking for doesn't exist.</p>
-      <a href="/" className="btn-primary">Go Home</a>
-    </div>
-  </div>
-)
 
 export default function App() {
   return (
@@ -197,7 +190,7 @@ function PublicSite() {
                   <Route path="/lms" element={<LMS />} />
 
                   {/* 404 */}
-                  <Route path="*" element={NotFound} />
+                  <Route path="*" element={<NotFound />} />
                 </Routes>
               </motion.div>
             </AnimatePresence>
