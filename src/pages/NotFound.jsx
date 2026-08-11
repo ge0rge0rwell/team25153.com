@@ -12,15 +12,45 @@ export default function NotFound() {
       <div className="absolute top-0 right-0 w-1/2 h-full bg-crimson/3 clip-diagonal pointer-events-none" />
       <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-gold/10 blur-3xl pointer-events-none" />
 
-      <div className="max-w-5xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-2 gap-10 items-center w-full relative">
-        <StaggerGroup as="div" staggerChildren={0.12}>
+      <div className="max-w-2xl mx-auto px-6 py-16 w-full relative text-center">
+        {/* 404 numeral, with René floating free above it — no frame, no box */}
+        <div className="relative flex justify-center mb-2">
+          <div className="text-8xl sm:text-9xl font-black text-navy/10 leading-none select-none">404</div>
+
+          <motion.img
+            src="/media/hero-descartes.png"
+            alt="René Descartes, escaped and floating free above the error"
+            decoding="async"
+            className="absolute -top-14 sm:-top-20 w-40 sm:w-56 object-contain drop-shadow-2xl"
+            initial={{ opacity: 0, y: 30, rotate: -8, scale: 0.8 }}
+            animate={
+              reducedMotion
+                ? { opacity: 1, y: 0, rotate: 0, scale: 1 }
+                : {
+                    opacity: 1,
+                    scale: 1,
+                    y: [30, -14, -6, -16, -10],
+                    rotate: [-8, 4, -3, 3, -2],
+                  }
+            }
+            transition={
+              reducedMotion
+                ? { duration: 0.5 }
+                : {
+                    opacity: { duration: 0.5 },
+                    scale: { duration: 0.5 },
+                    y: { duration: 5, times: [0, 0.25, 0.5, 0.75, 1], repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' },
+                    rotate: { duration: 5, times: [0, 0.25, 0.5, 0.75, 1], repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' },
+                  }
+            }
+          />
+        </div>
+
+        <StaggerGroup as="div" staggerChildren={0.12} className="flex flex-col items-center">
           <StaggerItem as="p" className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-4 flex items-center gap-2">
             <span className="w-8 h-px bg-crimson inline-block" />
             Error 404
-          </StaggerItem>
-
-          <StaggerItem as="div" className="text-7xl sm:text-8xl font-black text-navy/10 leading-none mb-2 select-none">
-            404
+            <span className="w-8 h-px bg-crimson inline-block" />
           </StaggerItem>
 
           <StaggerItem as="h1" className="text-2xl sm:text-3xl font-medium text-navy mb-4 leading-tight">
@@ -28,10 +58,10 @@ export default function NotFound() {
           </StaggerItem>
 
           <StaggerItem as="p" className="text-gray-600 text-sm leading-relaxed mb-8 max-w-sm">
-            Even René couldn't derive this one from first principles. The page you're looking for has been proven not to exist — or maybe it just moved.
+            Even René couldn't derive this one from first principles — he's out here floating free, and this page still doesn't exist. Or maybe it just moved.
           </StaggerItem>
 
-          <StaggerItem className="flex flex-wrap items-center gap-3">
+          <StaggerItem className="flex flex-wrap items-center justify-center gap-3">
             <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} transition={{ type: 'spring', stiffness: 400, damping: 20 }}>
               <Link to="/" className="btn-primary">
                 <HomeIcon size={16} /> Back to Home
@@ -48,37 +78,6 @@ export default function NotFound() {
             Or <Link to="/contact" className="text-crimson hover:underline">let us know</Link> if you think this is a bug.
           </StaggerItem>
         </StaggerGroup>
-
-        {/* Descartes, pondering where the page went */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.85 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2, type: 'spring', stiffness: 200, damping: 20 }}
-          className="flex justify-center md:justify-end"
-        >
-          <motion.div
-            className="relative"
-            animate={reducedMotion ? undefined : { rotate: [-3, 3, -3] }}
-            transition={reducedMotion ? undefined : { duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            <div className="absolute -inset-4 rounded-3xl border-2 border-crimson/10 rotate-3" />
-            <img
-              src="/media/hero-descartes.png"
-              alt="A puzzled René Descartes, unable to find this page"
-              className="relative w-full max-w-[260px] sm:max-w-xs object-contain drop-shadow-2xl"
-              decoding="async"
-            />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.6 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.7, type: 'spring', stiffness: 260, damping: 18 }}
-              className="absolute -bottom-3 -left-3 bg-navy text-white rounded-xl px-4 py-2.5 shadow-lg"
-            >
-              <p className="text-[10px] font-bold uppercase tracking-widest text-gold">Status</p>
-              <p className="text-sm font-bold leading-none">Lost in thought</p>
-            </motion.div>
-          </motion.div>
-        </motion.div>
       </div>
     </div>
   )
