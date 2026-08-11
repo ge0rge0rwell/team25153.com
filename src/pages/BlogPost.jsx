@@ -2,6 +2,7 @@ import { useParams, Link } from 'react-router-dom'
 import { marked } from 'marked'
 import PageBanner from '../components/ui/PageBanner'
 import { ArrowLeft, Calendar, Clock } from 'lucide-react'
+import Reveal from '../components/motion/Reveal'
 import { useCollection } from '../context/ContentContext'
 
 export default function BlogPost() {
@@ -36,7 +37,7 @@ export default function BlogPost() {
           </Link>
 
           <article>
-            <div className="mb-8">
+            <Reveal className="mb-8">
               <span className="text-[10px] font-bold uppercase px-3 py-1 rounded-full bg-crimson/10 text-crimson inline-block mb-4">
                 {post.tag}
               </span>
@@ -45,19 +46,23 @@ export default function BlogPost() {
                 <span className="flex items-center gap-1.5"><Calendar size={14} /> {post.date}</span>
                 <span className="flex items-center gap-1.5"><Clock size={14} /> {post.readTime}</span>
               </div>
-            </div>
+            </Reveal>
 
             {post.image && (
-              <img
-                src={post.image}
-                alt={post.title}
-                loading="lazy"
-                decoding="async"
-                className="w-full h-80 object-cover rounded-2xl mb-10 shadow-md"
-              />
+              <Reveal direction="scale" delay={0.1}>
+                <img
+                  src={post.image}
+                  alt={post.title}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-80 object-cover rounded-2xl mb-10 shadow-md"
+                />
+              </Reveal>
             )}
 
-            <div
+            <Reveal
+              as="div"
+              delay={0.15}
               className="prose prose-lg max-w-none text-gray-600 prose-headings:text-navy prose-blockquote:border-crimson prose-blockquote:bg-gray-50 prose-a:text-crimson"
               dangerouslySetInnerHTML={{ __html: marked.parse(post.body || '') }}
             />

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Menu, X, ChevronDown, Search } from 'lucide-react'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useCollection } from '../../context/ContentContext'
 
 function DropdownItem({ item, depth = 0 }) {
@@ -22,13 +23,21 @@ function DropdownItem({ item, depth = 0 }) {
           )}
           <ChevronDown size={12} className={`ml-2 transition-transform ${open ? 'rotate-180' : ''}`} />
         </div>
-        {open && (
-          <div className="absolute left-full top-0 min-w-[200px] bg-navy shadow-2xl py-2 z-50 border-t-2 border-gold">
-            {item.children.map((child) => (
-              <DropdownItem key={child.label} item={child} depth={depth + 1} />
-            ))}
-          </div>
-        )}
+        <AnimatePresence>
+          {open && (
+            <motion.div
+              initial={{ opacity: 0, x: -8 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -8 }}
+              transition={{ duration: 0.18 }}
+              className="absolute left-full top-0 min-w-[200px] bg-navy shadow-2xl py-2 z-50 border-t-2 border-gold"
+            >
+              {item.children.map((child) => (
+                <DropdownItem key={child.label} item={child} depth={depth + 1} />
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     )
   }
@@ -64,13 +73,21 @@ function TopNavItem({ item }) {
           )}
           <ChevronDown size={12} className={`transition-transform ${open ? 'rotate-180' : ''}`} />
         </div>
-        {open && (
-          <div className="absolute top-full left-0 min-w-[200px] bg-navy shadow-2xl py-2 z-50 border-t-2 border-gold">
-            {item.children.map((child) => (
-              <DropdownItem key={child.label} item={child} />
-            ))}
-          </div>
-        )}
+        <AnimatePresence>
+          {open && (
+            <motion.div
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.18 }}
+              className="absolute top-full left-0 min-w-[200px] bg-navy shadow-2xl py-2 z-50 border-t-2 border-gold"
+            >
+              {item.children.map((child) => (
+                <DropdownItem key={child.label} item={child} />
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     )
   }
@@ -117,13 +134,21 @@ function MobileNavItem({ item, onClose }) {
             <ChevronDown size={16} className={`transition-transform ${open ? 'rotate-180' : ''}`} />
           </button>
         </div>
-        {open && (
-          <div className="bg-navy-light/50">
-            {item.children.map((child) => (
-              <MobileNavItem key={child.label} item={child} onClose={onClose} />
-            ))}
-          </div>
-        )}
+        <AnimatePresence>
+          {open && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              className="bg-navy-light/50 overflow-hidden"
+            >
+              {item.children.map((child) => (
+                <MobileNavItem key={child.label} item={child} onClose={onClose} />
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     )
   }
@@ -187,24 +212,31 @@ export default function Navbar() {
       }`}>
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="flex-shrink-0">
-            <img
-              src="https://team25153.com/wp-content/uploads/2025/11/Cartesian-Font-Vector-scaled-1.png"
-              alt="Cartesian Robotics"
-              className="h-8 sm:h-10 w-auto max-w-[160px] sm:max-w-[192px]"
-              fetchPriority="high"
-              decoding="async"
-              onError={(e) => {
-                e.target.onerror = null
-                e.target.style.display = 'none'
-                e.target.nextSibling.style.display = 'flex'
-              }}
-            />
-            <div className="hidden items-center gap-2" style={{display:'none'}}>
-              <span className="text-crimson font-bold text-lg tracking-tight">CARTESIAN</span>
-              <span className="text-navy text-xs font-medium">#25153</span>
-            </div>
-          </Link>
+          <motion.div
+            initial={{ opacity: 0, x: -16 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="flex-shrink-0"
+          >
+            <Link to="/" className="flex-shrink-0">
+              <img
+                src="/uploads/cartesian-wordmark.png"
+                alt="Cartesian Robotics"
+                className="h-8 sm:h-10 w-auto max-w-[160px] sm:max-w-[192px]"
+                fetchPriority="high"
+                decoding="async"
+                onError={(e) => {
+                  e.target.onerror = null
+                  e.target.style.display = 'none'
+                  e.target.nextSibling.style.display = 'flex'
+                }}
+              />
+              <div className="hidden items-center gap-2" style={{display:'none'}}>
+                <span className="text-crimson font-bold text-lg tracking-tight">CARTESIAN</span>
+                <span className="text-navy text-xs font-medium">#25153</span>
+              </div>
+            </Link>
+          </motion.div>
 
           {/* Desktop Nav */}
           <div className="hidden lg:flex items-center gap-1">
@@ -225,32 +257,46 @@ export default function Navbar() {
       </nav>
 
       {/* Mobile Menu Overlay */}
-      {mobileOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden" onClick={() => setMobileOpen(false)}>
-          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
-          <div
-            className="absolute top-0 right-0 bottom-0 w-72 bg-navy overflow-y-auto"
-            onClick={(e) => e.stopPropagation()}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            className="fixed inset-0 z-50 lg:hidden"
+            onClick={() => setMobileOpen(false)}
+            initial="hidden"
+            animate="show"
+            exit="hidden"
           >
-            <div className="flex items-center justify-between px-6 py-4 border-b border-navy-mid/50">
-              <span className="text-white font-bold uppercase tracking-wider text-sm">Menu</span>
-              <button onClick={() => setMobileOpen(false)} className="text-white/70 hover:text-white">
-                <X size={20} />
-              </button>
-            </div>
-            <div>
-              {navItems.map((item) => (
-                <MobileNavItem key={item.label} item={item} onClose={() => setMobileOpen(false)} />
-              ))}
-            </div>
-            <div className="px-6 py-4 border-t border-navy-mid/30 flex gap-3 mt-4">
-              <a href="/tr" className="flex items-center gap-1 text-white/60 text-sm hover:text-white">🇹🇷 TR</a>
-              <span className="text-white/30">|</span>
-              <a href="/" className="flex items-center gap-1 text-white text-sm">🇬🇧 EN</a>
-            </div>
-          </div>
-        </div>
-      )}
+            <motion.div
+              className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+              variants={{ hidden: { opacity: 0 }, show: { opacity: 1 } }}
+              transition={{ duration: 0.2 }}
+            />
+            <motion.div
+              className="absolute top-0 right-0 bottom-0 w-72 bg-navy overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+              variants={{ hidden: { x: '100%' }, show: { x: 0 } }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <div className="flex items-center justify-between px-6 py-4 border-b border-navy-mid/50">
+                <span className="text-white font-bold uppercase tracking-wider text-sm">Menu</span>
+                <button onClick={() => setMobileOpen(false)} className="text-white/70 hover:text-white">
+                  <X size={20} />
+                </button>
+              </div>
+              <div>
+                {navItems.map((item) => (
+                  <MobileNavItem key={item.label} item={item} onClose={() => setMobileOpen(false)} />
+                ))}
+              </div>
+              <div className="px-6 py-4 border-t border-navy-mid/30 flex gap-3 mt-4">
+                <a href="/tr" className="flex items-center gap-1 text-white/60 text-sm hover:text-white">🇹🇷 TR</a>
+                <span className="text-white/30">|</span>
+                <a href="/" className="flex items-center gap-1 text-white text-sm">🇬🇧 EN</a>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   )
 }

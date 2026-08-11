@@ -1,6 +1,9 @@
 import PageBanner from '../components/ui/PageBanner'
 import { Trophy, Eye, X } from 'lucide-react'
 import { useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import Reveal from '../components/motion/Reveal'
+import { StaggerGroup, StaggerItem } from '../components/motion/Stagger'
 import { useCollection } from '../context/ContentContext'
 
 // Badge colors per tier — all crimson / navy variants, no gold
@@ -65,7 +68,7 @@ export default function Awards() {
 
       {/* Team overview */}
       <section className="py-10 md:py-14 bg-white border-b border-gray-100">
-        <div className="max-w-5xl mx-auto px-6">
+        <Reveal className="max-w-5xl mx-auto px-6">
           <p className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-2 flex items-center gap-2">
             <span className="w-6 h-px bg-crimson" /> About Us
           </p>
@@ -73,35 +76,37 @@ export default function Awards() {
           <p className="text-gray-700 leading-relaxed max-w-3xl">
             <strong>Cartesian Robotics #25153</strong> is a student-led team of over 25 students, guided by our motto <em>"I think, therefore I can."</em> We aim to develop middle school students' skills in engineering, creativity, strategy, and teamwork while spreading STEM culture within our community — and we measure our success by the people we impact.
           </p>
-        </div>
+        </Reveal>
       </section>
 
       {/* Total count strip */}
       <div className="bg-crimson text-white py-6">
-        <div className="max-w-5xl mx-auto px-6 flex flex-wrap items-center gap-4">
-          <Trophy size={28} className="text-white/70" />
-          <div>
-            <p className="text-white/70 text-xs font-bold uppercase tracking-widest">Total Awards</p>
-            <p className="text-3xl font-black leading-none">{total}</p>
-          </div>
+        <StaggerGroup as="div" staggerChildren={0.08} className="max-w-5xl mx-auto px-6 flex flex-wrap items-center gap-4">
+          <StaggerItem className="flex items-center gap-4">
+            <Trophy size={28} className="text-white/70" />
+            <div>
+              <p className="text-white/70 text-xs font-bold uppercase tracking-widest">Total Awards</p>
+              <p className="text-3xl font-black leading-none">{total}</p>
+            </div>
+          </StaggerItem>
           <div className="flex-1 h-px bg-white/20 mx-4" />
           <div className="flex gap-6 flex-wrap">
             {Object.entries(tierLabel).map(([tier, label]) => (
-              <div key={tier} className="text-center">
+              <StaggerItem key={tier} className="text-center">
                 <p className="text-2xl font-black">
                   {displaySeasons.reduce((sum, s) => sum + s.awards.filter(a => a.tier === tier).length, 0)}
                 </p>
                 <p className="text-white/60 text-xs uppercase tracking-wider">{label}</p>
-              </div>
+              </StaggerItem>
             ))}
           </div>
-        </div>
+        </StaggerGroup>
       </div>
 
       <section className="py-10 md:py-16 bg-gray-50">
         <div className="max-w-5xl mx-auto px-6 space-y-14">
           {displaySeasons.map((season) => (
-            <div key={season.year}>
+            <Reveal key={season.year} as="div" amount={0.1}>
               {/* Season header */}
               <div className="flex items-center gap-4 mb-6">
                 <div className="flex-shrink-0">
@@ -126,8 +131,9 @@ export default function Awards() {
                   <span className="text-xs font-bold uppercase tracking-widest text-gray-400">Event</span>
                 </div>
 
+                <StaggerGroup as="div" staggerChildren={0.05} amount={0.1}>
                 {season.awards.map((award, i) => (
-                  <div
+                  <StaggerItem
                     key={i}
                     className={`grid grid-cols-[auto_1fr] sm:grid-cols-[auto_1fr_auto] gap-x-4 gap-y-1 items-center px-6 py-4 ${
                       i !== season.awards.length - 1 ? 'border-b border-gray-50' : ''
@@ -165,43 +171,54 @@ export default function Awards() {
                     <div className="col-start-2 sm:col-start-3 pl-5 sm:pl-0">
                       <span className="text-gray-500 text-xs">{award.event}</span>
                     </div>
-                  </div>
+                  </StaggerItem>
                 ))}
+                </StaggerGroup>
               </div>
-            </div>
+            </Reveal>
           ))}
         </div>
       </section>
 
       {/* Lightbox Modal */}
-      {lightboxImage && (
-        <div 
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-4 cursor-pointer"
-          onClick={() => setLightboxImage(null)}
-        >
-          <button 
+      <AnimatePresence>
+        {lightboxImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-4 cursor-pointer"
             onClick={() => setLightboxImage(null)}
-            className="absolute top-6 right-6 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 p-2.5 rounded-full transition-all duration-200 cursor-pointer z-50"
           >
-            <X size={24} />
-          </button>
-          <div 
-            className="relative max-w-4xl w-full flex flex-col items-center justify-center cursor-default"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <img
-              src={lightboxImage.src}
-              alt={lightboxImage.title}
-              decoding="async"
-              className="max-h-[85vh] max-w-full object-contain rounded-xl shadow-2xl"
-            />
-            <div className="mt-4 text-center">
-              <p className="text-crimson text-xs font-black uppercase tracking-widest mb-1">Physical Award Photo</p>
-              <h3 className="text-white font-black text-xl">{lightboxImage.title}</h3>
-            </div>
-          </div>
-        </div>
-      )}
+            <button
+              onClick={() => setLightboxImage(null)}
+              className="absolute top-6 right-6 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 p-2.5 rounded-full transition-all duration-200 cursor-pointer z-50"
+            >
+              <X size={24} />
+            </button>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              className="relative max-w-4xl w-full flex flex-col items-center justify-center cursor-default"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src={lightboxImage.src}
+                alt={lightboxImage.title}
+                decoding="async"
+                className="max-h-[85vh] max-w-full object-contain rounded-xl shadow-2xl"
+              />
+              <div className="mt-4 text-center">
+                <p className="text-crimson text-xs font-black uppercase tracking-widest mb-1">Physical Award Photo</p>
+                <h3 className="text-white font-black text-xl">{lightboxImage.title}</h3>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

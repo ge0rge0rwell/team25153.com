@@ -5,6 +5,8 @@ import {
   ClipboardList, HelpCircle, FileText, MessageSquare, FolderOpen,
   PlayCircle, Link2, Tag, RefreshCw, Lock, CheckCircle,
 } from 'lucide-react'
+import Reveal from '../components/motion/Reveal'
+import { StaggerGroup, StaggerItem } from '../components/motion/Stagger'
 
 const MOODLE_PUBLIC_URL = import.meta.env.VITE_MOODLE_PUBLIC_URL || 'https://lms.team25153.com'
 const ADMIN_TOKEN = import.meta.env.VITE_MOODLE_TOKEN || ''
@@ -135,7 +137,7 @@ function LoginScreen({ onLogin }) {
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-      <div className="w-full max-w-sm">
+      <Reveal direction="scale" className="w-full max-w-sm">
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-navy mb-4">
@@ -248,7 +250,7 @@ function LoginScreen({ onLogin }) {
             </>
           )}
         </p>
-      </div>
+      </Reveal>
     </div>
   )
 }
@@ -588,7 +590,7 @@ function CourseGrid({ session, onSelect }) {
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <div className="text-white" style={{ background: 'linear-gradient(135deg, #002147 0%, #374b6b 100%)' }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 md:py-16">
+        <Reveal className="max-w-7xl mx-auto px-4 sm:px-6 py-12 md:py-16">
           <div className="flex items-start justify-between gap-4">
             <div>
               <div className="flex items-center gap-3 mb-4">
@@ -609,7 +611,7 @@ function CourseGrid({ session, onSelect }) {
               <LogOut size={14} /> Çıkış
             </button>
           </div>
-        </div>
+        </Reveal>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
@@ -656,9 +658,13 @@ function CourseGrid({ session, onSelect }) {
                 <p className="text-gray-400 text-sm mt-0.5">Başlamak için bir derse tıkla</p>
               </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {courses.map((c, i) => <CourseCard key={c.id} course={c} index={i} onClick={onSelect} />)}
-            </div>
+            <StaggerGroup as="div" staggerChildren={0.08} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {courses.map((c, i) => (
+                <StaggerItem key={c.id}>
+                  <CourseCard course={c} index={i} onClick={onSelect} />
+                </StaggerItem>
+              ))}
+            </StaggerGroup>
           </>
         )}
       </div>

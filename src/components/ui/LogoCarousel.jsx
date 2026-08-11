@@ -1,3 +1,5 @@
+import Reveal from '../motion/Reveal'
+
 // tier: 1 = Ergün (biggest), 2 = Pasifik (second), 3 = standard
 const sponsors = [
   { src: '/sponsors/1.jpg', alt: 'Ergün',               tier: 1 },
@@ -27,11 +29,11 @@ export default function LogoCarousel() {
       <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gold/60" />
 
       {/* Label */}
-      <div className="text-center mb-8">
+      <Reveal direction="scale" className="text-center mb-8">
         <p className="text-white/60 text-xs font-bold uppercase tracking-[0.35em]">
           Proudly Supported By
         </p>
-      </div>
+      </Reveal>
 
       {/* Scroll track */}
       <div className="relative">

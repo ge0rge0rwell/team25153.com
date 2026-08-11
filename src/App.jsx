@@ -1,8 +1,10 @@
 import { lazy, Suspense, useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
+import { AnimatePresence, motion, MotionConfig } from 'framer-motion'
 import Navbar from './components/layout/Navbar'
 import Footer from './components/layout/Footer'
 import Home from './pages/Home'
+import { pageTransition } from './components/motion/variants'
 
 // Route-level code splitting: every page below ships as its own chunk and is
 // only fetched when the user navigates to it. Home stays in the main bundle so
@@ -121,7 +123,9 @@ const NotFound = (
 export default function App() {
   return (
     <BrowserRouter>
-      <AppShell />
+      <MotionConfig reducedMotion="user">
+        <AppShell />
+      </MotionConfig>
     </BrowserRouter>
   )
 }
@@ -152,6 +156,7 @@ function AppShell() {
 
 function PublicSite() {
   useRoutePrefetch()
+  const location = useLocation()
   return (
     <>
       <ScrollToTop />
@@ -159,34 +164,38 @@ function PublicSite() {
         <Navbar />
         <main className="flex-1">
           <Suspense fallback={<RouteFallback />}>
-            <Routes>
-              <Route path="/" element={<Home />} />
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div key={location.pathname} {...pageTransition}>
+                <Routes location={location}>
+                  <Route path="/" element={<Home />} />
 
-              {/* Team */}
-              <Route path="/team" element={<Navigate to="/awards" replace />} />
-              <Route path="/robots/:slug" element={<RobotPage />} />
-              <Route path="/awards" element={<Awards />} />
+                  {/* Team */}
+                  <Route path="/team" element={<Navigate to="/awards" replace />} />
+                  <Route path="/robots/:slug" element={<RobotPage />} />
+                  <Route path="/awards" element={<Awards />} />
 
-              {/* Resources */}
-              <Route path="/resources" element={<Resources />} />
-              <Route path="/resources/:slug" element={<ResourceDetail />} />
+                  {/* Resources */}
+                  <Route path="/resources" element={<Resources />} />
+                  <Route path="/resources/:slug" element={<ResourceDetail />} />
 
-              {/* Portfolio */}
-              <Route path="/portfolio/:slug" element={<PortfolioDetail />} />
+                  {/* Portfolio */}
+                  <Route path="/portfolio/:slug" element={<PortfolioDetail />} />
 
-              {/* Blog */}
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/blog/:slug" element={<BlogPost />} />
+                  {/* Blog */}
+                  <Route path="/blog" element={<Blog />} />
+                  <Route path="/blog/:slug" element={<BlogPost />} />
 
-              {/* Other */}
-              <Route path="/sponsorship" element={<Sponsorship />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/join" element={<Join />} />
-              <Route path="/lms" element={<LMS />} />
+                  {/* Other */}
+                  <Route path="/sponsorship" element={<Sponsorship />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/join" element={<Join />} />
+                  <Route path="/lms" element={<LMS />} />
 
-              {/* 404 */}
-              <Route path="*" element={NotFound} />
-            </Routes>
+                  {/* 404 */}
+                  <Route path="*" element={NotFound} />
+                </Routes>
+              </motion.div>
+            </AnimatePresence>
           </Suspense>
         </main>
         <Footer />

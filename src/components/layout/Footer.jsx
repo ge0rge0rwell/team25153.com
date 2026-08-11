@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { Mail, MapPin, ArrowUp } from 'lucide-react'
 import { FaInstagram } from 'react-icons/fa'
 import { useCollection } from '../../context/ContentContext'
+import { StaggerGroup, StaggerItem } from '../motion/Stagger'
 
 export default function Footer() {
   const scrollTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -10,9 +11,9 @@ export default function Footer() {
   return (
     <footer className="bg-navy text-white">
       {/* Main Footer */}
-      <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-3 gap-12">
+      <StaggerGroup as="div" amount={0.1} className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-3 gap-12">
         {/* Brand */}
-        <div>
+        <StaggerItem>
           <img
             src="/cartesian-logo-transparent.png"
             alt="Cartesian Robotics"
@@ -25,10 +26,10 @@ export default function Footer() {
             A student-led FTC robotics team that believes in the power of thinking and creating.
           </p>
           <p className="text-gold font-medium italic text-sm">"I think, therefore I can."</p>
-        </div>
+        </StaggerItem>
 
         {/* Quick Links */}
-        <div>
+        <StaggerItem>
           <h3 className="text-white font-semibold uppercase tracking-widest text-xs mb-5 flex items-center gap-2">
             <span className="w-6 h-0.5 bg-gold inline-block"></span> Quick Links
           </h3>
@@ -45,10 +46,10 @@ export default function Footer() {
               </li>
             ))}
           </ul>
-        </div>
+        </StaggerItem>
 
         {/* Contact Info */}
-        <div>
+        <StaggerItem>
           <h3 className="text-white font-semibold uppercase tracking-widest text-xs mb-5 flex items-center gap-2">
             <span className="w-6 h-0.5 bg-gold inline-block"></span> Contact
           </h3>
@@ -89,8 +90,8 @@ export default function Footer() {
               <FaInstagram size={16} />
             </a>
           </div>
-        </div>
-      </div>
+        </StaggerItem>
+      </StaggerGroup>
 
       {/* Bottom Bar */}
       <div className="border-t border-white/10">

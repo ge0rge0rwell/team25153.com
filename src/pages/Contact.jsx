@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { MapPin, Mail } from 'lucide-react'
 import { FaInstagram } from 'react-icons/fa'
 import ContactForm from '../components/ui/ContactForm'
+import Reveal from '../components/motion/Reveal'
+import { StaggerGroup, StaggerItem } from '../components/motion/Stagger'
 
 export default function Contact() {
   return (
@@ -15,15 +17,15 @@ export default function Contact() {
       <section className="py-12 md:py-20 bg-white">
         <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-5 gap-6 md:gap-12">
           {/* Left – Contact Info */}
-          <div className="lg:col-span-2">
+          <Reveal direction="right" as="div" className="lg:col-span-2">
             <p className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-2 flex items-center gap-2">
               <span className="w-6 h-px bg-crimson" /> Get In Touch
             </p>
             <h2 className="text-3xl font-medium text-navy mb-1">Contact Us</h2>
             <div className="w-10 h-0.5 bg-gold mb-8" />
 
-            <ul className="space-y-8">
-              <li className="flex items-start gap-4">
+            <StaggerGroup as="ul" staggerChildren={0.12} className="space-y-8">
+              <StaggerItem as="li" className="flex items-start gap-4">
                 <div className="w-11 h-11 rounded-full bg-crimson/10 flex items-center justify-center flex-shrink-0">
                   <MapPin size={18} className="text-crimson" />
                 </div>
@@ -35,8 +37,8 @@ export default function Contact() {
                     06800 Çankaya/Ankara
                   </p>
                 </div>
-              </li>
-              <li className="flex items-start gap-4">
+              </StaggerItem>
+              <StaggerItem as="li" className="flex items-start gap-4">
                 <div className="w-11 h-11 rounded-full bg-crimson/10 flex items-center justify-center flex-shrink-0">
                   <Mail size={18} className="text-crimson" />
                 </div>
@@ -49,8 +51,8 @@ export default function Contact() {
                     cartesian25153@gmail.com
                   </a>
                 </div>
-              </li>
-              <li className="flex items-start gap-4">
+              </StaggerItem>
+              <StaggerItem as="li" className="flex items-start gap-4">
                 <div className="w-11 h-11 rounded-full bg-crimson/10 flex items-center justify-center flex-shrink-0">
                   <FaInstagram size={18} className="text-crimson" />
                 </div>
@@ -65,8 +67,8 @@ export default function Contact() {
                     <FaInstagram size={14} /> @cartesian25153
                   </a>
                 </div>
-              </li>
-            </ul>
+              </StaggerItem>
+            </StaggerGroup>
 
             {/* Map placeholder */}
             <div className="mt-10 rounded-xl overflow-hidden border border-gray-100 shadow-sm">
@@ -78,10 +80,10 @@ export default function Contact() {
                 loading="lazy"
               />
             </div>
-          </div>
+          </Reveal>
 
           {/* Right – Form */}
-          <div className="lg:col-span-3">
+          <Reveal direction="left" delay={0.1} as="div" className="lg:col-span-3">
             <div className="bg-gray-50 rounded-2xl p-5 sm:p-8 border border-gray-100 shadow-sm">
               <h3 className="text-xl font-medium text-navy mb-6 flex items-center gap-3">
                 <span className="w-1 h-6 bg-crimson rounded inline-block" />
@@ -89,7 +91,7 @@ export default function Contact() {
               </h3>
               <ContactForm />
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
     </div>

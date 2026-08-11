@@ -1,9 +1,15 @@
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
+
+const MotionLink = motion.create(Link)
 
 export default function RobotCard({ year, name, competition, image, link, blendMode = false }) {
   return (
-    <Link
+    <MotionLink
       to={link}
+      whileHover={{ scale: 1.04 }}
+      whileTap={{ scale: 0.97 }}
+      transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
       className="group relative flex flex-col items-center px-2 py-4 sm:px-6 sm:py-6 border-r border-crimson/15 last:border-r-0 hover:bg-crimson/5 transition-colors duration-300 overflow-hidden"
     >
 
@@ -31,6 +37,6 @@ export default function RobotCard({ year, name, competition, image, link, blendM
           {competition}
         </span>
       </div>
-    </Link>
+    </MotionLink>
   )
 }

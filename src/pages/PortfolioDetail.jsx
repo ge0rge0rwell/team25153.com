@@ -2,7 +2,9 @@ import { useParams, Link } from 'react-router-dom'
 import PageBanner from '../components/ui/PageBanner'
 import { ArrowLeft, Maximize2 } from 'lucide-react'
 import { useEffect, useRef } from 'react'
+import { motion } from 'framer-motion'
 import { loadFlipbook } from '../utils/loadFlipbook'
+import Reveal from '../components/motion/Reveal'
 import { useCollection } from '../context/ContentContext'
 
 export default function PortfolioDetail() {
@@ -66,24 +68,26 @@ export default function PortfolioDetail() {
             <ArrowLeft size={16} /> Back to Portfolios
           </Link>
           <div className="bg-gray-50 rounded-2xl p-5 sm:p-8 border border-gray-100 shadow-sm flex flex-col md:flex-row gap-8 items-center">
-            <div className="w-full md:w-1/3 flex justify-center">
+            <Reveal direction="scale" className="w-full md:w-1/3 flex justify-center">
               <img src={portfolio.image} alt={portfolio.title} className="w-48 h-48 object-contain mix-blend-multiply drop-shadow-xl" />
-            </div>
-            <div className="w-full md:w-2/3">
+            </Reveal>
+            <Reveal direction="left" delay={0.1} className="w-full md:w-2/3">
               <span className="text-xs font-bold text-crimson uppercase tracking-widest">{portfolio.season}</span>
               <h2 className="text-3xl font-bold text-navy mt-2 mb-4">{portfolio.title}</h2>
               <p className="text-gray-600 leading-relaxed text-lg">{portfolio.content}</p>
-              
+
               <div className="mt-8 pt-6 border-t border-gray-200">
-                <button 
+                <motion.button
                   ref={buttonRef}
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
                   className="btn-primary flex items-center gap-2"
                 >
                   <Maximize2 size={18} />
                   Open Full Page 3D Flipbook
-                </button>
+                </motion.button>
               </div>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>

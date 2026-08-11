@@ -2,6 +2,7 @@ import { useParams, Link } from 'react-router-dom'
 import PageBanner from '../components/ui/PageBanner'
 import { ArrowLeft, BookOpen, Code2, Box, Library } from 'lucide-react'
 import SoftwareDocs from '../components/resources/SoftwareDocs'
+import Reveal from '../components/motion/Reveal'
 import { useCollection } from '../context/ContentContext'
 
 const iconMap = { BookOpen, Code2, Box, Library }
@@ -38,7 +39,7 @@ export default function ResourceDetail() {
             <ArrowLeft size={16} /> Back to Resources
           </Link>
           
-          <div className="bg-white rounded-2xl p-5 sm:p-10 border border-gray-100 shadow-lg text-center">
+          <Reveal direction="scale" className="bg-white rounded-2xl p-5 sm:p-10 border border-gray-100 shadow-lg text-center">
             <div className="w-24 h-24 mx-auto bg-crimson/10 text-crimson rounded-full flex items-center justify-center mb-6">
               <Icon size={48} />
             </div>
@@ -46,7 +47,7 @@ export default function ResourceDetail() {
             <p className="text-gray-600 leading-relaxed text-lg max-w-2xl mx-auto mb-10">
               {resource.content}
             </p>
-            
+
             {slug === 'software' ? (
               <SoftwareDocs />
             ) : (
@@ -55,7 +56,7 @@ export default function ResourceDetail() {
                 <p className="mt-2">Check back soon or contact us for immediate access.</p>
               </div>
             )}
-          </div>
+          </Reveal>
         </div>
       </section>
     </div>

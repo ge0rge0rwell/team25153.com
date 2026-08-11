@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight, ChevronRight } from 'lucide-react'
+import { motion } from 'framer-motion'
 import RobotCard from '../components/ui/RobotCard'
 import LogoCarousel from '../components/ui/LogoCarousel'
+import Reveal from '../components/motion/Reveal'
+import { StaggerGroup, StaggerItem } from '../components/motion/Stagger'
 import { useCollection } from '../context/ContentContext'
 
 export default function Home() {
@@ -16,49 +19,49 @@ export default function Home() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
           {/* Left – Text + Robots */}
-          <div className="animate-fade-up">
-            <p className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-4 flex items-center gap-2">
+          <StaggerGroup as="div" staggerChildren={0.15} amount={0.3}>
+            <StaggerItem as="p" className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-4 flex items-center gap-2">
               <span className="w-8 h-px bg-crimson inline-block" />
               FTC Team #25153
-            </p>
+            </StaggerItem>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium text-navy leading-tight mb-4">
+            <StaggerItem as="h1" className="text-4xl md:text-5xl lg:text-6xl font-medium text-navy leading-tight mb-4">
               Cartesian<br />
               <span className="text-crimson">Robotics</span>
-            </h1>
+            </StaggerItem>
 
-            <p className="text-navy/70 text-base leading-relaxed mb-3 max-w-lg">
+            <StaggerItem as="p" className="text-navy/70 text-base leading-relaxed mb-3 max-w-lg">
               <strong>Cartesian Robotics #25153</strong> is a <strong>student-led team of over 25 students</strong>, having grown each season. We like to emphasize to the minds we touch the importance of thought and creation, inspiring our motto: <em>"I think, therefore I can."</em>
-            </p>
+            </StaggerItem>
 
-            <p className="text-gray-600 text-sm leading-relaxed mb-3 max-w-lg">
+            <StaggerItem as="p" className="text-gray-600 text-sm leading-relaxed mb-3 max-w-lg">
               Our design process follows the philosophy of <em>"I think, therefore I can."</em> Over three years, we have established a <strong>structured design process</strong> within our team, integrating our core philosophies and each year striving towards the optimal design.
-            </p>
+            </StaggerItem>
 
-            <p className="text-gray-600 text-sm leading-relaxed mb-3 max-w-lg">
+            <StaggerItem as="p" className="text-gray-600 text-sm leading-relaxed mb-3 max-w-lg">
               René Descartes, the philosopher we represent ourselves with, argued that he had to exist because he could think. We, recognizing that <strong>philosophy is the basis for all sciences</strong>, teach how to think, observe, and understand through hands-on STEM experience.
-            </p>
+            </StaggerItem>
 
-            <p className="text-gray-600 text-sm leading-relaxed mb-8 max-w-lg">
+            <StaggerItem as="p" className="text-gray-600 text-sm leading-relaxed mb-8 max-w-lg">
               Our team aims to develop middle school students' skills in <strong>engineering, creativity, strategy, and teamwork</strong> while <strong>spreading STEM culture</strong> within our community. We are proud of our international achievements, but we measure our success by the <strong>people we impact</strong>.
-            </p>
+            </StaggerItem>
 
-            <div className="flex flex-wrap gap-3">
+            <StaggerItem className="flex flex-wrap gap-3">
               <Link to="/team" className="btn-primary">
                 Team Overview <ArrowRight size={16} />
               </Link>
-            </div>
+            </StaggerItem>
 
             {/* Robot Roster */}
-            <div className="mt-12 border border-crimson/15 rounded-xl overflow-hidden grid grid-cols-3 bg-white shadow-sm">
+            <StaggerItem className="mt-12 border border-crimson/15 rounded-xl overflow-hidden grid grid-cols-3 bg-white shadow-sm">
               {robots.map((r) => (
                 <RobotCard key={r.name} {...r} />
               ))}
-            </div>
-          </div>
+            </StaggerItem>
+          </StaggerGroup>
 
           {/* Right – Hero Image */}
-          <div className="flex justify-center lg:justify-end relative lg:-mt-72 mt-4 lg:mt-0">
+          <Reveal direction="left" delay={0.2} className="flex justify-center lg:justify-end relative lg:-mt-72 mt-4 lg:mt-0">
             <div className="relative">
               {/* Decorative ring */}
               <div className="absolute -inset-4 rounded-3xl border-2 border-crimson/10 rotate-3" />
@@ -70,19 +73,24 @@ export default function Home() {
                 decoding="async"
               />
               {/* Badge */}
-              <div className="absolute -bottom-4 -left-4 bg-crimson text-white rounded-xl px-5 py-3 shadow-lg">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.6 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.6, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                className="absolute -bottom-4 -left-4 bg-crimson text-white rounded-xl px-5 py-3 shadow-lg"
+              >
                 <p className="text-xs font-bold uppercase tracking-widest">Team</p>
                 <p className="text-2xl font-bold leading-none">#25153</p>
-              </div>
+              </motion.div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
       {/* ── About Strip ───────────────────────────── */}
       <section className="py-12 md:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="max-w-3xl mx-auto text-center">
+          <Reveal className="max-w-3xl mx-auto text-center">
             <p className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-3">Our Mission</p>
             <h2 className="text-3xl font-medium text-navy mb-6">Not Just Building Robots</h2>
             <p className="text-gray-600 leading-relaxed mb-4">
@@ -94,7 +102,7 @@ export default function Home() {
             <p className="text-gray-600 leading-relaxed">
               For us, robotics is not just about building robots—it is about <strong>thinking, producing, and inspiring</strong>.
             </p>
-          </div>
+          </Reveal>
         </div>
       </section>
 

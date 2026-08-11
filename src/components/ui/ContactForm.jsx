@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { Send, CheckCircle } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { StaggerGroup, StaggerItem } from '../motion/Stagger'
 
 export default function ContactForm() {
   const [form, setForm] = useState({ name: '', email: '', subject: '', phone: '', message: '' })
@@ -17,28 +19,46 @@ export default function ContactForm() {
     }, 1200)
   }
 
-  if (sent) {
-    return (
-      <div className="flex flex-col items-center justify-center py-16 gap-4 text-center">
-        <CheckCircle size={56} className="text-green-500" />
-        <h3 className="text-xl font-medium text-navy">Message Sent!</h3>
-        <p className="text-gray-500 text-sm max-w-xs">
-          Thank you for reaching out. We'll get back to you as soon as possible.
-        </p>
-        <button
-          onClick={() => { setSent(false); setForm({ name:'',email:'',subject:'',phone:'',message:'' }) }}
-          className="btn-outline mt-2"
-        >
-          Send Another
-        </button>
-      </div>
-    )
-  }
-
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-        <div>
+    <AnimatePresence mode="wait">
+      {sent ? (
+        <motion.div
+          key="sent"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.9 }}
+          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col items-center justify-center py-16 gap-4 text-center"
+        >
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.1, type: 'spring', stiffness: 260, damping: 18 }}
+          >
+            <CheckCircle size={56} className="text-green-500" />
+          </motion.div>
+          <h3 className="text-xl font-medium text-navy">Message Sent!</h3>
+          <p className="text-gray-500 text-sm max-w-xs">
+            Thank you for reaching out. We'll get back to you as soon as possible.
+          </p>
+          <button
+            onClick={() => { setSent(false); setForm({ name:'',email:'',subject:'',phone:'',message:'' }) }}
+            className="btn-outline mt-2"
+          >
+            Send Another
+          </button>
+        </motion.div>
+      ) : (
+    <motion.form
+      key="form"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onSubmit={handleSubmit}
+      className="space-y-5"
+    >
+      <StaggerGroup as="div" staggerChildren={0.08} amount={0.4} className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <StaggerItem>
           <label className="form-label">Name *</label>
           <input
             id="contact-name"
@@ -50,8 +70,8 @@ export default function ContactForm() {
             onChange={handleChange}
             className="form-input"
           />
-        </div>
-        <div>
+        </StaggerItem>
+        <StaggerItem>
           <label className="form-label">Email *</label>
           <input
             id="contact-email"
@@ -63,8 +83,8 @@ export default function ContactForm() {
             onChange={handleChange}
             className="form-input"
           />
-        </div>
-        <div>
+        </StaggerItem>
+        <StaggerItem>
           <label className="form-label">Subject *</label>
           <input
             id="contact-subject"
@@ -76,8 +96,8 @@ export default function ContactForm() {
             onChange={handleChange}
             className="form-input"
           />
-        </div>
-        <div>
+        </StaggerItem>
+        <StaggerItem>
           <label className="form-label">Phone</label>
           <input
             id="contact-phone"
@@ -88,8 +108,8 @@ export default function ContactForm() {
             onChange={handleChange}
             className="form-input"
           />
-        </div>
-      </div>
+        </StaggerItem>
+      </StaggerGroup>
       <div>
         <label className="form-label">Message *</label>
         <textarea
@@ -103,9 +123,11 @@ export default function ContactForm() {
           className="form-input resize-none"
         />
       </div>
-      <button
+      <motion.button
         type="submit"
         disabled={loading}
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
         className="btn-primary w-full justify-center"
       >
         {loading ? (
@@ -122,7 +144,9 @@ export default function ContactForm() {
             Send Message
           </>
         )}
-      </button>
-    </form>
+      </motion.button>
+    </motion.form>
+      )}
+    </AnimatePresence>
   )
 }

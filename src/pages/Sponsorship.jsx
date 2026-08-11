@@ -1,6 +1,8 @@
 import PageBanner from '../components/ui/PageBanner'
 import ContactForm from '../components/ui/ContactForm'
 import { Heart, Star, Package, Handshake } from 'lucide-react'
+import Reveal from '../components/motion/Reveal'
+import { StaggerGroup, StaggerItem } from '../components/motion/Stagger'
 import { useCollection } from '../context/ContentContext'
 
 const iconMap = { Heart, Star, Package, Handshake }
@@ -23,7 +25,7 @@ export default function Sponsorship() {
 
       {/* Why Sponsor */}
       <section className="py-12 md:py-20 bg-white">
-        <div className="max-w-5xl mx-auto px-6 text-center">
+        <Reveal className="max-w-5xl mx-auto px-6 text-center">
           <p className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-2">Partner With Us</p>
           <h2 className="text-3xl font-medium text-navy mb-2">Why Sponsor Cartesian?</h2>
           <div className="w-10 h-0.5 bg-gold mx-auto mb-8" />
@@ -40,19 +42,21 @@ export default function Sponsorship() {
               Download Sponsorship Prospectus
             </a>
           </div>
-        </div>
+        </Reveal>
       </section>
 
       {/* Tiers */}
       <section className="py-10 pb-24 bg-gray-50">
         <div className="max-w-6xl mx-auto px-6">
           <h3 className="text-center text-xl font-medium text-navy mb-10">Sponsorship Tiers</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+          <StaggerGroup as="div" staggerChildren={0.1} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
             {tiers.map((tier) => {
               const Icon = iconMap[tier.icon] || Heart
               return (
-              <div
+              <StaggerItem
                 key={tier.name}
+                whileHover={{ y: -6 }}
+                transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                 className={`${tier.bg} border-2 ${tier.color} rounded-2xl p-6 flex flex-col ${tier.featured ? 'shadow-xl sm:scale-105' : ''}`}
               >
                 <div className={`${tier.accent} mb-3`}><Icon size={24} /></div>
@@ -66,13 +70,13 @@ export default function Sponsorship() {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </StaggerItem>
               )
             })}
-          </div>
+          </StaggerGroup>
 
           {/* Benefit Matrix */}
-          <div className="mb-20">
+          <Reveal className="mb-20">
             <div className="flex items-center gap-4 mb-6">
               <h3 className="text-xl font-bold text-navy uppercase tracking-widest">Benefit Matrix</h3>
               <div className="flex-1 h-px bg-gray-200" />
@@ -108,11 +112,11 @@ export default function Sponsorship() {
             <p className="text-xs text-gray-400 mt-4 italic">
               * Financial transactions and invoicing are processed through the METU Development Foundation.
             </p>
-          </div>
+          </Reveal>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12">
             {/* Technical Aligned Budget */}
-            <div>
+            <Reveal direction="right">
               <div className="flex items-center gap-4 mb-6">
                 <h3 className="text-xl font-bold text-navy uppercase tracking-widest">Technical Aligned Budget</h3>
                 <div className="flex-1 h-px bg-gray-200" />
@@ -131,10 +135,10 @@ export default function Sponsorship() {
                   </div>
                 </div>
               </div>
-            </div>
+            </Reveal>
 
             {/* In-Kind Support */}
-            <div>
+            <Reveal direction="left">
               <div className="flex items-center gap-4 mb-6">
                 <h3 className="text-xl font-bold text-navy uppercase tracking-widest">In-Kind Support</h3>
                 <div className="flex-1 h-px bg-gray-200" />
@@ -142,7 +146,7 @@ export default function Sponsorship() {
               <p className="text-gray-600 leading-relaxed bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
                 {inKind}
               </p>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -150,14 +154,14 @@ export default function Sponsorship() {
       {/* Contact CTA */}
       <section className="py-12 md:py-20 bg-white">
         <div className="max-w-2xl mx-auto px-6">
-          <div className="text-center mb-10">
+          <Reveal className="text-center mb-10">
             <p className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-2">Get In Touch</p>
             <h2 className="text-3xl font-medium text-navy mb-2">Become a Sponsor</h2>
             <div className="w-10 h-0.5 bg-gold mx-auto" />
-          </div>
-          <div className="bg-gray-50 rounded-2xl p-5 sm:p-8 border border-gray-100 shadow-sm">
+          </Reveal>
+          <Reveal delay={0.1} className="bg-gray-50 rounded-2xl p-5 sm:p-8 border border-gray-100 shadow-sm">
             <ContactForm />
-          </div>
+          </Reveal>
         </div>
       </section>
     </div>
