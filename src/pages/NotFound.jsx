@@ -13,24 +13,20 @@ export default function NotFound() {
       <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-gold/10 blur-3xl pointer-events-none" />
 
       <div className="max-w-2xl mx-auto px-6 py-16 w-full relative text-center">
-        {/* 404 numeral, with René floating free above it — no frame, no box */}
-        <div className="relative flex justify-center mb-2">
-          <div className="text-8xl sm:text-9xl font-black text-navy/10 leading-none select-none">404</div>
-
-          <motion.img
-            src="/media/hero-descartes.png"
-            alt="René Descartes, escaped and floating free above the error"
-            decoding="async"
-            className="absolute -top-14 sm:-top-20 w-40 sm:w-56 object-contain drop-shadow-2xl"
-            initial={{ opacity: 0, y: 30, rotate: -8, scale: 0.8 }}
+        {/* René, framed again, stacked above the 404 numeral in plain flow
+            (not absolutely overlapped) so spacing never collides with the text below */}
+        <div className="flex flex-col items-center mb-6 sm:mb-8">
+          <motion.div
+            className="relative w-36 sm:w-48 mb-4 sm:mb-6"
+            initial={{ opacity: 0, y: 20, rotate: -6, scale: 0.85 }}
             animate={
               reducedMotion
                 ? { opacity: 1, y: 0, rotate: 0, scale: 1 }
                 : {
                     opacity: 1,
                     scale: 1,
-                    y: [30, -14, -6, -16, -10],
-                    rotate: [-8, 4, -3, 3, -2],
+                    y: [0, -10, -4, -12, -6],
+                    rotate: [-3, 3, -2, 2, -3],
                   }
             }
             transition={
@@ -43,7 +39,17 @@ export default function NotFound() {
                     rotate: { duration: 5, times: [0, 0.25, 0.5, 0.75, 1], repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' },
                   }
             }
-          />
+          >
+            <div className="absolute -inset-3 rounded-3xl border-2 border-crimson/10 rotate-3" />
+            <img
+              src="/media/hero-descartes.png"
+              alt="A puzzled René Descartes, unable to find this page"
+              decoding="async"
+              className="relative w-full object-contain drop-shadow-2xl"
+            />
+          </motion.div>
+
+          <div className="text-8xl sm:text-9xl font-black text-navy/10 leading-none select-none">404</div>
         </div>
 
         <StaggerGroup as="div" staggerChildren={0.12} className="flex flex-col items-center">
