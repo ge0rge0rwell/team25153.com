@@ -8,6 +8,7 @@ import Reveal from '../components/motion/Reveal'
 import { StaggerGroup, StaggerItem } from '../components/motion/Stagger'
 import { TypewriterText, TypewriterCycle } from '../components/motion/Typewriter'
 import ScrollVelocitySkew from '../components/motion/ScrollVelocitySkew'
+import { Spotlight } from '../components/ui/spotlight'
 import { useCollection } from '../context/ContentContext'
 
 export default function Home() {
@@ -110,13 +111,18 @@ export default function Home() {
             >
               {/* Decorative ring */}
               <div className="absolute -inset-4 rounded-3xl border-2 border-crimson/10 rotate-3" />
-              <img
-                src="/media/hero-descartes.png"
-                alt="Cartesian Robotics Hero"
-                className="relative w-full max-w-sm lg:max-w-md rounded-2xl object-cover shadow-2xl"
-                fetchPriority="high"
-                decoding="async"
-              />
+              {/* Spotlight's forced overflow:hidden is confined to this inner
+                  wrapper so it doesn't clip the ring or badge outside it */}
+              <div className="relative inline-block rounded-2xl overflow-hidden">
+                <Spotlight size={280} />
+                <img
+                  src="/media/hero-descartes.png"
+                  alt="Cartesian Robotics Hero"
+                  className="relative block w-full max-w-sm lg:max-w-md object-cover shadow-2xl"
+                  fetchPriority="high"
+                  decoding="async"
+                />
+              </div>
               {/* Badge */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.6 }}
