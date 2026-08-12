@@ -1,13 +1,20 @@
+import { lazy, Suspense } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { Trophy, ChevronRight } from 'lucide-react'
 import { motion } from 'framer-motion'
 import Reveal from '../components/motion/Reveal'
 import { StaggerGroup, StaggerItem } from '../components/motion/Stagger'
 import { useCollection } from '../context/ContentContext'
+import { useIsDesktop } from '../lib/useIsDesktop'
+
+// three+fiber+drei, split out of RobotPage's own chunk and only fetched on
+// desktop where the 3D viewer actually mounts.
+const RobotScene = lazy(() => import('../components/motion/RobotScene'))
 
 export default function RobotPage() {
   const { slug } = useParams()
   const robot = useCollection('robots').robots.find((r) => r.slug === slug)
+  const isDesktop = useIsDesktop()
 
   if (!robot) return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -85,6 +92,22 @@ export default function RobotPage() {
           </div>
         </div>
       </section>
+
+      {/* ══════════════════════════════════════════
+          3D VIEWER — drag to rotate. Loads /models/<slug>.glb; renders
+          nothing if that file isn't there yet. Desktop only.
+      ══════════════════════════════════════════ */}
+      {isDesktop && (
+        <section className="bg-gray-50 border-t border-gray-100">
+          <div className="max-w-5xl mx-auto px-6 py-6">
+            <div className="h-[420px] rounded-2xl overflow-hidden bg-gradient-to-b from-white to-gray-100 ring-1 ring-gray-100">
+              <Suspense fallback={null}>
+                <RobotScene modelUrl={`/models/${robot.slug}.glb`} />
+              </Suspense>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ══════════════════════════════════════════
           ROBOT BREAKDOWN IMAGE
