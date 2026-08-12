@@ -105,13 +105,21 @@ function TopNavItem({ item }) {
     )
   }
 
+  const isActive = location.pathname === item.to
   return (
     <Link
       to={item.to}
-      className={`px-3 py-2 text-sm font-medium uppercase tracking-wider transition-colors
-        ${location.pathname === item.to ? 'text-navy-mid' : 'text-navy hover:text-navy-mid'}`}
+      className={`relative px-3 py-2 text-sm font-medium uppercase tracking-wider transition-colors
+        ${isActive ? 'text-navy-mid' : 'text-navy hover:text-navy-mid'}`}
     >
       {item.label}
+      {isActive && (
+        <motion.span
+          layoutId="nav-underline"
+          className="absolute left-3 right-3 -bottom-0.5 h-0.5 bg-crimson rounded-full"
+          transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+        />
+      )}
     </Link>
   )
 }

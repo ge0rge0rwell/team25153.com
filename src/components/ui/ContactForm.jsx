@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Send, CheckCircle } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { toast } from 'sonner'
 import { StaggerGroup, StaggerItem } from '../motion/Stagger'
 
 export default function ContactForm() {
@@ -16,6 +17,7 @@ export default function ContactForm() {
     setTimeout(() => {
       setLoading(false)
       setSent(true)
+      toast.success('Message sent', { description: "We'll get back to you as soon as possible." })
     }, 1200)
   }
 

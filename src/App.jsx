@@ -1,10 +1,12 @@
 import { lazy, Suspense, useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion, MotionConfig, LayoutGroup } from 'framer-motion'
+import { Toaster } from 'sonner'
 import Navbar from './components/layout/Navbar'
 import Footer from './components/layout/Footer'
 import Home from './pages/Home'
 import Loader from './components/ui/Loader'
+import SmoothScroll from './components/motion/SmoothScroll'
 import { pageTransition } from './components/motion/variants'
 
 // Route-level code splitting: every page below ships as its own chunk and is
@@ -117,6 +119,8 @@ export default function App() {
   return (
     <BrowserRouter>
       <MotionConfig reducedMotion="user">
+        <SmoothScroll />
+        <Toaster position="bottom-right" richColors closeButton />
         <AppShell />
       </MotionConfig>
     </BrowserRouter>

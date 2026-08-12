@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { DialogContent, DialogTitle } from '../components/ui/dialog'
 import Reveal from '../components/motion/Reveal'
 import { StaggerGroup, StaggerItem } from '../components/motion/Stagger'
+import ScrollProgressBar from '../components/motion/ScrollProgressBar'
+import GsapCountUp from '../components/motion/GsapCountUp'
 import { useCollection } from '../context/ContentContext'
 
 // Badge colors per tier — all crimson / navy variants, no gold
@@ -37,6 +39,7 @@ export default function Awards() {
 
   return (
     <div>
+      <ScrollProgressBar />
       <PageBanner
         title={pageTitle}
         breadcrumbs={breadcrumbs}
@@ -86,7 +89,7 @@ export default function Awards() {
             <Trophy size={28} className="text-white/70" />
             <div>
               <p className="text-white/70 text-xs font-bold uppercase tracking-widest">Total Awards</p>
-              <p className="text-3xl font-black leading-none">{total}</p>
+              <p className="text-3xl font-black leading-none"><GsapCountUp value={total} /></p>
             </div>
           </StaggerItem>
           <div className="flex-1 h-px bg-white/20 mx-4" />

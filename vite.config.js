@@ -29,6 +29,16 @@ export default defineConfig({
         // changes don't bust the React/runtime cache, and the main entry stays small.
         manualChunks(id) {
           if (id.includes('node_modules')) {
+            // Only reachable through HeroScene/ParticlesBackground's dynamic
+            // import() — leave them to Rollup's automatic per-entry chunking
+            // instead of forcing them into the always-loaded vendor bundle.
+            if (
+              id.includes('three') ||
+              id.includes('@react-three') ||
+              id.includes('tsparticles')
+            ) {
+              return undefined
+            }
             if (id.includes('react-router') || id.includes('/@remix-run/')) return 'router'
             if (
               id.includes('/react/') ||

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
@@ -10,6 +10,14 @@ import { TypewriterText, TypewriterCycle } from '../components/motion/Typewriter
 import ScrollVelocitySkew from '../components/motion/ScrollVelocitySkew'
 import { Spotlight } from '../components/ui/spotlight'
 import { useCollection } from '../context/ContentContext'
+import { useIsDesktop } from '../lib/useIsDesktop'
+import { gsap } from '../lib/scroll'
+
+// Both chunks (three+fiber+drei, tsparticles) are desktop-only extras — kept
+// out of Home's bundle (which ships in the critical-path main chunk) via
+// lazy() and only fetched once isDesktop is true.
+const HeroScene = lazy(() => import('../components/motion/HeroScene'))
+const ParticlesBackground = lazy(() => import('../components/motion/ParticlesBackground'))
 
 export default function Home() {
   const { robots, stats } = useCollection('home')
@@ -17,7 +25,25 @@ export default function Home() {
   const reducedMotion = useReducedMotion()
 
   const heroRef = useRef(null)
+  const aboutRef = useRef(null)
+  const isDesktop = useIsDesktop()
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] })
+
+  // Pins the About Strip in place while its heading scales in, then releases —
+  // a GSAP timeline distinct from the framer-motion whileInView reveals used
+  // elsewhere. Desktop-only: pinning fights mobile's shorter viewport and
+  // address-bar resize jank.
+  useEffect(() => {
+    if (!isDesktop || reducedMotion || !aboutRef.current) return
+    const heading = aboutRef.current.querySelector('[data-pin-heading]')
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: { trigger: aboutRef.current, start: 'top top', end: '+=60%', scrub: 0.6, pin: true },
+      })
+      if (heading) tl.fromTo(heading, { scale: 0.85, opacity: 0.4 }, { scale: 1, opacity: 1, ease: 'none' })
+    }, aboutRef)
+    return () => ctx.revert()
+  }, [isDesktop, reducedMotion])
 
   // Layered "3D planes" parallax — each element moves at its own rate as the
   // hero scrolls past, so the composition has real depth instead of a flat
@@ -43,6 +69,16 @@ export default function Home() {
           style={{ y: midPlaneY, rotate: midPlaneRotate }}
           className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-gold/10 blur-3xl pointer-events-none"
         />
+
+        {/* Ambient particle field + abstract 3D — desktop only */}
+        {isDesktop && !reducedMotion && (
+          <Suspense fallback={null}>
+            <ParticlesBackground />
+            <div className="absolute inset-y-0 right-0 w-full lg:w-1/2 pointer-events-none opacity-70">
+              <HeroScene />
+            </div>
+          </Suspense>
+        )}
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
           {/* Left – Text + Robots */}
@@ -139,12 +175,17 @@ export default function Home() {
       </section>
 
       {/* ── About Strip ───────────────────────────── */}
-      <section className="py-12 md:py-20 bg-white">
+      <section ref={aboutRef} className="py-12 md:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <StaggerGroup as="div" staggerChildren={0.15} className="max-w-3xl mx-auto text-center">
             <StaggerItem as="p" className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-3">Our Mission</StaggerItem>
             <StaggerItem as="h2" className="text-3xl font-medium text-navy mb-6">
-              <ScrollVelocitySkew as="span" className="inline-block">Not Just Building Robots</ScrollVelocitySkew>
+              {/* Plain span, not framer-motion-controlled — GSAP's pin scrub
+                  owns this node exclusively, no fighting over transform/opacity
+                  with the StaggerItem entrance above it. */}
+              <span data-pin-heading className="inline-block">
+                <ScrollVelocitySkew as="span" className="inline-block">Not Just Building Robots</ScrollVelocitySkew>
+              </span>
             </StaggerItem>
             <StaggerItem as="p" className="text-gray-600 leading-relaxed mb-4">
               Our team aims to develop middle school students' skills in <strong>engineering, creativity, strategy, and teamwork</strong> while simultaneously <strong>spreading STEM culture</strong> within our community.
