@@ -1,6 +1,7 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { useParams, Link } from 'react-router-dom'
-import { Trophy, ChevronRight } from 'lucide-react'
+import { Trophy, ChevronRight, Maximize2, X } from 'lucide-react'
 import { motion } from 'framer-motion'
 import Reveal from '../components/motion/Reveal'
 import { StaggerGroup, StaggerItem } from '../components/motion/Stagger'
@@ -15,6 +16,23 @@ export default function RobotPage() {
   const { slug } = useParams()
   const robot = useCollection('robots').robots.find((r) => r.slug === slug)
   const isDesktop = useIsDesktop()
+  const [fullscreen, setFullscreen] = useState(false)
+
+  // Escape to exit, and lock page scroll while the portal overlay is up —
+  // it's rendered into document.body specifically so `position: fixed` isn't
+  // scoped to the route wrapper's transform (framer-motion's page-transition
+  // translateY leaves a `transform` on that ancestor even at rest, which
+  // would otherwise turn "fullscreen" into "fills the route div").
+  useEffect(() => {
+    if (!fullscreen) return
+    const onKey = (e) => e.key === 'Escape' && setFullscreen(false)
+    window.addEventListener('keydown', onKey)
+    document.body.style.overflow = 'hidden'
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      document.body.style.overflow = ''
+    }
+  }, [fullscreen])
 
   if (!robot) return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -98,19 +116,48 @@ export default function RobotPage() {
           scroll to zoom. Loads /models/<slug>.glb; renders nothing if that
           file isn't there yet. Desktop only.
       ══════════════════════════════════════════ */}
-      {isDesktop && (
+      {isDesktop && !fullscreen && (
         <section className="bg-gray-50 border-t border-gray-100">
           <div className="max-w-5xl mx-auto px-6 py-6">
-            <div className="relative h-[520px] rounded-2xl overflow-hidden bg-gradient-to-b from-white to-gray-100 ring-1 ring-gray-100">
+            {/* data-lenis-prevent: keeps the global Lenis smooth-scroll from
+                also grabbing wheel/drag input meant for OrbitControls, so
+                zooming/orbiting the model doesn't also scroll the page. */}
+            <div data-lenis-prevent className="relative h-[520px] rounded-2xl overflow-hidden bg-gradient-to-b from-white to-gray-100 ring-1 ring-gray-100">
               <Suspense fallback={null}>
                 <RobotScene modelUrl={`/models/${robot.slug}.glb`} />
               </Suspense>
+              <button
+                onClick={() => setFullscreen(true)}
+                className="absolute top-3 right-3 p-2 rounded-lg bg-white/80 hover:bg-white text-navy shadow-sm ring-1 ring-gray-200 transition-colors"
+                aria-label="View fullscreen"
+              >
+                <Maximize2 size={16} />
+              </button>
               <span className="absolute bottom-3 right-4 text-[11px] text-gray-400 uppercase tracking-widest pointer-events-none">
                 Drag to rotate · Scroll to zoom · Right-click to pan
               </span>
             </div>
           </div>
         </section>
+      )}
+
+      {isDesktop && fullscreen && createPortal(
+        <div data-lenis-prevent className="fixed inset-0 z-[999] bg-navy">
+          <Suspense fallback={null}>
+            <RobotScene modelUrl={`/models/${robot.slug}.glb`} />
+          </Suspense>
+          <button
+            onClick={() => setFullscreen(false)}
+            className="absolute top-5 right-5 p-3 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-colors"
+            aria-label="Exit fullscreen"
+          >
+            <X size={20} />
+          </button>
+          <span className="absolute bottom-5 right-6 text-xs text-white/40 uppercase tracking-widest pointer-events-none">
+            Drag to rotate · Scroll to zoom · Right-click to pan · Esc to exit
+          </span>
+        </div>,
+        document.body
       )}
 
       {/* ══════════════════════════════════════════

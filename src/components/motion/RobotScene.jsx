@@ -26,9 +26,9 @@ function Model({ url }) {
 export default function RobotScene({ modelUrl }) {
   return (
     <ModelBoundary>
-      <Canvas camera={{ position: [3, 2, 5], fov: 40 }} dpr={[1, 1.5]} shadows>
+      <Canvas camera={{ position: [3, 2, 5], fov: 40 }} dpr={[1, 2]} gl={{ antialias: true }} shadows="soft">
         <Suspense fallback={null}>
-          <Stage environment="city" intensity={0.5} shadows="contact" adjustCamera>
+          <Stage environment="city" intensity={0.6} shadows={{ type: 'contact', opacity: 0.5, blur: 2 }} adjustCamera>
             <Model url={modelUrl} />
           </Stage>
         </Suspense>

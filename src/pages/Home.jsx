@@ -50,8 +50,6 @@ export default function Home() {
   // scroll. Back plane (diagonal wash) drifts slowest, mid plane (blur
   // circle) drifts + rotates, front plane (hero image) zooms + lifts.
   const backPlaneY = useTransform(scrollYProgress, [0, 1], reducedMotion ? [0, 0] : [0, 70])
-  const midPlaneY = useTransform(scrollYProgress, [0, 1], reducedMotion ? [0, 0] : [0, -110])
-  const midPlaneRotate = useTransform(scrollYProgress, [0, 1], reducedMotion ? [0, 0] : [0, 25])
   const heroImageY = useTransform(scrollYProgress, [0, 1], reducedMotion ? [0, 0] : [0, -60])
   const heroImageScale = useTransform(scrollYProgress, [0, 1], reducedMotion ? [1, 1] : [1, 1.12])
   const heroImageRotateX = useTransform(scrollYProgress, [0, 1], reducedMotion ? [0, 0] : [0, 10])
@@ -64,11 +62,6 @@ export default function Home() {
       <section ref={heroRef} className="min-h-[88vh] flex items-center bg-gradient-to-br from-[#fdf8f7] to-white relative overflow-hidden">
         {/* Background decoration — back plane */}
         <motion.div style={{ y: backPlaneY }} className="absolute top-0 right-0 w-1/2 h-full bg-crimson/3 clip-diagonal pointer-events-none" />
-        {/* Mid plane */}
-        <motion.div
-          style={{ y: midPlaneY, rotate: midPlaneRotate }}
-          className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-gold/10 blur-3xl pointer-events-none"
-        />
 
         {/* Ambient particle field + abstract 3D — desktop only */}
         {isDesktop && !reducedMotion && (
