@@ -20,8 +20,9 @@ function Model({ url }) {
   return <primitive object={scene} />
 }
 
-// Drag-to-rotate 3D viewer for a robot's .glb, expected at /models/<slug>.glb.
-// Renders nothing if that file doesn't exist yet.
+// Fully interactive 3D viewer for a robot's .glb, expected at
+// /models/<slug>.glb — drag to rotate, right-click/two-finger drag to pan,
+// scroll/pinch to zoom. Renders nothing if that file doesn't exist yet.
 export default function RobotScene({ modelUrl }) {
   return (
     <ModelBoundary>
@@ -31,7 +32,17 @@ export default function RobotScene({ modelUrl }) {
             <Model url={modelUrl} />
           </Stage>
         </Suspense>
-        <OrbitControls autoRotate autoRotateSpeed={1.1} enablePan={false} minDistance={2} maxDistance={12} />
+        <OrbitControls
+          enableRotate
+          enableZoom
+          enablePan
+          screenSpacePanning
+          panSpeed={0.8}
+          zoomSpeed={0.8}
+          rotateSpeed={0.7}
+          minDistance={0.5}
+          maxDistance={20}
+        />
       </Canvas>
     </ModelBoundary>
   )

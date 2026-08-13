@@ -94,16 +94,20 @@ export default function RobotPage() {
       </section>
 
       {/* ══════════════════════════════════════════
-          3D VIEWER — drag to rotate. Loads /models/<slug>.glb; renders
-          nothing if that file isn't there yet. Desktop only.
+          3D VIEWER — drag to rotate, right-click/two-finger drag to pan,
+          scroll to zoom. Loads /models/<slug>.glb; renders nothing if that
+          file isn't there yet. Desktop only.
       ══════════════════════════════════════════ */}
       {isDesktop && (
         <section className="bg-gray-50 border-t border-gray-100">
           <div className="max-w-5xl mx-auto px-6 py-6">
-            <div className="h-[420px] rounded-2xl overflow-hidden bg-gradient-to-b from-white to-gray-100 ring-1 ring-gray-100">
+            <div className="relative h-[520px] rounded-2xl overflow-hidden bg-gradient-to-b from-white to-gray-100 ring-1 ring-gray-100">
               <Suspense fallback={null}>
                 <RobotScene modelUrl={`/models/${robot.slug}.glb`} />
               </Suspense>
+              <span className="absolute bottom-3 right-4 text-[11px] text-gray-400 uppercase tracking-widest pointer-events-none">
+                Drag to rotate · Scroll to zoom · Right-click to pan
+              </span>
             </div>
           </div>
         </section>
