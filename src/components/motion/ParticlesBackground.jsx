@@ -1,17 +1,15 @@
-import { useEffect, useMemo, useState } from 'react'
-import Particles, { initParticlesEngine } from '@tsparticles/react'
+import { useMemo } from 'react'
+import { Particles, ParticlesProvider } from '@tsparticles/react'
 import { loadSlim } from '@tsparticles/slim'
+
+// Must be a stable reference across the app's lifetime — ParticlesProvider
+// throws if it's given a new function identity on a later mount.
+const initEngine = async (engine) => {
+  await loadSlim(engine)
+}
 
 // Subtle drifting dot field behind the hero. Desktop-only, mounted by the caller.
 export default function ParticlesBackground() {
-  const [ready, setReady] = useState(false)
-
-  useEffect(() => {
-    initParticlesEngine(async (engine) => {
-      await loadSlim(engine)
-    }).then(() => setReady(true))
-  }, [])
-
   const options = useMemo(
     () => ({
       fullScreen: { enable: false },
@@ -30,12 +28,9 @@ export default function ParticlesBackground() {
     []
   )
 
-  if (!ready) return null
   return (
-    <Particles
-      id="hero-particles"
-      options={options}
-      className="absolute inset-0 pointer-events-none"
-    />
+    <ParticlesProvider init={initEngine}>
+      <Particles id="hero-particles" options={options} className="absolute inset-0 pointer-events-none" />
+    </ParticlesProvider>
   )
 }
