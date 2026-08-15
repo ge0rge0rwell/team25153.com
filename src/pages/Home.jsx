@@ -8,7 +8,6 @@ import Reveal from '../components/motion/Reveal'
 import { StaggerGroup, StaggerItem } from '../components/motion/Stagger'
 import { TypewriterText, TypewriterCycle } from '../components/motion/Typewriter'
 import ScrollVelocitySkew from '../components/motion/ScrollVelocitySkew'
-import { Spotlight } from '../components/ui/spotlight'
 import { useCollection } from '../context/ContentContext'
 import { useIsDesktop } from '../lib/useIsDesktop'
 import { gsap } from '../lib/scroll'
@@ -136,10 +135,9 @@ export default function Home() {
             >
               {/* Decorative ring */}
               <div className="absolute -inset-4 rounded-3xl border-2 border-crimson/10 rotate-3" />
-              {/* Spotlight's forced overflow:hidden is confined to this inner
-                  wrapper so it doesn't clip the ring or badge outside it */}
+              {/* Rounded-corner clip confined to this inner wrapper so it
+                  doesn't clip the ring or badge outside it */}
               <div className="relative inline-block rounded-2xl overflow-hidden">
-                <Spotlight size={280} />
                 <img
                   src="/media/hero-descartes.png"
                   alt="Cartesian Robotics Hero"
