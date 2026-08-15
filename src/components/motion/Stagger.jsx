@@ -1,37 +1,28 @@
-import { motion } from 'framer-motion'
-import { staggerContainer, staggerItem } from './variants'
-
-// Wrap a list/grid with StaggerGroup, wrap each child with StaggerItem.
-// The group triggers once on scroll-in; items cascade in on its schedule.
+// Plain static wrappers — list/grid children used to cascade in on scroll
+// via framer-motion's whileInView; that scroll-linked animation has been
+// removed sitewide, so these now just render their elements directly. Kept
+// as pass-through components (rather than deleted) so call sites across
+// every page don't all need touching.
 export function StaggerGroup({
-  as = 'div',
-  staggerChildren = 0.12,
-  delayChildren = 0,
-  amount = 0.15,
+  as: Tag = 'div',
+  staggerChildren, // eslint-disable-line no-unused-vars -- kept for call-site compatibility, animation removed
+  delayChildren, // eslint-disable-line no-unused-vars
+  amount, // eslint-disable-line no-unused-vars
   className,
   children,
   ...rest
 }) {
-  const MotionTag = motion[as] || motion.div
   return (
-    <MotionTag
-      className={className}
-      variants={staggerContainer(staggerChildren, delayChildren)}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount }}
-      {...rest}
-    >
+    <Tag className={className} {...rest}>
       {children}
-    </MotionTag>
+    </Tag>
   )
 }
 
-export function StaggerItem({ as = 'div', className, children, ...rest }) {
-  const MotionTag = motion[as] || motion.div
+export function StaggerItem({ as: Tag = 'div', className, children, ...rest }) {
   return (
-    <MotionTag className={className} variants={staggerItem} {...rest}>
+    <Tag className={className} {...rest}>
       {children}
-    </MotionTag>
+    </Tag>
   )
 }

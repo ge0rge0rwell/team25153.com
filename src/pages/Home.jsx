@@ -1,13 +1,12 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
-import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import RobotCard from '../components/ui/RobotCard'
 import LogoCarousel from '../components/ui/LogoCarousel'
 import Reveal from '../components/motion/Reveal'
 import { StaggerGroup, StaggerItem } from '../components/motion/Stagger'
 import { TypewriterText, TypewriterCycle } from '../components/motion/Typewriter'
-import ScrollVelocitySkew from '../components/motion/ScrollVelocitySkew'
 import { useCollection } from '../context/ContentContext'
 import { useIsDesktop } from '../lib/useIsDesktop'
 import { gsap } from '../lib/scroll'
@@ -22,15 +21,12 @@ export default function Home() {
   const [firstWordDone, setFirstWordDone] = useState(false)
   const reducedMotion = useReducedMotion()
 
-  const heroRef = useRef(null)
   const aboutRef = useRef(null)
   const isDesktop = useIsDesktop()
-  const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] })
 
-  // Pins the About Strip in place while its heading scales in, then releases —
-  // a GSAP timeline distinct from the framer-motion whileInView reveals used
-  // elsewhere. Desktop-only: pinning fights mobile's shorter viewport and
-  // address-bar resize jank.
+  // Pins the About Strip in place while its heading scales in, then releases.
+  // Desktop-only: pinning fights mobile's shorter viewport and address-bar
+  // resize jank.
   useEffect(() => {
     if (!isDesktop || reducedMotion || !aboutRef.current) return
     const heading = aboutRef.current.querySelector('[data-pin-heading]')
@@ -43,23 +39,14 @@ export default function Home() {
     return () => ctx.revert()
   }, [isDesktop, reducedMotion])
 
-  // Layered "3D planes" parallax — each element moves at its own rate as the
-  // hero scrolls past, so the composition has real depth instead of a flat
-  // scroll. Back plane (diagonal wash) drifts slowest, mid plane (blur
-  // circle) drifts + rotates, front plane (hero image) zooms + lifts.
-  const backPlaneY = useTransform(scrollYProgress, [0, 1], reducedMotion ? [0, 0] : [0, 70])
-  const heroImageY = useTransform(scrollYProgress, [0, 1], reducedMotion ? [0, 0] : [0, -60])
-  const heroImageScale = useTransform(scrollYProgress, [0, 1], reducedMotion ? [1, 1] : [1, 1.12])
-  const heroImageRotateX = useTransform(scrollYProgress, [0, 1], reducedMotion ? [0, 0] : [0, 10])
-
   const statPhrases = (stats || []).map((s) => `${s.number} ${s.label}`)
 
   return (
     <div>
       {/* ── Hero ─────────────────────────────────── */}
-      <section ref={heroRef} className="min-h-[88vh] flex items-center bg-gradient-to-br from-[#fdf8f7] to-white relative overflow-hidden">
-        {/* Background decoration — back plane */}
-        <motion.div style={{ y: backPlaneY }} className="absolute top-0 right-0 w-1/2 h-full bg-crimson/3 clip-diagonal pointer-events-none" />
+      <section className="min-h-[88vh] flex items-center bg-gradient-to-br from-[#fdf8f7] to-white relative overflow-hidden">
+        {/* Background decoration */}
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-crimson/3 clip-diagonal pointer-events-none" />
 
         {/* Ambient particle field — desktop only */}
         {isDesktop && !reducedMotion && (
@@ -127,12 +114,9 @@ export default function Home() {
             </StaggerGroup>
           </div>
 
-          {/* Right – Hero Image — front plane: scroll zoom + 3D tilt */}
-          <Reveal direction="left" delay={0.2} className="flex justify-center lg:justify-end relative lg:-mt-72 mt-4 lg:mt-0" style={{ perspective: 1200 }}>
-            <motion.div
-              className="relative"
-              style={{ y: heroImageY, scale: heroImageScale, rotateX: heroImageRotateX, transformStyle: 'preserve-3d' }}
-            >
+          {/* Right – Hero Image */}
+          <Reveal direction="left" delay={0.2} className="flex justify-center lg:justify-end relative lg:-mt-72 mt-4 lg:mt-0">
+            <div className="relative">
               {/* Decorative ring */}
               <div className="absolute -inset-4 rounded-3xl border-2 border-crimson/10 rotate-3" />
               {/* Rounded-corner clip confined to this inner wrapper so it
@@ -156,7 +140,7 @@ export default function Home() {
                 <p className="text-xs font-bold uppercase tracking-widest">Team</p>
                 <p className="text-2xl font-bold leading-none">#25153</p>
               </motion.div>
-            </motion.div>
+            </div>
           </Reveal>
         </div>
       </section>
@@ -167,12 +151,8 @@ export default function Home() {
           <StaggerGroup as="div" staggerChildren={0.15} className="max-w-3xl mx-auto text-center">
             <StaggerItem as="p" className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-3">Our Mission</StaggerItem>
             <StaggerItem as="h2" className="text-3xl font-medium text-navy mb-6">
-              {/* Plain span, not framer-motion-controlled — GSAP's pin scrub
-                  owns this node exclusively, no fighting over transform/opacity
-                  with the StaggerItem entrance above it. */}
-              <span data-pin-heading className="inline-block">
-                <ScrollVelocitySkew as="span" className="inline-block">Not Just Building Robots</ScrollVelocitySkew>
-              </span>
+              {/* GSAP's pin scrub owns this node's scale/opacity exclusively */}
+              <span data-pin-heading className="inline-block">Not Just Building Robots</span>
             </StaggerItem>
             <StaggerItem as="p" className="text-gray-600 leading-relaxed mb-4">
               Our team aims to develop middle school students' skills in <strong>engineering, creativity, strategy, and teamwork</strong> while simultaneously <strong>spreading STEM culture</strong> within our community.

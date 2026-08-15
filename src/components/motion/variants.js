@@ -20,24 +20,6 @@ export const fadeDown = {
   },
 }
 
-export const fadeLeft = {
-  hidden: { opacity: 0, x: 56 },
-  show: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
-  },
-}
-
-export const fadeRight = {
-  hidden: { opacity: 0, x: -56 },
-  show: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
-  },
-}
-
 export const scaleIn = {
   hidden: { opacity: 0, scale: 0.85 },
   show: {
@@ -46,24 +28,6 @@ export const scaleIn = {
     transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] },
   },
 }
-
-export const directionVariant = {
-  up: fadeUp,
-  down: fadeDown,
-  left: fadeLeft,
-  right: fadeRight,
-  scale: scaleIn,
-}
-
-// Container drives the choreography; children just declare `staggerItem`.
-export const staggerContainer = (staggerChildren = 0.12, delayChildren = 0) => ({
-  hidden: {},
-  show: {
-    transition: { staggerChildren, delayChildren },
-  },
-})
-
-export const staggerItem = fadeUp
 
 // Merge a delay into a variant's own transition instead of passing a
 // top-level `transition` prop (which would clobber the variant's tuned

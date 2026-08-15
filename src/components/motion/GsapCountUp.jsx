@@ -1,8 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from '../../lib/scroll'
 
-// Counts a number up from 0 on mount. GSAP-driven (distinct from the
-// framer-motion whileInView reveals used everywhere else on the page).
+// Counts a number up from 0 on mount. GSAP-driven, not framer-motion.
 //
 // Animates on mount rather than via ScrollTrigger: this component only ever
 // renders just below the page banner, so it's typically already in view by
