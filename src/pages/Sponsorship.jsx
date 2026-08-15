@@ -3,7 +3,6 @@ import ContactForm from '../components/ui/ContactForm'
 import { Heart, Star, Package, Handshake } from 'lucide-react'
 import Reveal from '../components/motion/Reveal'
 import { StaggerGroup, StaggerItem } from '../components/motion/Stagger'
-import ScrollProgressBar from '../components/motion/ScrollProgressBar'
 import { useCollection } from '../context/ContentContext'
 
 const iconMap = { Heart, Star, Package, Handshake }
@@ -19,7 +18,6 @@ export default function Sponsorship() {
   }))
   return (
     <div>
-      <ScrollProgressBar />
       <PageBanner
         title="Sponsorship"
         breadcrumbs={[{ label: 'Sponsorship' }]}
