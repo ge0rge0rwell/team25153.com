@@ -13,10 +13,9 @@ import { useCollection } from '../context/ContentContext'
 import { useIsDesktop } from '../lib/useIsDesktop'
 import { gsap } from '../lib/scroll'
 
-// Both chunks (three+fiber+drei, tsparticles) are desktop-only extras — kept
-// out of Home's bundle (which ships in the critical-path main chunk) via
-// lazy() and only fetched once isDesktop is true.
-const HeroScene = lazy(() => import('../components/motion/HeroScene'))
+// tsparticles is a desktop-only extra — kept out of Home's bundle (which
+// ships in the critical-path main chunk) via lazy() and only fetched once
+// isDesktop is true.
 const ParticlesBackground = lazy(() => import('../components/motion/ParticlesBackground'))
 
 export default function Home() {
@@ -63,13 +62,10 @@ export default function Home() {
         {/* Background decoration — back plane */}
         <motion.div style={{ y: backPlaneY }} className="absolute top-0 right-0 w-1/2 h-full bg-crimson/3 clip-diagonal pointer-events-none" />
 
-        {/* Ambient particle field + abstract 3D — desktop only */}
+        {/* Ambient particle field — desktop only */}
         {isDesktop && !reducedMotion && (
           <Suspense fallback={null}>
             <ParticlesBackground />
-            <div className="absolute inset-y-0 right-0 w-full lg:w-1/2 pointer-events-none opacity-70">
-              <HeroScene />
-            </div>
           </Suspense>
         )}
 
