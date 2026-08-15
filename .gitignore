@@ -1,2 +1,7 @@
-.envdist/
+.env
+.env.*
+!.env.example
+dist/
 data/
+node_modules/
+.DS_Store

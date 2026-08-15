@@ -8,6 +8,7 @@ import Home from './pages/Home'
 import Loader from './components/ui/Loader'
 import SmoothScroll from './components/motion/SmoothScroll'
 import { pageTransition } from './components/motion/variants'
+import useDocumentMeta from './lib/useDocumentMeta'
 
 // Route-level code splitting: every page below ships as its own chunk and is
 // only fetched when the user navigates to it. Home stays in the main bundle so
@@ -129,6 +130,7 @@ export default function App() {
 
 function AppShell() {
   const { pathname } = useLocation()
+  useDocumentMeta()
 
   // The CMS panel owns everything under /cms and renders without site chrome.
   if (pathname.startsWith('/cms')) {

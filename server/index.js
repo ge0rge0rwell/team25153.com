@@ -24,6 +24,7 @@ import {
   savePost,
   deletePost,
 } from './store.js'
+import { registerSeoRoutes, seoFallback } from './seo.js'
 import {
   ensureAdmin,
   login,
@@ -393,11 +394,12 @@ app.use('/moodle-api', express.urlencoded({ extended: false }), async (req, res,
 
 // ── Static site + SPA fallback ───────────────────────────────────────────────
 if (fs.existsSync(DIST)) {
-  app.use(express.static(DIST))
-  // SPA fallback
-  app.use((_req, res) => {
-    res.sendFile(path.join(DIST, 'index.html'))
-  })
+  // robots.txt / sitemap.xml must be registered before express.static, so the
+  // generated versions win over anything sitting in dist/.
+  registerSeoRoutes(app)
+  app.use(express.static(DIST, { index: false }))
+  // SPA fallback, with per-route metadata injected into the HTML.
+  app.use(seoFallback(DIST))
 } else {
   app.get('/', (_req, res) =>
     res.send('Run `npm run build` to generate the site. The API is live at /api.'),
