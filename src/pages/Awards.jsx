@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { DialogContent, DialogTitle } from '../components/ui/dialog'
 import Reveal from '../components/motion/Reveal'
 import { StaggerGroup, StaggerItem } from '../components/motion/Stagger'
-import ScrollProgressBar from '../components/motion/ScrollProgressBar'
 import GsapCountUp from '../components/motion/GsapCountUp'
 import { useCollection } from '../context/ContentContext'
 
@@ -39,7 +38,6 @@ export default function Awards() {
 
   return (
     <div>
-      <ScrollProgressBar />
       <PageBanner
         title={pageTitle}
         breadcrumbs={breadcrumbs}
