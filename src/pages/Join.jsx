@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ClipboardList, BookOpen, MessageSquare, Rocket, ExternalLink, Send, CheckCircle } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
 import PageBanner from '../components/ui/PageBanner'
 import Reveal from '../components/motion/Reveal'
 import { StaggerGroup, StaggerItem } from '../components/motion/Stagger'
@@ -61,32 +60,21 @@ function ApplicationForm() {
   const inputClass =
     'w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-crimson/30 focus:border-crimson transition'
 
-  return (
-    <AnimatePresence mode="wait">
-    {status === 'success' ? (
-      <motion.div
-        key="success"
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: 0.9 }}
-        transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-        className="text-center py-12"
-      >
-        <motion.div
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ delay: 0.1, type: 'spring', stiffness: 260, damping: 18 }}
-        >
-          <CheckCircle size={48} className="text-green-500 mx-auto mb-4" />
-        </motion.div>
+  if (status === 'success') {
+    return (
+      <div className="text-center py-12">
+        <CheckCircle size={48} className="text-green-500 mx-auto mb-4" />
         <h3 className="text-xl font-semibold text-navy mb-2">Application Submitted!</h3>
         <p className="text-gray-500 text-sm max-w-sm mx-auto">
           Thanks! We'll send your Moodle invitation to <span className="font-medium">{form.email}</span>{' '}
           within a few days.
         </p>
-      </motion.div>
-    ) : (
-    <motion.form key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onSubmit={handleSubmit} className="space-y-5">
+      </div>
+    )
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-5">
       <StaggerGroup as="div" staggerChildren={0.08} amount={0.4} className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <StaggerItem>
           <label className="block text-xs font-semibold text-navy uppercase tracking-wider mb-1.5">
@@ -165,19 +153,15 @@ function ApplicationForm() {
         <p className="text-sm text-red-500">{errorMsg}</p>
       )}
 
-      <motion.button
+      <button
         type="submit"
         disabled={status === 'submitting'}
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
         className="btn-primary inline-flex items-center gap-2 disabled:opacity-60"
       >
         <Send size={15} />
         {status === 'submitting' ? 'Submitting…' : 'Submit Application'}
-      </motion.button>
-    </motion.form>
-    )}
-    </AnimatePresence>
+      </button>
+    </form>
   )
 }
 

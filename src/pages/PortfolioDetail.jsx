@@ -2,7 +2,6 @@ import { useParams, Link } from 'react-router-dom'
 import PageBanner from '../components/ui/PageBanner'
 import { ArrowLeft, Maximize2 } from 'lucide-react'
 import { useEffect, useRef } from 'react'
-import { motion } from 'framer-motion'
 import { loadFlipbook } from '../utils/loadFlipbook'
 import Reveal from '../components/motion/Reveal'
 import { useCollection } from '../context/ContentContext'
@@ -77,15 +76,13 @@ export default function PortfolioDetail() {
               <p className="text-gray-600 leading-relaxed text-lg">{portfolio.content}</p>
 
               <div className="mt-8 pt-6 border-t border-gray-200">
-                <motion.button
+                <button
                   ref={buttonRef}
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
                   className="btn-primary flex items-center gap-2"
                 >
                   <Maximize2 size={18} />
                   Open Full Page 3D Flipbook
-                </motion.button>
+                </button>
               </div>
             </Reveal>
           </div>

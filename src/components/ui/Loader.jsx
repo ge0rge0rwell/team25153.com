@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { motion, useReducedMotion } from 'framer-motion'
 import { TypewriterCycle } from '../motion/Typewriter'
 
 const THINKING_PHRASES = ['Thinking...', 'Deriving...', 'Cogito, ergo...', 'Loading axioms...']
@@ -10,7 +9,6 @@ const THINKING_PHRASES = ['Thinking...', 'Deriving...', 'Cogito, ergo...', 'Load
 // loads and only shows for a load that's actually taking a moment.
 export default function Loader({ fullScreen = true, delay = 200 }) {
   const [visible, setVisible] = useState(delay === 0)
-  const reducedMotion = useReducedMotion()
 
   useEffect(() => {
     if (delay === 0) return
@@ -21,10 +19,7 @@ export default function Loader({ fullScreen = true, delay = 200 }) {
   if (!visible) return null
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.25 }}
+    <div
       className={
         fullScreen
           ? 'min-h-screen flex flex-col items-center justify-center gap-4 bg-white'
@@ -35,15 +30,7 @@ export default function Loader({ fullScreen = true, delay = 200 }) {
       aria-label="Loading"
     >
       <div className="relative w-16 h-16">
-        {reducedMotion ? (
-          <span className="absolute inset-0 rounded-full border-2 border-crimson/30" />
-        ) : (
-          <motion.span
-            className="absolute inset-0 rounded-full border-2 border-transparent border-t-crimson border-r-gold"
-            animate={{ rotate: 360 }}
-            transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-          />
-        )}
+        <span className="absolute inset-0 rounded-full border-2 border-crimson/30" />
         <img
           src="/descartes/logo-cartesian.jpg"
           alt=""
@@ -53,6 +40,6 @@ export default function Loader({ fullScreen = true, delay = 200 }) {
       <p className="text-navy/50 text-xs font-semibold uppercase tracking-widest h-4">
         <TypewriterCycle phrases={THINKING_PHRASES} holdMs={900} />
       </p>
-    </motion.div>
+    </div>
   )
 }

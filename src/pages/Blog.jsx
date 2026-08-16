@@ -1,12 +1,9 @@
 import PageBanner from '../components/ui/PageBanner'
 import { Calendar, Clock, ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
 import Reveal from '../components/motion/Reveal'
 import { StaggerGroup, StaggerItem } from '../components/motion/Stagger'
 import { useCollection } from '../context/ContentContext'
-
-const MotionLink = motion.create(Link)
 
 const tagColors = {
   'Season Recap': 'bg-crimson/10 text-crimson',
@@ -33,10 +30,8 @@ export default function Blog() {
           <StaggerGroup as="div" staggerChildren={0.1} className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {posts.map((post) => (
               <StaggerItem key={post.slug}>
-                <MotionLink
+                <Link
                   to={`/blog/${post.slug}`}
-                  whileHover={{ y: -6 }}
-                  transition={{ type: 'spring', stiffness: 350, damping: 24 }}
                   className="card flex flex-col border border-gray-100 group cursor-pointer"
                 >
                   <div className="h-48 overflow-hidden bg-gray-50 flex items-center justify-center">
@@ -66,7 +61,7 @@ export default function Blog() {
                       Read more <ArrowRight size={13} />
                     </div>
                   </div>
-                </MotionLink>
+                </Link>
               </StaggerItem>
             ))}
           </StaggerGroup>

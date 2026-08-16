@@ -1,13 +1,11 @@
 import { lazy, Suspense, useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
-import { AnimatePresence, motion, MotionConfig, LayoutGroup } from 'framer-motion'
 import { Toaster } from 'sonner'
 import Navbar from './components/layout/Navbar'
 import Footer from './components/layout/Footer'
 import Home from './pages/Home'
 import Loader from './components/ui/Loader'
 import SmoothScroll from './components/motion/SmoothScroll'
-import { pageTransition } from './components/motion/variants'
 import useDocumentMeta from './lib/useDocumentMeta'
 
 // Route-level code splitting: every page below ships as its own chunk and is
@@ -119,11 +117,9 @@ function useRoutePrefetch() {
 export default function App() {
   return (
     <BrowserRouter>
-      <MotionConfig reducedMotion="user">
-        <SmoothScroll />
-        <Toaster position="bottom-right" richColors closeButton />
-        <AppShell />
-      </MotionConfig>
+      <SmoothScroll />
+      <Toaster position="bottom-right" richColors closeButton />
+      <AppShell />
     </BrowserRouter>
   )
 }
@@ -159,47 +155,38 @@ function PublicSite() {
   return (
     <>
       <ScrollToTop />
-      <LayoutGroup>
       <div className="flex flex-col min-h-screen font-roboto">
         <Navbar />
         <main className="flex-1">
           <Suspense fallback={<RouteFallback />}>
-            {/* No mode="wait": entering/exiting pages briefly overlap, which is
-                what lets the robot-image layoutId morph between the roster
-                thumbnail (Home) and the hero image (RobotPage) instead of a
-                flat cut. */}
-            <AnimatePresence initial={false}>
-              <motion.div key={location.pathname} {...pageTransition}>
-                <Routes location={location}>
-                  <Route path="/" element={<Home />} />
+            <Routes location={location}>
+              <Route path="/" element={<Home />} />
 
-                  {/* Team */}
-                  <Route path="/team" element={<Navigate to="/awards" replace />} />
-                  <Route path="/robots/:slug" element={<RobotPage />} />
-                  <Route path="/awards" element={<Awards />} />
+              {/* Team */}
+              <Route path="/team" element={<Navigate to="/awards" replace />} />
+              <Route path="/robots/:slug" element={<RobotPage />} />
+              <Route path="/awards" element={<Awards />} />
 
-                  {/* Resources */}
-                  <Route path="/resources" element={<Resources />} />
-                  <Route path="/resources/:slug" element={<ResourceDetail />} />
+              {/* Resources */}
+              <Route path="/resources" element={<Resources />} />
+              <Route path="/resources/:slug" element={<ResourceDetail />} />
 
-                  {/* Portfolio */}
-                  <Route path="/portfolio/:slug" element={<PortfolioDetail />} />
+              {/* Portfolio */}
+              <Route path="/portfolio/:slug" element={<PortfolioDetail />} />
 
-                  {/* Blog */}
-                  <Route path="/blog" element={<Blog />} />
-                  <Route path="/blog/:slug" element={<BlogPost />} />
+              {/* Blog */}
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
 
-                  {/* Other */}
-                  <Route path="/sponsorship" element={<Sponsorship />} />
-                  <Route path="/contact" element={<Contact />} />
-                  <Route path="/join" element={<Join />} />
-                  <Route path="/lms" element={<LMS />} />
+              {/* Other */}
+              <Route path="/sponsorship" element={<Sponsorship />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/join" element={<Join />} />
+              <Route path="/lms" element={<LMS />} />
 
-                  {/* 404 */}
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </motion.div>
-            </AnimatePresence>
+              {/* 404 */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
           </Suspense>
         </main>
         <Footer />
@@ -209,7 +196,6 @@ function PublicSite() {
           </Suspense>
         </DeferredMount>
       </div>
-      </LayoutGroup>
     </>
   )
 }

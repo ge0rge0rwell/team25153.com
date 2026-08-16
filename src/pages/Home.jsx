@@ -1,7 +1,7 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
-import { motion, useReducedMotion } from 'framer-motion'
+import useReducedMotion from '../lib/useReducedMotion'
 import RobotCard from '../components/ui/RobotCard'
 import LogoCarousel from '../components/ui/LogoCarousel'
 import Reveal from '../components/motion/Reveal'
@@ -58,15 +58,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
           {/* Left – Text + Robots */}
           <div>
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
-              className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-4 flex items-center gap-2"
-            >
+            <p className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-4 flex items-center gap-2">
               <span className="w-8 h-px bg-crimson inline-block" />
               FTC Team #25153
-            </motion.p>
+            </p>
 
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium text-navy leading-tight mb-2 min-h-[2.4em] sm:min-h-0">
               <TypewriterText text="Cartesian" startDelay={150} onComplete={() => setFirstWordDone(true)} />
@@ -98,11 +93,9 @@ export default function Home() {
               </StaggerItem>
 
               <StaggerItem className="flex flex-wrap gap-3">
-                <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} transition={{ type: 'spring', stiffness: 400, damping: 20 }}>
-                  <Link to="/team" className="btn-primary">
-                    Team Overview <ArrowRight size={16} />
-                  </Link>
-                </motion.div>
+                <Link to="/team" className="btn-primary">
+                  Team Overview <ArrowRight size={16} />
+                </Link>
               </StaggerItem>
 
               {/* Robot Roster */}
@@ -131,15 +124,10 @@ export default function Home() {
                 />
               </div>
               {/* Badge */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.6 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.6, type: 'spring', stiffness: 260, damping: 18 }}
-                className="absolute -bottom-4 -left-4 bg-crimson text-white rounded-xl px-5 py-3 shadow-lg"
-              >
+              <div className="absolute -bottom-4 -left-4 bg-crimson text-white rounded-xl px-5 py-3 shadow-lg">
                 <p className="text-xs font-bold uppercase tracking-widest">Team</p>
                 <p className="text-2xl font-bold leading-none">#25153</p>
-              </motion.div>
+              </div>
             </div>
           </Reveal>
         </div>

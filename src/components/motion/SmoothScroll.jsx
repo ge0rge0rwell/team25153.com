@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useReducedMotion } from 'framer-motion'
+import useReducedMotion from '../../lib/useReducedMotion'
 import { createSmoothScroll } from '../../lib/scroll'
 
 // Mounted once at the app root. Skips entirely under prefers-reduced-motion,

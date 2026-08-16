@@ -1,12 +1,9 @@
 import PageBanner from '../components/ui/PageBanner'
 import { BookOpen, Code2, Box, Library } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
 import Reveal from '../components/motion/Reveal'
 import { StaggerGroup, StaggerItem } from '../components/motion/Stagger'
 import { useCollection } from '../context/ContentContext'
-
-const MotionLink = motion.create(Link)
 
 const iconMap = { BookOpen, Code2, Box, Library }
 
@@ -38,10 +35,8 @@ export default function Resources() {
               const Icon = iconMap[r.icon] || BookOpen
               return (
               <StaggerItem key={r.slug}>
-                <MotionLink
+                <Link
                   to={`/resources/${r.slug}`}
-                  whileHover={{ y: -4 }}
-                  transition={{ type: 'spring', stiffness: 350, damping: 24 }}
                   className="group card border border-gray-100 p-7 flex gap-5"
                 >
                   <div className="w-12 h-12 rounded-xl bg-crimson/10 text-crimson flex items-center justify-center flex-shrink-0 group-hover:bg-crimson group-hover:text-white transition-colors duration-300">
@@ -54,7 +49,7 @@ export default function Resources() {
                     </div>
                     <p className="text-gray-500 text-sm leading-relaxed">{r.description}</p>
                   </div>
-                </MotionLink>
+                </Link>
               </StaggerItem>
               )
             })}

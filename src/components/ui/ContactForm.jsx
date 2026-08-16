@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { Send, CheckCircle } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
 import { toast } from 'sonner'
 import { StaggerGroup, StaggerItem } from '../motion/Stagger'
 
@@ -21,44 +20,26 @@ export default function ContactForm() {
     }, 1200)
   }
 
-  return (
-    <AnimatePresence mode="wait">
-      {sent ? (
-        <motion.div
-          key="sent"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.9 }}
-          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col items-center justify-center py-16 gap-4 text-center"
+  if (sent) {
+    return (
+      <div className="flex flex-col items-center justify-center py-16 gap-4 text-center">
+        <CheckCircle size={56} className="text-green-500" />
+        <h3 className="text-xl font-medium text-navy">Message Sent!</h3>
+        <p className="text-gray-500 text-sm max-w-xs">
+          Thank you for reaching out. We'll get back to you as soon as possible.
+        </p>
+        <button
+          onClick={() => { setSent(false); setForm({ name:'',email:'',subject:'',phone:'',message:'' }) }}
+          className="btn-outline mt-2"
         >
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.1, type: 'spring', stiffness: 260, damping: 18 }}
-          >
-            <CheckCircle size={56} className="text-green-500" />
-          </motion.div>
-          <h3 className="text-xl font-medium text-navy">Message Sent!</h3>
-          <p className="text-gray-500 text-sm max-w-xs">
-            Thank you for reaching out. We'll get back to you as soon as possible.
-          </p>
-          <button
-            onClick={() => { setSent(false); setForm({ name:'',email:'',subject:'',phone:'',message:'' }) }}
-            className="btn-outline mt-2"
-          >
-            Send Another
-          </button>
-        </motion.div>
-      ) : (
-    <motion.form
-      key="form"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      onSubmit={handleSubmit}
-      className="space-y-5"
-    >
+          Send Another
+        </button>
+      </div>
+    )
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-5">
       <StaggerGroup as="div" staggerChildren={0.08} amount={0.4} className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <StaggerItem>
           <label className="form-label">Name *</label>
@@ -125,11 +106,9 @@ export default function ContactForm() {
           className="form-input resize-none"
         />
       </div>
-      <motion.button
+      <button
         type="submit"
         disabled={loading}
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
         className="btn-primary w-full justify-center"
       >
         {loading ? (
@@ -146,9 +125,7 @@ export default function ContactForm() {
             Send Message
           </>
         )}
-      </motion.button>
-    </motion.form>
-      )}
-    </AnimatePresence>
+      </button>
+    </form>
   )
 }

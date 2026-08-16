@@ -181,7 +181,7 @@ export default function Awards() {
         </div>
       </section>
 
-      {/* Lightbox Modal — shadcn Dialog primitive (Radix a11y) + framer-motion visuals */}
+      {/* Lightbox Modal — shadcn Dialog primitive (Radix a11y) */}
       <DialogContent open={!!lightboxImage} onOpenChange={(o) => !o && setLightboxImage(null)}>
         {lightboxImage && (
           <>

@@ -1,13 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import useReducedMotion from '../../lib/useReducedMotion'
 
 const Cursor = ({ show }) => (
-  <motion.span
+  <span
     aria-hidden="true"
     className="inline-block w-[0.08em] -mb-[0.05em] ml-0.5 align-baseline bg-current"
-    style={{ height: '0.9em' }}
-    animate={show ? { opacity: [1, 1, 0, 0] } : { opacity: 0 }}
-    transition={show ? { duration: 1, repeat: Infinity, times: [0, 0.5, 0.5, 1], ease: 'linear' } : { duration: 0.3 }}
+    style={{ height: '0.9em', opacity: show ? 1 : 0 }}
   />
 )
 
@@ -95,21 +93,7 @@ export function TypewriterCycle({ phrases, className, typeSpeed = 45, deleteSpee
   }, [phase, count, phrase, phrases.length, typeSpeed, deleteSpeed, holdMs, gapMs, reducedMotion])
 
   if (reducedMotion) {
-    return (
-      <span className={`${className} relative inline-block`}>
-        <AnimatePresence mode="wait">
-          <motion.span
-            key={phrase}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
-          >
-            {phrase}
-          </motion.span>
-        </AnimatePresence>
-      </span>
-    )
+    return <span className={`${className} relative inline-block`}>{phrase}</span>
   }
 
   return (

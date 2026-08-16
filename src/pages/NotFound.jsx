@@ -1,12 +1,9 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight, Home as HomeIcon } from 'lucide-react'
-import { motion, useReducedMotion } from 'framer-motion'
 import { StaggerGroup, StaggerItem } from '../components/motion/Stagger'
 import { TypewriterText } from '../components/motion/Typewriter'
 
 export default function NotFound() {
-  const reducedMotion = useReducedMotion()
-
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center bg-gradient-to-br from-[#fdf8f7] to-white relative overflow-hidden">
       <div className="absolute top-0 right-0 w-1/2 h-full bg-crimson/3 clip-diagonal pointer-events-none" />
@@ -16,30 +13,7 @@ export default function NotFound() {
         {/* René, framed again, stacked above the 404 numeral in plain flow
             (not absolutely overlapped) so spacing never collides with the text below */}
         <div className="flex flex-col items-center mb-6 sm:mb-8">
-          <motion.div
-            className="relative w-36 sm:w-48 mb-4 sm:mb-6"
-            initial={{ opacity: 0, y: 20, rotate: -6, scale: 0.85 }}
-            animate={
-              reducedMotion
-                ? { opacity: 1, y: 0, rotate: 0, scale: 1 }
-                : {
-                    opacity: 1,
-                    scale: 1,
-                    y: [0, -10, -4, -12, -6],
-                    rotate: [-3, 3, -2, 2, -3],
-                  }
-            }
-            transition={
-              reducedMotion
-                ? { duration: 0.5 }
-                : {
-                    opacity: { duration: 0.5 },
-                    scale: { duration: 0.5 },
-                    y: { duration: 5, times: [0, 0.25, 0.5, 0.75, 1], repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' },
-                    rotate: { duration: 5, times: [0, 0.25, 0.5, 0.75, 1], repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' },
-                  }
-            }
-          >
+          <div className="relative w-36 sm:w-48 mb-4 sm:mb-6">
             <div className="absolute -inset-3 rounded-3xl border-2 border-crimson/10 rotate-3" />
             <img
               src="/media/hero-descartes.png"
@@ -47,7 +21,7 @@ export default function NotFound() {
               decoding="async"
               className="relative w-full object-contain drop-shadow-2xl"
             />
-          </motion.div>
+          </div>
 
           <div className="text-8xl sm:text-9xl font-black text-navy/10 leading-none select-none">404</div>
         </div>
@@ -68,16 +42,12 @@ export default function NotFound() {
           </StaggerItem>
 
           <StaggerItem className="flex flex-wrap items-center justify-center gap-3">
-            <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} transition={{ type: 'spring', stiffness: 400, damping: 20 }}>
-              <Link to="/" className="btn-primary">
-                <HomeIcon size={16} /> Back to Home
-              </Link>
-            </motion.div>
-            <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} transition={{ type: 'spring', stiffness: 400, damping: 20 }}>
-              <Link to="/awards" className="btn-outline">
-                Meet the Team <ArrowRight size={16} />
-              </Link>
-            </motion.div>
+            <Link to="/" className="btn-primary">
+              <HomeIcon size={16} /> Back to Home
+            </Link>
+            <Link to="/awards" className="btn-outline">
+              Meet the Team <ArrowRight size={16} />
+            </Link>
           </StaggerItem>
 
           <StaggerItem as="p" className="text-gray-400 text-xs mt-6">

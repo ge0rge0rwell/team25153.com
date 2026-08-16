@@ -2,7 +2,6 @@ import { lazy, Suspense, useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useParams, Link } from 'react-router-dom'
 import { Trophy, ChevronRight, Maximize2, X } from 'lucide-react'
-import { motion } from 'framer-motion'
 import Reveal from '../components/motion/Reveal'
 import { StaggerGroup, StaggerItem } from '../components/motion/Stagger'
 import { useCollection } from '../context/ContentContext'
@@ -19,10 +18,8 @@ export default function RobotPage() {
   const [fullscreen, setFullscreen] = useState(false)
 
   // Escape to exit, and lock page scroll while the portal overlay is up —
-  // it's rendered into document.body specifically so `position: fixed` isn't
-  // scoped to the route wrapper's transform (framer-motion's page-transition
-  // translateY leaves a `transform` on that ancestor even at rest, which
-  // would otherwise turn "fullscreen" into "fills the route div").
+  // it's rendered into document.body so `position: fixed` targets the real
+  // viewport rather than some ancestor.
   useEffect(() => {
     if (!fullscreen) return
     const onKey = (e) => e.key === 'Escape' && setFullscreen(false)
@@ -94,15 +91,11 @@ export default function RobotPage() {
 
           </StaggerGroup>
 
-          {/* Right: robot image — shared layoutId morphs in from the roster thumbnail */}
+          {/* Right: robot image */}
           <div className="flex-1 flex justify-center lg:justify-end z-10">
-            <motion.img
-              layoutId={`robot-image-${robot.slug}`}
+            <img
               src={robot.image}
               alt={robot.name}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ opacity: { duration: 0.4, delay: 0.15 }, layout: { type: 'spring', stiffness: 220, damping: 26 } }}
               className="w-64 h-64 lg:w-80 lg:h-80 object-contain drop-shadow-2xl"
               decoding="async"
               style={{ mixBlendMode: robot.heroBgBlend }}
@@ -275,8 +268,6 @@ export default function RobotPage() {
                     href={event.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    whileHover={{ x: 4 }}
-                    whileTap={{ scale: 0.98 }}
                     className="flex items-center gap-4 bg-crimson hover:bg-crimson-dark text-white rounded-xl px-5 py-3 font-semibold text-sm transition-colors hover:shadow-lg group"
                   >
                     <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-xs font-black flex-shrink-0">
