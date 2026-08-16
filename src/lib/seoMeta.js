@@ -35,7 +35,7 @@ function clamp(text, max = 158) {
 }
 
 function titleFor(pageTitle) {
-  if (!pageTitle) return `${SITE.name} #${SITE.team} — FTC & FRC Team, ${SITE.locality}`
+  if (!pageTitle) return `${SITE.name} #${SITE.team}`
   const suffix = ` | ${SITE.name} #${SITE.team}`
   return pageTitle.length + suffix.length > 65 ? pageTitle : pageTitle + suffix
 }
@@ -67,7 +67,10 @@ function absolute(url) {
 // robot names, award names, season names, and the team's city.
 const STATIC = {
   '/': {
-    title: `${SITE.name} #${SITE.team} — FTC & FRC Robotics Team, ${SITE.locality}`,
+    // No title here: titleFor()'s no-argument branch already renders the bare
+    // "Cartesian Robotics #25153" — passing that same string through would
+    // hit the OTHER branch and append " | Cartesian Robotics #25153" again.
+    title: null,
     description: DEFAULT_DESC,
   },
   '/awards': {
