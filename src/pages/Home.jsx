@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import useReducedMotion from '../lib/useReducedMotion'
@@ -9,7 +9,6 @@ import { StaggerGroup, StaggerItem } from '../components/motion/Stagger'
 import { TypewriterText, TypewriterCycle } from '../components/motion/Typewriter'
 import { useCollection } from '../context/ContentContext'
 import { useIsDesktop } from '../lib/useIsDesktop'
-import { gsap } from '../lib/scroll'
 
 // tsparticles is a desktop-only extra — kept out of Home's bundle (which
 // ships in the critical-path main chunk) via lazy() and only fetched once
@@ -21,23 +20,7 @@ export default function Home() {
   const [firstWordDone, setFirstWordDone] = useState(false)
   const reducedMotion = useReducedMotion()
 
-  const aboutRef = useRef(null)
   const isDesktop = useIsDesktop()
-
-  // Pins the About Strip in place while its heading scales in, then releases.
-  // Desktop-only: pinning fights mobile's shorter viewport and address-bar
-  // resize jank.
-  useEffect(() => {
-    if (!isDesktop || reducedMotion || !aboutRef.current) return
-    const heading = aboutRef.current.querySelector('[data-pin-heading]')
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: { trigger: aboutRef.current, start: 'top top', end: '+=60%', scrub: 0.6, pin: true },
-      })
-      if (heading) tl.fromTo(heading, { scale: 0.85, opacity: 0.4 }, { scale: 1, opacity: 1, ease: 'none' })
-    }, aboutRef)
-    return () => ctx.revert()
-  }, [isDesktop, reducedMotion])
 
   const statPhrases = (stats || []).map((s) => `${s.number} ${s.label}`)
 
@@ -134,13 +117,12 @@ export default function Home() {
       </section>
 
       {/* ── About Strip ───────────────────────────── */}
-      <section ref={aboutRef} className="py-12 md:py-20 bg-white">
+      <section className="py-12 md:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <StaggerGroup as="div" staggerChildren={0.15} className="max-w-3xl mx-auto text-center">
             <StaggerItem as="p" className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-3">Our Mission</StaggerItem>
             <StaggerItem as="h2" className="text-3xl font-medium text-navy mb-6">
-              {/* GSAP's pin scrub owns this node's scale/opacity exclusively */}
-              <span data-pin-heading className="inline-block">Not Just Building Robots</span>
+              Not Just Building Robots
             </StaggerItem>
             <StaggerItem as="p" className="text-gray-600 leading-relaxed mb-4">
               Our team aims to develop middle school students' skills in <strong>engineering, creativity, strategy, and teamwork</strong> while simultaneously <strong>spreading STEM culture</strong> within our community.

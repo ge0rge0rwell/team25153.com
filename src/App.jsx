@@ -5,7 +5,6 @@ import Navbar from './components/layout/Navbar'
 import Footer from './components/layout/Footer'
 import Home from './pages/Home'
 import Loader from './components/ui/Loader'
-import SmoothScroll from './components/motion/SmoothScroll'
 import useDocumentMeta from './lib/useDocumentMeta'
 
 // Route-level code splitting: every page below ships as its own chunk and is
@@ -117,7 +116,6 @@ function useRoutePrefetch() {
 export default function App() {
   return (
     <BrowserRouter>
-      <SmoothScroll />
       <Toaster position="bottom-right" richColors closeButton />
       <AppShell />
     </BrowserRouter>

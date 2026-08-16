@@ -112,10 +112,7 @@ export default function RobotPage() {
       {isDesktop && !fullscreen && (
         <section className="bg-gray-50 border-t border-gray-100">
           <div className="max-w-5xl mx-auto px-6 py-6">
-            {/* data-lenis-prevent: keeps the global Lenis smooth-scroll from
-                also grabbing wheel/drag input meant for OrbitControls, so
-                zooming/orbiting the model doesn't also scroll the page. */}
-            <div data-lenis-prevent className="relative h-[520px] rounded-2xl overflow-hidden bg-gradient-to-b from-white to-gray-100 ring-1 ring-gray-100">
+            <div className="relative h-[520px] rounded-2xl overflow-hidden bg-gradient-to-b from-white to-gray-100 ring-1 ring-gray-100">
               <Suspense fallback={null}>
                 <RobotScene modelUrl={`/models/${robot.slug}.glb`} />
               </Suspense>
@@ -135,7 +132,7 @@ export default function RobotPage() {
       )}
 
       {isDesktop && fullscreen && createPortal(
-        <div data-lenis-prevent className="fixed inset-0 z-[999] bg-navy">
+        <div className="fixed inset-0 z-[999] bg-navy">
           <Suspense fallback={null}>
             <RobotScene modelUrl={`/models/${robot.slug}.glb`} />
           </Suspense>

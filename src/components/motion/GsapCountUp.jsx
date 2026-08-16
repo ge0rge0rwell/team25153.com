@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { gsap } from '../../lib/scroll'
+import gsap from 'gsap'
 
 // Counts a number up from 0 on mount. GSAP-driven, not framer-motion.
 //
