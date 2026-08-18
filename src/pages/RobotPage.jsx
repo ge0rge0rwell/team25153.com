@@ -114,7 +114,7 @@ export default function RobotPage() {
           <div className="max-w-5xl mx-auto px-6 py-6">
             <div className="relative h-[520px] rounded-2xl overflow-hidden bg-gradient-to-b from-white to-gray-100 ring-1 ring-gray-100">
               <Suspense fallback={null}>
-                <RobotScene modelUrl={`/models/${robot.slug}.glb`} />
+                <RobotScene modelUrl={`/models/${robot.slug}.glb?v=2`} />
               </Suspense>
               <button
                 onClick={() => setFullscreen(true)}
@@ -134,7 +134,7 @@ export default function RobotPage() {
       {isDesktop && fullscreen && createPortal(
         <div className="fixed inset-0 z-[999] bg-navy">
           <Suspense fallback={null}>
-            <RobotScene modelUrl={`/models/${robot.slug}.glb`} />
+            <RobotScene modelUrl={`/models/${robot.slug}.glb?v=2`} />
           </Suspense>
           <button
             onClick={() => setFullscreen(false)}
