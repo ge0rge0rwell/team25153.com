@@ -1,11 +1,40 @@
 import { useParams, Link } from 'react-router-dom'
 import PageBanner from '../components/ui/PageBanner'
-import { ArrowLeft, BookOpen, Code2, Box, Library } from 'lucide-react'
+import { ArrowLeft, BookOpen, Code2, Box, Library, ExternalLink } from 'lucide-react'
 import SoftwareDocs from '../components/resources/SoftwareDocs'
 import Reveal from '../components/motion/Reveal'
+import { StaggerGroup, StaggerItem } from '../components/motion/Stagger'
 import { useCollection } from '../context/ContentContext'
+import resourceLinks from '../content/resourceLinks.json'
 
 const iconMap = { BookOpen, Code2, Box, Library }
+
+function LinkGroup({ slug }) {
+  const category = resourceLinks.categories.find((c) => c.slug === slug)
+  if (!category) return null
+  return (
+    <div className="text-left mt-4">
+      <StaggerGroup as="div" staggerChildren={0.03} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {category.items.map((item) => (
+          <StaggerItem key={item.url + item.title}>
+            <a
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group card border border-gray-100 bg-white p-5 flex flex-col h-full"
+            >
+              <div className="flex items-start justify-between gap-2 mb-1.5">
+                <h4 className="font-semibold text-navy text-sm group-hover:text-crimson transition-colors">{item.title}</h4>
+                <ExternalLink size={14} className="text-gray-300 group-hover:text-crimson transition-colors flex-shrink-0 mt-0.5" />
+              </div>
+              <p className="text-gray-500 text-xs leading-relaxed">{item.description}</p>
+            </a>
+          </StaggerItem>
+        ))}
+      </StaggerGroup>
+    </div>
+  )
+}
 
 export default function ResourceDetail() {
   const { slug } = useParams()
@@ -48,14 +77,8 @@ export default function ResourceDetail() {
               {resource.content}
             </p>
 
-            {slug === 'software' ? (
-              <SoftwareDocs />
-            ) : (
-              <div className="p-6 bg-gray-50 rounded-xl text-gray-500 text-sm">
-                <p>Detailed documentation and links for this resource are currently being updated for the new season.</p>
-                <p className="mt-2">Check back soon or contact us for immediate access.</p>
-              </div>
-            )}
+            {slug === 'software' && <SoftwareDocs />}
+            <LinkGroup slug={slug} />
           </Reveal>
         </div>
       </section>

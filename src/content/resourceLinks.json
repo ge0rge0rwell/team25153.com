@@ -2,6 +2,7 @@
   "categories": [
     {
       "title": "Decoding FTC",
+      "slug": "decoding-ftc",
       "items": [
         { "title": "FIRST Resource Library", "url": "https://www.firstinspires.org/resource-library", "description": "Main directory for FIRST and FTC manuals, guides, videos, awards, fundraising, marketing, and team resources." },
         { "title": "FTC Documentation", "url": "https://ftc-docs.firstinspires.org/", "description": "Official technical documentation: programming, control system, SDK, hardware configuration, cameras, and troubleshooting." },
@@ -29,6 +30,7 @@
     },
     {
       "title": "Software",
+      "slug": "software",
       "items": [
         { "title": "FTC Programming Resources", "url": "https://ftc-docs.firstinspires.org/en/latest/programming_resources/index.html", "description": "Official library covering Blocks, OnBot Java, Android Studio, SDK setup, and control-system management." },
         { "title": "Blocks Programming Tutorial", "url": "https://ftc-docs.firstinspires.org/en/latest/programming_resources/blocks/Blocks-Tutorial.html", "description": "Visual programming tutorial for beginners and quick prototypes." },
@@ -60,6 +62,7 @@
     },
     {
       "title": "CAD & Modeling",
+      "slug": "cad",
       "items": [
         { "title": "Game Manual 0", "url": "https://gm0.org/", "description": "The strongest community-maintained FTC guide: team organization, design strategy, CAD, mechanisms, and software." },
         { "title": "Game Manual 0: Useful Resources", "url": "https://gm0.org/en/latest/docs/other/useful-links.html", "description": "Curated links to additional FTC communities, tools, suppliers, and technical references." },
@@ -101,6 +104,7 @@
     },
     {
       "title": "Library",
+      "slug": "library",
       "items": [
         { "title": "r/FTC on Reddit", "url": "https://www.reddit.com/r/FTC/", "description": "Community questions, robot reviews, programming discussion, and season strategy." },
         { "title": "Chief Delphi", "url": "https://www.chiefdelphi.com/", "description": "Long-running robotics community with technical discussions across FRC and FTC." },
