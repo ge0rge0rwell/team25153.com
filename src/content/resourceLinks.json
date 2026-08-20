@@ -1,7 +1,7 @@
 {
   "categories": [
     {
-      "title": "Official FTC Resources",
+      "title": "Decoding FTC",
       "items": [
         { "title": "FIRST Resource Library", "url": "https://www.firstinspires.org/resource-library", "description": "Main directory for FIRST and FTC manuals, guides, videos, awards, fundraising, marketing, and team resources." },
         { "title": "FTC Documentation", "url": "https://ftc-docs.firstinspires.org/", "description": "Official technical documentation: programming, control system, SDK, hardware configuration, cameras, and troubleshooting." },
@@ -17,11 +17,18 @@
         { "title": "FTC Events and Results", "url": "https://ftc-events.firstinspires.org/", "description": "Official event schedules, match results, teams, awards, and event information." },
         { "title": "FIRST Blog", "url": "https://www.firstinspires.org/blog", "description": "FIRST announcements, team stories, educational ideas, and community news." },
         { "title": "FIRST Community Forum", "url": "https://community.firstinspires.org/", "description": "Official discussion and season updates from FIRST staff and volunteers." },
-        { "title": "FTC Common Team FAQs", "url": "https://ftc-docs.firstinspires.org/en/latest/faq/faqs.html", "description": "Answers to frequently asked questions about rules, hardware, and software." }
+        { "title": "FTC Common Team FAQs", "url": "https://ftc-docs.firstinspires.org/en/latest/faq/faqs.html", "description": "Answers to frequently asked questions about rules, hardware, and software." },
+        { "title": "FTC Team Management Resources", "url": "https://www.firstinspires.org/resource-library", "description": "Registration, fundraising, marketing, team organization, and competition preparation." },
+        { "title": "Fundraising Toolkit", "url": "https://www.firstinspires.org/robotics/ftc/fundraising", "description": "Fundraising plans, business plans, sponsor development, and documentation." },
+        { "title": "FIRST Brand and Marketing Downloads", "url": "https://www.firstinspires.org/brand", "description": "Official logos, brochures, posters, recruitment materials, and brand assets." },
+        { "title": "FTC Mentor Manual", "url": "https://www.firstinspires.org/resource-library", "description": "Team organization, community outreach, parent involvement, and sponsor relationships." },
+        { "title": "Engineering Notebook Self-Assessment", "url": "https://www.firstinspires.org/resource-library", "description": "Checklist for evaluating team identity, engineering process, and documentation quality." },
+        { "title": "FTC Judging Quick Start", "url": "https://www.firstinspires.org/robotics/ftc/awards", "description": "Explains team interviews, portfolio review, and event judging procedures." },
+        { "title": "FTC Community Docs", "url": "https://ftc-docs.firstinspires.org/", "description": "Community-created guides for engineering portfolios, judging, awards, outreach, and software." }
       ]
     },
     {
-      "title": "Programming",
+      "title": "Software",
       "items": [
         { "title": "FTC Programming Resources", "url": "https://ftc-docs.firstinspires.org/en/latest/programming_resources/index.html", "description": "Official library covering Blocks, OnBot Java, Android Studio, SDK setup, and control-system management." },
         { "title": "Blocks Programming Tutorial", "url": "https://ftc-docs.firstinspires.org/en/latest/programming_resources/blocks/Blocks-Tutorial.html", "description": "Visual programming tutorial for beginners and quick prototypes." },
@@ -52,7 +59,7 @@
       ]
     },
     {
-      "title": "Mechanical Design, CAD & Manufacturing",
+      "title": "CAD & Modeling",
       "items": [
         { "title": "Game Manual 0", "url": "https://gm0.org/", "description": "The strongest community-maintained FTC guide: team organization, design strategy, CAD, mechanisms, and software." },
         { "title": "Game Manual 0: Useful Resources", "url": "https://gm0.org/en/latest/docs/other/useful-links.html", "description": "Curated links to additional FTC communities, tools, suppliers, and technical references." },
@@ -77,12 +84,7 @@
         { "title": "McMaster-Carr", "url": "https://www.mcmaster.com/", "description": "Fasteners, bearings, plastics, aluminum, tubing, spacers, belts, and fabrication materials." },
         { "title": "Misumi", "url": "https://us.misumi-ec.com/", "description": "Precision extrusion, brackets, shafts, bearings, and mechanical hardware." },
         { "title": "Pololu", "url": "https://www.pololu.com/", "description": "Small electronics, sensors, connectors, regulators, and prototyping hardware." },
-        { "title": "Adafruit", "url": "https://www.adafruit.com/", "description": "Educational electronics and prototyping components; verify competition legality before using anything." }
-      ]
-    },
-    {
-      "title": "Electronics & Control System",
-      "items": [
+        { "title": "Adafruit", "url": "https://www.adafruit.com/", "description": "Educational electronics and prototyping components; verify competition legality before using anything." },
         { "title": "Control System Introduction", "url": "https://ftc-docs.firstinspires.org/en/latest/hardware_and_software_configuration/index.html", "description": "Explains the Robot Controller, Driver Station, Control Hub, Expansion Hub, and communication architecture." },
         { "title": "Robot Controller Overview", "url": "https://ftc-docs.firstinspires.org/en/latest/programming_resources/shared_resources/hardware_mapping/hardware-mapping.html", "description": "Typical connections for motors, encoders, servos, sensors, and cameras." },
         { "title": "Control Hub Ports", "url": "https://ftc-docs.firstinspires.org/en/latest/hardware_and_software_configuration/configuring/index.html", "description": "Explains motor, encoder, servo, digital, analog, I2C, USB, and RS485 ports." },
@@ -98,25 +100,12 @@
       ]
     },
     {
-      "title": "PR, Outreach & Team Management",
+      "title": "Library",
       "items": [
-        { "title": "FTC Team Management Resources", "url": "https://www.firstinspires.org/resource-library", "description": "Registration, fundraising, marketing, team organization, and competition preparation." },
-        { "title": "Fundraising Toolkit", "url": "https://www.firstinspires.org/robotics/ftc/fundraising", "description": "Fundraising plans, business plans, sponsor development, and documentation." },
-        { "title": "FIRST Brand and Marketing Downloads", "url": "https://www.firstinspires.org/brand", "description": "Official logos, brochures, posters, recruitment materials, and brand assets." },
-        { "title": "FTC Mentor Manual", "url": "https://www.firstinspires.org/resource-library", "description": "Team organization, community outreach, parent involvement, and sponsor relationships." },
-        { "title": "Engineering Notebook Self-Assessment", "url": "https://www.firstinspires.org/resource-library", "description": "Checklist for evaluating team identity, engineering process, and documentation quality." },
-        { "title": "FTC Judging Quick Start", "url": "https://www.firstinspires.org/robotics/ftc/awards", "description": "Explains team interviews, portfolio review, and event judging procedures." },
-        { "title": "FTC Community Docs", "url": "https://ftc-docs.firstinspires.org/", "description": "Community-created guides for engineering portfolios, judging, awards, outreach, and software." }
-      ]
-    },
-    {
-      "title": "Community, Scouting & Regional Hubs",
-      "items": [
-        { "title": "FTC Discord", "url": "https://discord.gg/first-tech-challenge", "description": "Fast community discussion with students, mentors, volunteers, and teams." },
         { "title": "r/FTC on Reddit", "url": "https://www.reddit.com/r/FTC/", "description": "Community questions, robot reviews, programming discussion, and season strategy." },
         { "title": "Chief Delphi", "url": "https://www.chiefdelphi.com/", "description": "Long-running robotics community with technical discussions across FRC and FTC." },
         { "title": "FTC Secrets", "url": "https://ftcsecrets.com/", "description": "OPR, cOPR, rankings, match prediction, and team comparisons." },
-        { "title": "The Orange Alliance", "url": "https://theorangealliance.org/", "description": "FTC event, team, match, and statistics database." }
+        { "title": "The Orange Alliance", "url": "https://theorangealliance.org/", "description": "FTC event, team, match, and statistics database, with a public API for building custom scouting tools." }
       ]
     }
   ]
