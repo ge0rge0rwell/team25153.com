@@ -23,6 +23,25 @@ const tierStyle = {
   3: { card: 'w-44 h-24', logo: 'max-h-12' },
 }
 
+// Static row — no scrolling, just centered logos. Used for the small,
+// fixed set of major partners where a marquee would just loop pointlessly.
+function StaticRow({ items, label }) {
+  return (
+    <div>
+      {label && (
+        <p className="text-white/40 text-[10px] font-bold uppercase tracking-[0.3em] mb-3 text-center">
+          {label}
+        </p>
+      )}
+      <div className="flex flex-wrap items-center justify-center gap-6">
+        {items.map((s, i) => (
+          <LogoCard key={i} sponsor={s} />
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function Row({ items, direction, speed, label }) {
   const reducedMotion = useReducedMotion()
   // Exactly two copies + translate 50% = seamless loop with no jump.
@@ -126,7 +145,7 @@ export default function LogoCarousel() {
         </Reveal>
 
         <div className="flex flex-col gap-10">
-          <Row items={majors} direction="left" speed={22} label="Major Partners" />
+          <StaticRow items={majors} label="Major Partners" />
           <Row items={community} direction="right" speed={34} label="Community Supporters" />
         </div>
       </div>
