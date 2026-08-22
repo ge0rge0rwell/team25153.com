@@ -30,6 +30,7 @@ export default {
       },
       animation: {
         'scroll-left': 'scrollLeft 30s linear infinite',
+        'scroll-right': 'scrollRight 30s linear infinite',
         'fade-up': 'fadeUp 0.6s ease forwards',
         'fade-in': 'fadeIn 0.5s ease forwards',
       },
@@ -37,6 +38,10 @@ export default {
         scrollLeft: {
           '0%': { transform: 'translateX(0)' },
           '100%': { transform: 'translateX(-50%)' },
+        },
+        scrollRight: {
+          '0%': { transform: 'translateX(-50%)' },
+          '100%': { transform: 'translateX(0)' },
         },
         fadeUp: {
           '0%': { opacity: '0', transform: 'translateY(24px)' },
