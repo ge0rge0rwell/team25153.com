@@ -1,32 +1,42 @@
 import { useParams, Link } from 'react-router-dom'
 import PageBanner from '../components/ui/PageBanner'
-import { ArrowLeft, Maximize2 } from 'lucide-react'
+import { ArrowLeft } from 'lucide-react'
 import { useEffect, useRef } from 'react'
 import { loadFlipbook } from '../utils/loadFlipbook'
-import Reveal from '../components/motion/Reveal'
 import { useCollection } from '../context/ContentContext'
 
-export default function PortfolioDetail() {
-  const { slug } = useParams()
-  const portfolio = useCollection('portfolios').portfolios.find((p) => p.slug === slug)
-
-  const buttonRef = useRef(null)
+// Renders the actual flipbook. Keyed by slug from the parent so React fully
+// unmounts/remounts this on every portfolio change — that's what guarantees
+// a fresh container element and a fresh dFlip instance instead of reusing a
+// stale one (dFlip has no destroy() API, and re-invoking .flipBook() on an
+// element React reused across a param-only route change was binding a
+// second, redundant instance on top of the first — which is why the first
+// portfolio ever opened kept reappearing on every other one until a full
+// page refresh reset the JS state).
+function FlipbookViewer({ portfolio }) {
+  const containerRef = useRef(null)
 
   useEffect(() => {
-    if (!portfolio || !buttonRef.current) return
+    if (!containerRef.current) return
     let cancelled = false
 
-    // Lazily fetch the ~2.7 MB flipbook engine only when this page mounts,
-    // then bind it to the button once ready.
     loadFlipbook()
       .then(() => {
-        if (cancelled || !buttonRef.current) return
-        window.jQuery(buttonRef.current).flipBook({
+        if (cancelled || !containerRef.current) return
+        window.jQuery(containerRef.current).flipBook({
           pdfUrl: portfolio.pdfUrl,
-          lightBox: true,
+          lightBox: false,
           rootFolder: '/dflip/',
           name: portfolio.title,
-          lightboxBackground: '#000000',
+          // Default download button opens the PDF with window.open(), which
+          // popup blockers can silently kill. forceDownload uses a same-
+          // origin <a download> click instead, which isn't subject to that.
+          btnDownloadPdf: {
+            enabled: true,
+            url: portfolio.pdfUrl,
+            forceDownload: true,
+            name: `${portfolio.slug}.pdf`,
+          },
         })
       })
       .catch((err) => console.error('Flipbook failed to load:', err))
@@ -34,57 +44,52 @@ export default function PortfolioDetail() {
     return () => { cancelled = true }
   }, [portfolio])
 
+  return <div ref={containerRef} className="w-full h-[75vh] min-h-[500px]" />
+}
+
+export default function PortfolioDetail() {
+  const { slug } = useParams()
+  const portfolio = useCollection('portfolios').portfolios.find((p) => p.slug === slug)
+
   if (!portfolio) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center px-6">
           <h1 className="text-2xl font-medium text-navy mb-2">Portfolio Not Found</h1>
-          <Link to="/portfolio" className="btn-primary mt-4">Back to Portfolios</Link>
+          <Link to="/" className="btn-primary mt-4">Go Home</Link>
         </div>
       </div>
     )
   }
 
   return (
-    <div>
-      <style>{`
-        .flipbook-lightbox-overlay {
-          background: #000000 !important;
-          z-index: 9999999 !important;
-        }
-      `}</style>
+    // key=slug forces a clean remount per portfolio — see FlipbookViewer comment.
+    <div key={slug}>
       <PageBanner
         title={portfolio.title}
-        breadcrumbs={[
-          { label: 'Portfolio', to: '/portfolio' },
-          { label: portfolio.title },
-        ]}
+        breadcrumbs={[{ label: portfolio.title }]}
       />
-      
-      <section className="py-12 md:py-20 bg-white">
-        <div className="max-w-4xl mx-auto px-6">
-          <Link to="/portfolio" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-crimson mb-8 transition-colors">
-            <ArrowLeft size={16} /> Back to Portfolios
-          </Link>
-          <div className="bg-gray-50 rounded-2xl p-5 sm:p-8 border border-gray-100 shadow-sm flex flex-col md:flex-row gap-8 items-center">
-            <Reveal direction="scale" className="w-full md:w-1/3 flex justify-center">
-              <img src={portfolio.image} alt={portfolio.title} className="w-48 h-48 object-contain mix-blend-multiply drop-shadow-xl" />
-            </Reveal>
-            <Reveal direction="left" delay={0.1} className="w-full md:w-2/3">
-              <span className="text-xs font-bold text-crimson uppercase tracking-widest">{portfolio.season}</span>
-              <h2 className="text-3xl font-bold text-navy mt-2 mb-4">{portfolio.title}</h2>
-              <p className="text-gray-600 leading-relaxed text-lg">{portfolio.content}</p>
 
-              <div className="mt-8 pt-6 border-t border-gray-200">
-                <button
-                  ref={buttonRef}
-                  className="btn-primary flex items-center gap-2"
-                >
-                  <Maximize2 size={18} />
-                  Open Full Page 3D Flipbook
-                </button>
-              </div>
-            </Reveal>
+      <section className="py-8 md:py-12 bg-white">
+        <div className="max-w-6xl mx-auto px-6">
+          <Link to="/" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-crimson mb-6 transition-colors">
+            <ArrowLeft size={16} /> Home
+          </Link>
+
+          <div className="flex flex-col sm:flex-row gap-5 items-start mb-6">
+            <img
+              src={portfolio.image}
+              alt={portfolio.title}
+              className="w-20 h-20 object-contain mix-blend-multiply flex-shrink-0"
+            />
+            <div>
+              <span className="text-xs font-bold text-crimson uppercase tracking-widest">{portfolio.season}</span>
+              <p className="text-gray-600 leading-relaxed mt-1">{portfolio.content}</p>
+            </div>
+          </div>
+
+          <div className="rounded-2xl overflow-hidden ring-1 ring-gray-100 shadow-sm bg-gray-900">
+            <FlipbookViewer portfolio={portfolio} />
           </div>
         </div>
       </section>
