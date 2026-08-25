@@ -14,6 +14,7 @@ import { fileURLToPath } from 'node:url'
 import { collections, fileCollections } from './collections.js'
 import {
   ensureSeed,
+  runContentMigrations,
   DATA_DIR,
   MEDIA_DIR,
   readCollection,
@@ -42,6 +43,7 @@ const DIST = path.join(ROOT, 'dist')
 const PORT = process.env.PORT || 4000
 
 await ensureSeed()
+await runContentMigrations()
 await ensureAdmin()
 
 const app = express()

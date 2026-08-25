@@ -80,6 +80,40 @@ export async function ensureSeed() {
   }
 }
 
+// ── One-time content migrations ────────────────────────────────────────────
+// ensureSeed only ever copies src/content into DATA_DIR on the very first
+// boot — every deploy after that keeps whatever's already on the persistent
+// volume, so a later edit to a seed file (like navigation.json) never
+// reaches production on its own. Each migration below patches one specific,
+// narrow thing directly in the live collection and is written to be a no-op
+// once applied, so it's safe to leave running on every boot.
+export async function runContentMigrations() {
+  await migratePortfolioMenuToFlipbook()
+}
+
+async function migratePortfolioMenuToFlipbook() {
+  const file = path.join(CONTENT_DIR, collections.navigation.file)
+  if (!fs.existsSync(file)) return
+
+  const data = JSON.parse(await fsp.readFile(file, 'utf8'))
+  const portfolioItem = (data.navItems || []).find((item) => item.label === 'Portfolio')
+  if (!portfolioItem?.children) return
+
+  let changed = false
+  for (const child of portfolioItem.children) {
+    if (typeof child.to === 'string' && child.to.startsWith('/portfolio/')) {
+      child.to = child.to.replace('/portfolio/', '/flipbook/')
+      child.newTab = true
+      changed = true
+    }
+  }
+
+  if (changed) {
+    await fsp.writeFile(file, JSON.stringify(data, null, 2) + '\n', 'utf8')
+    console.log('  ✦ Migrated Portfolio menu links to /flipbook (new tab)')
+  }
+}
+
 // ── File collections ───────────────────────────────────────────────────────
 export async function readCollection(name) {
   const col = collections[name]
