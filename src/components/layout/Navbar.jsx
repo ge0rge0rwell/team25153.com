@@ -33,6 +33,19 @@ function DropdownItem({ item, depth = 0 }) {
     )
   }
 
+  if (item.newTab) {
+    return (
+      <a
+        href={item.to}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block px-5 py-2.5 text-sm uppercase tracking-wider font-medium transition-colors text-white/80 hover:text-gold hover:bg-navy-light"
+      >
+        {item.label}
+      </a>
+    )
+  }
+
   return (
     <Link
       to={item.to}

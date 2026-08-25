@@ -261,6 +261,13 @@ export function buildMeta(pathname, content = {}) {
     else if (section === 'portfolio' && slug) meta = portfolioMeta(slug, content)
     else if (section === 'resources' && slug) meta = resourceMeta(slug, content)
     else if (section === 'blog' && slug) meta = blogMeta(slug, content)
+    // /flipbook/:slug is the bare, no-chrome viewer opened in a new tab from
+    // the Portfolio menu — a real page (valid, 200), just not one we want
+    // Google indexing as its own result alongside the real /portfolio/:slug.
+    else if (section === 'flipbook' && slug) {
+      meta = portfolioMeta(slug, content)
+      if (meta) noindex = true
+    }
   }
 
   // Unknown URL (404) or an admin screen — give it a title but keep it out of

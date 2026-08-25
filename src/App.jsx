@@ -64,6 +64,10 @@ const DescartesChat = lazy(() => import('./components/descartes/DescartesChat'))
 const AdminApp = lazy(() => import('./admin/AdminApp'))
 const MoodleAdmin = lazy(() => import('./pages/MoodleAdmin'))
 
+// The flipbook viewer opens in its own tab straight from the Portfolio menu,
+// full-screen with no site chrome — same pattern as the admin panels above.
+const FlipbookView = lazy(() => import('./pages/FlipbookView'))
+
 function ScrollToTop() {
   const { pathname } = useLocation()
   useEffect(() => {
@@ -131,6 +135,18 @@ function AppShell() {
     return (
       <Suspense fallback={<RouteFallback />}>
         <AdminApp />
+      </Suspense>
+    )
+  }
+
+  // /flipbook/:slug renders the portfolio viewer full-screen, no site chrome —
+  // this is what opens in the new tab from the Portfolio menu.
+  if (pathname.startsWith('/flipbook/')) {
+    return (
+      <Suspense fallback={<RouteFallback />}>
+        <Routes>
+          <Route path="/flipbook/:slug" element={<FlipbookView />} />
+        </Routes>
       </Suspense>
     )
   }

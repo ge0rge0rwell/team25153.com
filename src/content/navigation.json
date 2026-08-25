@@ -12,9 +12,9 @@
     {
       "label": "Portfolio",
       "children": [
-        { "label": "AGE – Decode Worlds", "to": "/portfolio/age" },
-        { "label": "DIVE – Into The Deep", "to": "/portfolio/dive" },
-        { "label": "SHOW – Centerstage", "to": "/portfolio/show" }
+        { "label": "AGE – Decode Worlds", "to": "/flipbook/age", "newTab": true },
+        { "label": "DIVE – Into The Deep", "to": "/flipbook/dive", "newTab": true },
+        { "label": "SHOW – Centerstage", "to": "/flipbook/show", "newTab": true }
       ]
     },
     { "label": "Learn", "to": "/lms" },

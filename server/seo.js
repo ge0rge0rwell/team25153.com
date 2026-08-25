@@ -149,5 +149,5 @@ export function seoFallback(DIST) {
 // Admin surfaces are deliberately noindex but are perfectly valid pages, so
 // they must not be reported as 404.
 function isKnownNoindex(pathname) {
-  return /^\/(admin|cms|ozi)(\/|$)/.test(pathname)
+  return /^\/(admin|cms|ozi|flipbook)(\/|$)/.test(pathname)
 }
