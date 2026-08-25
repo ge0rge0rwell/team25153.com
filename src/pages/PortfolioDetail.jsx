@@ -2,7 +2,7 @@ import { useParams, Link } from 'react-router-dom'
 import PageBanner from '../components/ui/PageBanner'
 import { ArrowLeft } from 'lucide-react'
 import { useEffect, useRef } from 'react'
-import { loadFlipbook } from '../utils/loadFlipbook'
+import { openFlipbook } from '../utils/loadFlipbook'
 import { useCollection } from '../context/ContentContext'
 
 // Renders the actual flipbook. Keyed by slug from the parent so React fully
@@ -18,30 +18,9 @@ function FlipbookViewer({ portfolio }) {
 
   useEffect(() => {
     if (!containerRef.current) return
-    let cancelled = false
-
-    loadFlipbook()
-      .then(() => {
-        if (cancelled || !containerRef.current) return
-        window.jQuery(containerRef.current).flipBook({
-          pdfUrl: portfolio.pdfUrl,
-          lightBox: false,
-          rootFolder: '/dflip/',
-          name: portfolio.title,
-          // Default download button opens the PDF with window.open(), which
-          // popup blockers can silently kill. forceDownload uses a same-
-          // origin <a download> click instead, which isn't subject to that.
-          btnDownloadPdf: {
-            enabled: true,
-            url: portfolio.pdfUrl,
-            forceDownload: true,
-            name: `${portfolio.slug}.pdf`,
-          },
-        })
-      })
-      .catch((err) => console.error('Flipbook failed to load:', err))
-
-    return () => { cancelled = true }
+    openFlipbook(containerRef, portfolio).catch((err) =>
+      console.error('Flipbook failed to load:', err),
+    )
   }, [portfolio])
 
   return <div ref={containerRef} className="w-full h-[75vh] min-h-[500px]" />

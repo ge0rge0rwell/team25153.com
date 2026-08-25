@@ -72,3 +72,40 @@ export function loadFlipbook() {
 
   return loadPromise
 }
+
+// Binds a flipbook to containerRef.current. dFlip's own WordPress embed
+// script always sets `assets`, `pdfjsworkerSrc` and `cMapUrl` explicitly,
+// prefixed with its rootFolder, before calling .flipBook() — see
+// dflip/js/embed.js. Calling .flipBook() directly without doing the same
+// leaves those on their library defaults, which are bare relative paths
+// like "images/preloader.jpg". Those resolve against the *current page
+// URL*, not rootFolder, so on a route like /flipbook/age they 404 instead
+// of finding /dflip/images/preloader.jpg. The preloader never gets its load
+// event, so the loading screen never clears — this is what was showing as
+// "stuck on grey" rather than a hang.
+//
+// Takes the ref object itself (not .current) so it can re-check after the
+// async script load in case the caller unmounted in the meantime.
+export async function openFlipbook(containerRef, portfolio) {
+  await loadFlipbook()
+  if (!containerRef.current) return
+  window.jQuery(containerRef.current).flipBook({
+    pdfUrl: portfolio.pdfUrl,
+    lightBox: false,
+    rootFolder: '/dflip/',
+    name: portfolio.title,
+    assets: {
+      preloader: '/dflip/images/preloader.jpg',
+      spinner: '/dflip/images/spinner.gif',
+      overlay: '/dflip/images/overlay.png',
+    },
+    pdfjsworkerSrc: '/dflip/js/pdf.worker.min.js',
+    sound: false, // no mp3 assets shipped, skip the page-flip sound entirely
+    btnDownloadPdf: {
+      enabled: true,
+      url: portfolio.pdfUrl,
+      forceDownload: true,
+      name: `${portfolio.slug}.pdf`,
+    },
+  })
+}

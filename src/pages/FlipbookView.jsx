@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router-dom'
 import { useEffect, useRef } from 'react'
-import { loadFlipbook } from '../utils/loadFlipbook'
+import { openFlipbook } from '../utils/loadFlipbook'
 import { useCollection } from '../context/ContentContext'
 
 // Bare, full-viewport flipbook — no navbar, no banner, no info strip.
@@ -16,27 +16,9 @@ function Flipbook({ portfolio }) {
 
   useEffect(() => {
     if (!containerRef.current) return
-    let cancelled = false
-
-    loadFlipbook()
-      .then(() => {
-        if (cancelled || !containerRef.current) return
-        window.jQuery(containerRef.current).flipBook({
-          pdfUrl: portfolio.pdfUrl,
-          lightBox: false,
-          rootFolder: '/dflip/',
-          name: portfolio.title,
-          btnDownloadPdf: {
-            enabled: true,
-            url: portfolio.pdfUrl,
-            forceDownload: true,
-            name: `${portfolio.slug}.pdf`,
-          },
-        })
-      })
-      .catch((err) => console.error('Flipbook failed to load:', err))
-
-    return () => { cancelled = true }
+    openFlipbook(containerRef, portfolio).catch((err) =>
+      console.error('Flipbook failed to load:', err),
+    )
   }, [portfolio])
 
   return <div ref={containerRef} className="w-screen h-screen" />
