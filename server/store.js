@@ -89,6 +89,7 @@ export async function ensureSeed() {
 // once applied, so it's safe to leave running on every boot.
 export async function runContentMigrations() {
   await migratePortfolioMenuToFlipbook()
+  await migrateRemoveBlogNavLinks()
 }
 
 async function migratePortfolioMenuToFlipbook() {
@@ -111,6 +112,32 @@ async function migratePortfolioMenuToFlipbook() {
   if (changed) {
     await fsp.writeFile(file, JSON.stringify(data, null, 2) + '\n', 'utf8')
     console.log('  ✦ Migrated Portfolio menu links to /flipbook (new tab)')
+  }
+}
+
+// Blog is unwired for now (App.jsx has no /blog route), so its nav/footer
+// links would otherwise dead-end in a 404. Removing them, not the
+// underlying blog collection or markdown files — those are untouched.
+async function migrateRemoveBlogNavLinks() {
+  const file = path.join(CONTENT_DIR, collections.navigation.file)
+  if (!fs.existsSync(file)) return
+
+  const data = JSON.parse(await fsp.readFile(file, 'utf8'))
+  let changed = false
+
+  for (const key of ['navItems', 'footerLinks']) {
+    const list = data[key]
+    if (!Array.isArray(list)) continue
+    const next = list.filter((item) => item.label !== 'Blog')
+    if (next.length !== list.length) {
+      data[key] = next
+      changed = true
+    }
+  }
+
+  if (changed) {
+    await fsp.writeFile(file, JSON.stringify(data, null, 2) + '\n', 'utf8')
+    console.log('  ✦ Removed Blog links from live navigation (content untouched)')
   }
 }
 

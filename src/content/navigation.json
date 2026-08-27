@@ -28,7 +28,6 @@
         { "label": "Library", "to": "/resources/library" }
       ]
     },
-    { "label": "Blog", "to": "/blog" },
     { "label": "Sponsorship", "to": "/sponsorship" },
     { "label": "Contact Us", "to": "/contact" }
   ],
@@ -38,7 +37,6 @@
     { "label": "Portfolio", "to": "/portfolio/age" },
     { "label": "Learn", "to": "/lms" },
     { "label": "Resources", "to": "/resources/decoding-ftc" },
-    { "label": "Blog", "to": "/blog" },
     { "label": "Sponsorship", "to": "/sponsorship" },
     { "label": "Join Us", "to": "/join" },
     { "label": "Contact Us", "to": "/contact" }

@@ -12,11 +12,11 @@ import useDocumentMeta from './lib/useDocumentMeta'
 // the landing page paints without a second round-trip. Each import thunk is
 // shared between lazy() and the idle prefetcher (see prefetchRoutes) so a chunk
 // is fetched at most once.
+// Blog is deliberately not wired up right now — see the Blog section below
+// for why. The pages and content are left in place, just unreferenced.
 const routeImports = [
   () => import('./pages/RobotPage'),
   () => import('./pages/Awards'),
-  () => import('./pages/Blog'),
-  () => import('./pages/BlogPost'),
   () => import('./pages/Sponsorship'),
   () => import('./pages/Contact'),
   () => import('./pages/Resources'),
@@ -29,8 +29,6 @@ const routeImports = [
 const [
   importRobotPage,
   importAwards,
-  importBlog,
-  importBlogPost,
   importSponsorship,
   importContact,
   importResources,
@@ -43,8 +41,6 @@ const [
 
 const RobotPage = lazy(importRobotPage)
 const Awards = lazy(importAwards)
-const Blog = lazy(importBlog)
-const BlogPost = lazy(importBlogPost)
 const Sponsorship = lazy(importSponsorship)
 const Contact = lazy(importContact)
 const Resources = lazy(importResources)
@@ -188,9 +184,10 @@ function PublicSite() {
               {/* Portfolio */}
               <Route path="/portfolio/:slug" element={<PortfolioDetail />} />
 
-              {/* Blog */}
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/blog/:slug" element={<BlogPost />} />
+              {/* Blog is off for now — pages, content and markdown are all
+                  still in the repo, just unrouted. Re-add the two routes
+                  above (and the Blog/BlogPost imports near the top of this
+                  file) to bring it back. */}
 
               {/* Other */}
               <Route path="/sponsorship" element={<Sponsorship />} />

@@ -83,11 +83,9 @@ const STATIC = {
     description:
       'Free FTC resources from team #25153: game analysis and strategy guides, the Java FTC SDK software stack, Onshape CAD tutorials, and a curated engineering library.',
   },
-  '/blog': {
-    title: 'Blog — Build Season & Outreach',
-    description:
-      'Technical deep-dives, season recaps, game analysis and STEM outreach stories from Cartesian Robotics #25153.',
-  },
+  // '/blog' intentionally omitted — the route is unwired for now (see
+  // App.jsx). Leaving a STATIC entry here would make the server report it
+  // as a real, indexable 200 page even though the client renders NotFound.
   '/sponsorship': {
     title: 'Sponsor Our Team',
     description:
@@ -260,7 +258,9 @@ export function buildMeta(pathname, content = {}) {
     if (section === 'robots' && slug) meta = robotMeta(slug, content)
     else if (section === 'portfolio' && slug) meta = portfolioMeta(slug, content)
     else if (section === 'resources' && slug) meta = resourceMeta(slug, content)
-    else if (section === 'blog' && slug) meta = blogMeta(slug, content)
+    // 'blog' intentionally not dispatched here — route is unwired for now,
+    // so /blog/:slug should fall through to the unknown-path 404 below,
+    // same as any other dead URL.
     // /flipbook/:slug is the bare, no-chrome viewer opened in a new tab from
     // the Portfolio menu — a real page (valid, 200), just not one we want
     // Google indexing as its own result alongside the real /portfolio/:slug.
@@ -300,14 +300,15 @@ export function buildMeta(pathname, content = {}) {
 }
 
 /**
- * Every indexable URL, for sitemap.xml. Driven by live content so new blog
- * posts and robots added through the CMS appear automatically.
+ * Every indexable URL, for sitemap.xml. Driven by live content so new
+ * robots etc. added through the CMS appear automatically.
+ * ('/blog' and its posts are left out while the route is unwired — see
+ * App.jsx — so the sitemap never advertises a URL that 404s.)
  */
 export function sitemapEntries(content = {}) {
   const entries = [
     { path: '/', priority: '1.0', changefreq: 'weekly' },
     { path: '/awards', priority: '0.9', changefreq: 'monthly' },
-    { path: '/blog', priority: '0.8', changefreq: 'weekly' },
     { path: '/resources', priority: '0.8', changefreq: 'monthly' },
     { path: '/sponsorship', priority: '0.7', changefreq: 'monthly' },
     { path: '/join', priority: '0.6', changefreq: 'monthly' },
@@ -322,14 +323,6 @@ export function sitemapEntries(content = {}) {
   }
   for (const r of content?.resources?.resources || []) {
     entries.push({ path: `/resources/${r.slug}`, priority: '0.7', changefreq: 'monthly' })
-  }
-  for (const p of content?.blog || []) {
-    entries.push({
-      path: `/blog/${p.slug}`,
-      priority: '0.7',
-      changefreq: 'yearly',
-      lastmod: toIsoDate(p.date),
-    })
   }
   return entries
 }
