@@ -46,7 +46,7 @@ export default function RobotPage() {
       {/* ══════════════════════════════════════════
           HERO — solid navy, clean & sharp
       ══════════════════════════════════════════ */}
-      <section className="relative overflow-hidden bg-navy" style={{ minHeight: '70vh' }}>
+      <section className="relative overflow-hidden bg-navy" style={{ minHeight: '45vh' }}>
         {/* Dot-grid texture */}
         <div
           className="absolute inset-0 opacity-5"
@@ -58,9 +58,8 @@ export default function RobotPage() {
         {/* Crimson accent bar left edge */}
         <div className="absolute left-0 top-0 bottom-0 w-1 bg-crimson" />
 
-        <div className="relative max-w-6xl mx-auto px-6 py-12 md:py-20 flex flex-col lg:flex-row items-center gap-6 md:gap-12">
-          {/* Left: text */}
-          <StaggerGroup as="div" staggerChildren={0.12} amount={0.4} className="flex-1 text-white z-10">
+        <div className="relative max-w-6xl mx-auto px-6 pt-12 pb-6 md:pt-20 md:pb-10">
+          <StaggerGroup as="div" staggerChildren={0.12} amount={0.4} className="max-w-2xl text-white z-10">
             {/* Breadcrumb */}
             <StaggerItem className="flex items-center gap-2 text-white/50 text-xs uppercase tracking-widest mb-6">
               <Link to="/" className="hover:text-white transition-colors">Home</Link>
@@ -90,17 +89,6 @@ export default function RobotPage() {
             </StaggerItem>
 
           </StaggerGroup>
-
-          {/* Right: robot image */}
-          <div className="flex-1 flex justify-center lg:justify-end z-10">
-            <img
-              src={robot.image}
-              alt={robot.name}
-              className="w-64 h-64 lg:w-80 lg:h-80 object-contain drop-shadow-2xl"
-              decoding="async"
-              style={{ mixBlendMode: robot.heroBgBlend }}
-            />
-          </div>
         </div>
       </section>
 
