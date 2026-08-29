@@ -352,25 +352,22 @@ app.post('/api/lms/register', express.json(), async (req, res) => {
     return data
   }
   try {
-    const created = await wsCall('core_user_create_users', {
+    // Account is created suspended — signing up does not grant access.
+    // An administrator must approve it (un-suspend) in the Moodle admin
+    // panel under Site administration > Users > Browse list of users.
+    await wsCall('core_user_create_users', {
       'users[0][username]': username,
       'users[0][password]': password,
       'users[0][firstname]': firstname,
       'users[0][lastname]': lastname,
       'users[0][email]': email,
+      'users[0][suspended]': 1,
     })
-    const userId = created[0].id
 
-    const courses = await wsCall('core_course_get_courses_by_field', { field: 'shortname', value: 'FTC101' })
-    const course = courses.courses?.[0]
-    if (course) {
-      await wsCall('enrol_manual_enrol_users', {
-        'enrolments[0][roleid]': 5, // student
-        'enrolments[0][userid]': userId,
-        'enrolments[0][courseid]': course.id,
-      })
-    }
-    res.json({ ok: true, username })
+    // No auto-enrolment: an approved account still can't see any course
+    // until an admin manually enrols it into one from the Moodle admin
+    // panel (course > Participants > Enrol users).
+    res.json({ ok: true, pending: true, username })
   } catch (e) {
     res.status(400).json({ error: e.message })
   }

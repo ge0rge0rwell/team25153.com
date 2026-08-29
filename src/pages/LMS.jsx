@@ -9,10 +9,13 @@ import Reveal from '../components/motion/Reveal'
 import { StaggerGroup, StaggerItem } from '../components/motion/Stagger'
 
 const MOODLE_PUBLIC_URL = import.meta.env.VITE_MOODLE_PUBLIC_URL || 'https://lms.team25153.com'
-const ADMIN_TOKEN = import.meta.env.VITE_MOODLE_TOKEN || ''
 
 // ── Moodle helpers ────────────────────────────────────────────────────────────
-async function moodleGet(wsfunction, params = {}, token = ADMIN_TOKEN) {
+// token is required (no default): every call must pass the logged-in user's
+// own session token, never a privileged one. A VITE_-prefixed env var is
+// inlined into the public JS bundle at build time — an admin-level token
+// used to default here, which meant it shipped to every visitor's browser.
+async function moodleGet(wsfunction, params, token) {
   const qs = new URLSearchParams({ wstoken: token, wsfunction, moodlewsrestformat: 'json', ...params })
   const res = await fetch(`/moodle-api/webservice/rest/server.php?${qs}`)
   const data = await res.json()
@@ -105,6 +108,7 @@ function LoginScreen({ onLogin }) {
   const [show, setShow] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [pendingNotice, setPendingNotice] = useState('')
 
   const loginWith = async (u, p) => {
     const token = await moodleLogin(u.trim(), p)
@@ -116,7 +120,7 @@ function LoginScreen({ onLogin }) {
 
   const submit = async (e) => {
     e.preventDefault()
-    setLoading(true); setError('')
+    setLoading(true); setError(''); setPendingNotice('')
     try {
       if (mode === 'register') {
         const res = await fetch('/api/lms/register', {
@@ -126,6 +130,12 @@ function LoginScreen({ onLogin }) {
         })
         const data = await res.json()
         if (!res.ok) throw new Error(data.error || 'Kayıt başarısız.')
+        // Account is created suspended server-side — it can't log in until
+        // an admin approves it, so don't attempt to sign the user in here.
+        setPendingNotice('Hesabınız oluşturuldu. Bir yönetici onayladıktan ve bir derse atadıktan sonra giriş yapabilirsiniz.')
+        setMode('login')
+        setPassword('')
+        return
       }
       await loginWith(username, password)
     } catch (err) {
@@ -220,6 +230,13 @@ function LoginScreen({ onLogin }) {
               </div>
             </div>
 
+            {pendingNotice && (
+              <div className="flex items-center gap-2 rounded-xl bg-emerald-50 border border-emerald-200 px-3 py-2.5 text-sm text-emerald-700">
+                <CheckCircle size={14} className="flex-shrink-0" />
+                {pendingNotice}
+              </div>
+            )}
+
             {error && (
               <div className="flex items-center gap-2 rounded-xl bg-red-50 border border-red-200 px-3 py-2.5 text-sm text-red-600">
                 <AlertCircle size={14} className="flex-shrink-0" />
@@ -242,11 +259,11 @@ function LoginScreen({ onLogin }) {
         <p className="text-center text-xs text-gray-400 mt-6">
           {mode === 'login' ? (
             <>Hesabın yok mu?{' '}
-              <button type="button" onClick={() => { setMode('register'); setError('') }} className="text-crimson font-medium hover:underline">Kayıt ol</button>
+              <button type="button" onClick={() => { setMode('register'); setError(''); setPendingNotice('') }} className="text-crimson font-medium hover:underline">Kayıt ol</button>
             </>
           ) : (
             <>Zaten hesabın var mı?{' '}
-              <button type="button" onClick={() => { setMode('login'); setError('') }} className="text-crimson font-medium hover:underline">Giriş yap</button>
+              <button type="button" onClick={() => { setMode('login'); setError(''); setPendingNotice('') }} className="text-crimson font-medium hover:underline">Giriş yap</button>
             </>
           )}
         </p>
