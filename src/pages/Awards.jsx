@@ -23,6 +23,25 @@ const tierLabel = {
   offseason:    'Off-Season',
 }
 
+// Championship banners shown in the page header, each opening a lightbox.
+const HERO_BANNERS = [
+  {
+    src: '/media/banner-2.png',
+    alt: '2025 Turkey Championship — Inspire Award',
+    title: '2025 Turkey Championship — Inspire Award Banner',
+  },
+  {
+    src: '/media/banner-3.png',
+    alt: '2025 Piri Reis Regional I — Inspire Award',
+    title: '2025 Piri Reis Regional I — Inspire Award Banner',
+  },
+  {
+    src: '/media/banner-1.png',
+    alt: '2024 Turkey Championship — Winner',
+    title: '2024 Turkey Championship — Winner Banner',
+  },
+]
+
 export default function Awards() {
   const [lightboxImage, setLightboxImage] = useState(null)
 
@@ -43,27 +62,24 @@ export default function Awards() {
         breadcrumbs={breadcrumbs}
       >
         <div className="flex gap-6 sm:gap-8 items-center justify-end flex-wrap md:flex-nowrap">
-          <img
-            src="/media/banner-2.png"
-            alt="2025 Turkey Championship — Inspire Award"
-            decoding="async"
-            onClick={() => setLightboxImage({ src: '/media/banner-2.png', title: '2025 Turkey Championship — Inspire Award Banner' })}
-            className="h-44 sm:h-52 md:h-64 w-auto object-contain cursor-zoom-in hover:scale-105 hover:-translate-y-2 transition-all duration-300 drop-shadow-[0_8px_20px_rgba(0,0,0,0.5)]"
-          />
-          <img
-            src="/media/banner-3.png"
-            alt="2025 Piri Reis Regional I — Inspire Award"
-            decoding="async"
-            onClick={() => setLightboxImage({ src: '/media/banner-3.png', title: '2025 Piri Reis Regional I — Inspire Award Banner' })}
-            className="h-44 sm:h-52 md:h-64 w-auto object-contain cursor-zoom-in hover:scale-105 hover:-translate-y-2 transition-all duration-300 drop-shadow-[0_8px_20px_rgba(0,0,0,0.5)]"
-          />
-          <img
-            src="/media/banner-1.png"
-            alt="2024 Turkey Championship — Winner"
-            decoding="async"
-            onClick={() => setLightboxImage({ src: '/media/banner-1.png', title: '2024 Turkey Championship — Winner Banner' })}
-            className="h-44 sm:h-52 md:h-64 w-auto object-contain cursor-zoom-in hover:scale-105 hover:-translate-y-2 transition-all duration-300 drop-shadow-[0_8px_20px_rgba(0,0,0,0.5)]"
-          />
+          {/* Wrapped in real <button>s: these open the lightbox, and as bare
+              <img onClick> they were unreachable by keyboard entirely. */}
+          {HERO_BANNERS.map((banner) => (
+            <button
+              key={banner.src}
+              type="button"
+              onClick={() => setLightboxImage({ src: banner.src, title: banner.title })}
+              className="cursor-zoom-in rounded-lg transition-transform duration-300 hover:scale-105 hover:-translate-y-2"
+              aria-label={`Enlarge photo: ${banner.title}`}
+            >
+              <img
+                src={banner.src}
+                alt={banner.alt}
+                decoding="async"
+                className="h-44 sm:h-52 md:h-64 w-auto object-contain drop-shadow-[0_8px_20px_rgba(0,0,0,0.5)]"
+              />
+            </button>
+          ))}
         </div>
       </PageBanner>
 

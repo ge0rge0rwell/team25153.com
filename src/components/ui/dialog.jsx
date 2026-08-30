@@ -24,8 +24,11 @@ export function DialogContent({ open, onOpenChange, className, overlayClassName,
               className
             )}
           >
-            <DialogPrimitive.Close className="absolute -top-14 right-0 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 p-2.5 rounded-full transition-all duration-200 cursor-pointer">
-              <X size={24} />
+            <DialogPrimitive.Close
+              aria-label="Close"
+              className="absolute -top-14 right-0 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 p-2.5 rounded-full transition-all duration-200 cursor-pointer"
+            >
+              <X size={24} aria-hidden="true" />
             </DialogPrimitive.Close>
             {children}
           </DialogPrimitive.Content>
