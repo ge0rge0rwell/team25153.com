@@ -35,7 +35,14 @@ export default defineConfig({
             if (
               id.includes('three') ||
               id.includes('@react-three') ||
-              id.includes('tsparticles')
+              id.includes('tsparticles') ||
+              // Only reached from lazy routes: `marked` from BlogPost and the
+              // CMS blog editor, `gsap` from the Awards counter. Forcing them
+              // into `vendor` (which the entry always loads) made every
+              // visitor download them on first paint. Leaving them out lets
+              // Rollup put them in the route chunk that actually needs them.
+              id.includes('/marked/') ||
+              id.includes('/gsap/')
             ) {
               return undefined
             }
