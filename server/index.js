@@ -345,7 +345,8 @@ api.use((err, _req, res, _next) => {
 })
 
 app.use('/api', api)
-app.use('/uploads', express.static(MEDIA_DIR))
+// Uploaded media keeps its filename when replaced, so keep this short.
+app.use('/uploads', express.static(MEDIA_DIR, { maxAge: '1h' }))
 
 // ── Moodle LMS helpers ────────────────────────────────────────────────────────
 const MOODLE_ORIGIN = process.env.MOODLE_URL || 'http://localhost:8081'
@@ -443,7 +444,36 @@ if (fs.existsSync(DIST)) {
   // robots.txt / sitemap.xml must be registered before express.static, so the
   // generated versions win over anything sitting in dist/.
   registerSeoRoutes(app)
-  app.use(express.static(DIST, { index: false }))
+  // Cache policy. express.static defaults to maxAge 0, so every asset —
+  // including content-hashed bundles and the 32 MB robot model — was
+  // revalidated on every page load: a round trip per file before anything
+  // could render, even when the answer was always 304.
+  //
+  // Tiered by whether the URL changes when the content does:
+  //   /assets/*  Vite embeds a content hash in the filename, so a given URL
+  //              can never point at different bytes. Safe to keep forever;
+  //              `immutable` also stops revalidation on reload.
+  //   models/portfolios/dflip  large, rarely edited, and referenced from code
+  //              with an explicit ?v= when they are. A week.
+  //   everything else  CMS-editable media that keeps its filename across
+  //              edits, so it needs to go stale quickly. An hour.
+  app.use(express.static(DIST, {
+    index: false,
+    setHeaders(res, filePath) {
+      const rel = path.relative(DIST, filePath).split(path.sep).join('/')
+      if (rel.startsWith('assets/')) {
+        res.setHeader('Cache-Control', 'public, max-age=31536000, immutable')
+      } else if (/^(models|portfolios|dflip)\//.test(rel)) {
+        res.setHeader('Cache-Control', 'public, max-age=604800')
+      } else if (rel === 'index.html') {
+        // Must always be revalidated, otherwise a deployed release stays
+        // invisible to anyone holding a cached copy.
+        res.setHeader('Cache-Control', 'no-cache')
+      } else {
+        res.setHeader('Cache-Control', 'public, max-age=3600')
+      }
+    },
+  }))
   // SPA fallback, with per-route metadata injected into the HTML.
   app.use(seoFallback(DIST))
 } else {

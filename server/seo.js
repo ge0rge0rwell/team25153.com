@@ -129,7 +129,7 @@ export function seoFallback(DIST) {
     // unmodified HTML — the app still boots and renders, it just loses the
     // injected metadata for that request.
     try {
-      if (!MARKER.test(html)) return res.type('html').send(html)
+      if (!MARKER.test(html)) return res.set('Cache-Control', 'no-cache').type('html').send(html)
 
       const content = await getAllContent()
       const meta = buildMeta(req.path, content)
@@ -138,10 +138,12 @@ export function seoFallback(DIST) {
       // 404s must answer with a 404 — a soft-404 (unknown URL returning 200)
       // lets junk URLs into the index and dilutes the real pages.
       res.status(meta.noindex && !isKnownNoindex(req.path) ? 404 : 200)
+      // Never cache the shell: it names the current hashed asset URLs.
+      res.set('Cache-Control', 'no-cache')
       res.type('html').send(injected)
     } catch (e) {
       console.error('SEO injection failed, serving plain HTML:', e)
-      if (!res.headersSent) res.type('html').send(html)
+      if (!res.headersSent) res.set('Cache-Control', 'no-cache').type('html').send(html)
     }
   }
 }
