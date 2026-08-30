@@ -99,7 +99,7 @@ export default function Home() {
                   doesn't clip the ring or badge outside it */}
               <div className="relative inline-block rounded-2xl overflow-hidden">
                 <img
-                  src="/media/hero-descartes.png"
+                  src="/media/hero-descartes.webp"
                   alt="Cartesian Robotics Hero"
                   className="relative block w-full max-w-sm lg:max-w-md object-cover shadow-2xl"
                   fetchPriority="high"

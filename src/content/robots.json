@@ -31,7 +31,7 @@
         }
       ],
       "robotOverview": "Cerberon is created with the most efficient methods to provide the maximized velocity, shooting ability and cycle sustainability.",
-      "breakdownImage": "/media/cerberon-breakdown.png",
+      "breakdownImage": "/media/cerberon-breakdown.webp",
       "specs": {
         "name": "Cerberon",
         "weight": "39 lbs",
@@ -84,7 +84,7 @@
         }
       ],
       "robotOverview": "Behind every smooth motion and successful score lies a network of carefully designed and fine-tuned subsystems. At Cartesian Robotics, we treat each subsystem not as an isolated part, but as a piece of a unified machine \u2014 each one optimized for speed, stability, and synergy.",
-      "breakdownImage": "/media/hilda-breakdown.png",
+      "breakdownImage": "/media/hilda-breakdown.webp",
       "specs": {
         "name": "Hilda V.II",
         "weight": "13 kg"

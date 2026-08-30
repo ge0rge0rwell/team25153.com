@@ -16,7 +16,7 @@ export default function NotFound() {
           <div className="relative w-36 sm:w-48 mb-4 sm:mb-6">
             <div className="absolute -inset-3 rounded-3xl border-2 border-crimson/10 rotate-3" />
             <img
-              src="/media/hero-descartes.png"
+              src="/media/hero-descartes.webp"
               alt="A puzzled René Descartes, unable to find this page"
               decoding="async"
               className="relative w-full object-contain drop-shadow-2xl"

@@ -90,6 +90,7 @@ export async function ensureSeed() {
 export async function runContentMigrations() {
   await migratePortfolioMenuToFlipbook()
   await migrateRemoveBlogNavLinks()
+  await migrateBreakdownImagesToWebp()
 }
 
 async function migratePortfolioMenuToFlipbook() {
@@ -138,6 +139,35 @@ async function migrateRemoveBlogNavLinks() {
   if (changed) {
     await fsp.writeFile(file, JSON.stringify(data, null, 2) + '\n', 'utf8')
     console.log('  ✦ Removed Blog links from live navigation (content untouched)')
+  }
+}
+
+// The two robot breakdown diagrams were re-encoded as WebP (2.6 MB of PNG down
+// to 184 KB). Their paths live in the robots collection on the data volume, so
+// the seed edit alone wouldn't reach an already-deployed site. Only rewrites a
+// path when the .webp file actually exists on disk, so a half-deployed state
+// can't leave the page pointing at a missing image; the original .png files are
+// kept as a fallback either way.
+async function migrateBreakdownImagesToWebp() {
+  const file = path.join(CONTENT_DIR, collections.robots.file)
+  if (!fs.existsSync(file)) return
+
+  const data = JSON.parse(await fsp.readFile(file, 'utf8'))
+  let changed = false
+
+  for (const robot of data.robots || []) {
+    const src = robot.breakdownImage
+    if (typeof src !== 'string' || !src.endsWith('.png')) continue
+    const webp = src.replace(/\.png$/, '.webp')
+    const onDisk = path.join(ROOT, 'public', webp.replace(/^\//, ''))
+    if (!fs.existsSync(onDisk)) continue
+    robot.breakdownImage = webp
+    changed = true
+  }
+
+  if (changed) {
+    await fsp.writeFile(file, JSON.stringify(data, null, 2) + '\n', 'utf8')
+    console.log('  ✦ Migrated robot breakdown images to WebP')
   }
 }
 
