@@ -165,9 +165,10 @@ function PublicSite() {
   return (
     <>
       <ScrollToTop />
+      <a href="#main-content" className="skip-link">Skip to content</a>
       <div className="flex flex-col min-h-screen font-roboto">
         <Navbar />
-        <main className="flex-1">
+        <main id="main-content" className="flex-1">
           <Suspense fallback={<RouteFallback />}>
             <Routes location={location}>
               <Route path="/" element={<Home />} />

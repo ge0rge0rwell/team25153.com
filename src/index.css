@@ -22,6 +22,24 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-roboto font-medium;
   }
+
+  /* Keyboard focus indicator. :focus-visible only matches keyboard/AT focus,
+     never a mouse click, so this adds no visual noise for pointer users but
+     makes tabbing through the site actually followable. Several components
+     set `focus:outline-none` on inputs; this keeps them reachable anyway. */
+  :focus-visible {
+    outline: 2px solid theme('colors.crimson.DEFAULT');
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* On dark backgrounds a crimson ring is nearly invisible — use gold. */
+  .bg-navy :focus-visible,
+  .bg-crimson :focus-visible,
+  .bg-navy-gradient :focus-visible,
+  .bg-crimson-gradient :focus-visible {
+    outline-color: theme('colors.gold.DEFAULT');
+  }
 }
 
 @layer components {
@@ -111,10 +129,42 @@
   }
 }
 
+/* Skip link — first thing in the tab order, visually hidden until focused.
+   Without it keyboard and screen-reader users have to tab through the whole
+   nav on every single page before reaching the content. */
+.skip-link {
+  @apply absolute left-4 z-[100] bg-crimson text-white px-4 py-2 rounded-lg text-sm font-semibold;
+  top: -100px;
+  transition: top 0.15s ease;
+}
+
+.skip-link:focus {
+  top: 0.75rem;
+}
+
 /* Mobile overflow guard */
 html, body {
   overflow-x: hidden;
   max-width: 100vw;
+}
+
+/* Respect the OS "reduce motion" setting. The site has marquees, typewriter
+   effects, particles and scroll animations; for users who ask for less
+   motion (vestibular disorders, migraine triggers) these are actively
+   unpleasant, so drop them to near-instant rather than removing features. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Mobile touch targets */

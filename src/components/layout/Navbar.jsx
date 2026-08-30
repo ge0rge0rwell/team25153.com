@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Menu, X, ChevronDown, Search } from 'lucide-react'
+import { Menu, X, ChevronDown } from 'lucide-react'
 import { useCollection } from '../../context/ContentContext'
 
+// Submenu entries (second level and deeper, rendered inside the dark panel).
 function DropdownItem({ item, depth = 0 }) {
   const [open, setOpen] = useState(false)
   const location = useLocation()
@@ -10,15 +11,33 @@ function DropdownItem({ item, depth = 0 }) {
   if (item.children) {
     return (
       <div
-        className={depth === 0 ? 'nav-sub-item relative' : 'nav-sub-item relative'}
+        className="nav-sub-item relative"
         onMouseEnter={() => setOpen(true)}
         onMouseLeave={() => setOpen(false)}
+        // onFocus/onBlur bubble in React (focusin/focusout), so these also fire
+        // for the links inside — that's what makes the submenu reachable by
+        // keyboard. Without them the menu was mouse-only.
+        onFocus={() => setOpen(true)}
+        onBlur={(e) => {
+          if (!e.currentTarget.contains(e.relatedTarget)) setOpen(false)
+        }}
+        onKeyDown={(e) => {
+          if (e.key === 'Escape') setOpen(false)
+        }}
       >
         <div className="flex items-center justify-between w-full px-5 py-2.5 text-sm text-white/80 hover:text-gold hover:bg-navy-light transition-colors uppercase tracking-wider font-medium">
           {item.to ? (
             <Link to={item.to} className="flex-1 text-left">{item.label}</Link>
           ) : (
-            <span className="flex-1 text-left cursor-default">{item.label}</span>
+            <button
+              type="button"
+              aria-expanded={open}
+              aria-haspopup="true"
+              onClick={() => setOpen((v) => !v)}
+              className="flex-1 text-left uppercase tracking-wider font-medium"
+            >
+              {item.label}
+            </button>
           )}
           <ChevronDown size={12} className={`ml-2 transition-transform ${open ? 'rotate-180' : ''}`} />
         </div>
@@ -57,6 +76,7 @@ function DropdownItem({ item, depth = 0 }) {
   )
 }
 
+// Top-level desktop nav entries.
 function TopNavItem({ item }) {
   const [open, setOpen] = useState(false)
   const location = useLocation()
@@ -67,13 +87,28 @@ function TopNavItem({ item }) {
         className="nav-item relative"
         onMouseEnter={() => setOpen(true)}
         onMouseLeave={() => setOpen(false)}
+        onFocus={() => setOpen(true)}
+        onBlur={(e) => {
+          if (!e.currentTarget.contains(e.relatedTarget)) setOpen(false)
+        }}
+        onKeyDown={(e) => {
+          if (e.key === 'Escape') setOpen(false)
+        }}
       >
         <div className={`flex items-center gap-1 px-3 py-2 text-sm font-medium uppercase tracking-wider transition-colors
           ${open ? 'text-navy-mid' : 'text-navy hover:text-navy-mid'}`}>
           {item.to ? (
             <Link to={item.to} className="flex-1">{item.label}</Link>
           ) : (
-            <span className="flex-1 cursor-default">{item.label}</span>
+            <button
+              type="button"
+              aria-expanded={open}
+              aria-haspopup="true"
+              onClick={() => setOpen((v) => !v)}
+              className="flex-1 uppercase tracking-wider font-medium"
+            >
+              {item.label}
+            </button>
           )}
           <ChevronDown size={12} className={`transition-transform ${open ? 'rotate-180' : ''}`} />
         </div>
@@ -105,6 +140,7 @@ function TopNavItem({ item }) {
   return (
     <Link
       to={item.to}
+      aria-current={isActive ? 'page' : undefined}
       className={`relative px-3 py-2 text-sm font-medium uppercase tracking-wider transition-colors
         ${isActive ? 'text-navy-mid' : 'text-navy hover:text-navy-mid'}`}
     >
@@ -122,15 +158,25 @@ function MobileNavItem({ item, onClose }) {
   if (item.children) {
     return (
       <div>
-        <div
-          className="flex items-center justify-between w-full px-6 py-3 text-white font-medium uppercase tracking-wider border-b border-navy-mid/30 hover:bg-navy-light transition-colors"
-        >
+        <div className="flex items-center justify-between w-full px-6 py-3 text-white font-medium uppercase tracking-wider border-b border-navy-mid/30 hover:bg-navy-light transition-colors">
           {item.to ? (
             <Link to={item.to} onClick={onClose} className="flex-1 text-left">{item.label}</Link>
           ) : (
-            <span className="flex-1 text-left" onClick={() => setOpen(!open)}>{item.label}</span>
+            <button
+              type="button"
+              className="flex-1 text-left uppercase tracking-wider"
+              aria-expanded={open}
+              onClick={() => setOpen(!open)}
+            >
+              {item.label}
+            </button>
           )}
-          <button onClick={() => setOpen(!open)} className="p-1">
+          <button
+            onClick={() => setOpen(!open)}
+            className="p-1"
+            aria-expanded={open}
+            aria-label={`${open ? 'Collapse' : 'Expand'} ${item.label}`}
+          >
             <ChevronDown size={16} className={`transition-transform ${open ? 'rotate-180' : ''}`} />
           </button>
         </div>
@@ -176,28 +222,28 @@ export default function Navbar() {
   const navItems = useCollection('navigation').navItems || []
 
   useEffect(() => {
+    // passive: this listener never calls preventDefault, and saying so lets the
+    // browser keep scrolling on the compositor instead of waiting on JS.
     const handler = () => setScrolled(window.scrollY > 50)
-    window.addEventListener('scroll', handler)
+    window.addEventListener('scroll', handler, { passive: true })
     return () => window.removeEventListener('scroll', handler)
   }, [])
 
+  // Escape closes the drawer, and the page behind it must not scroll while
+  // it's open — otherwise the background slides around under the overlay.
+  useEffect(() => {
+    if (!mobileOpen) return
+    const onKey = (e) => e.key === 'Escape' && setMobileOpen(false)
+    window.addEventListener('keydown', onKey)
+    document.body.style.overflow = 'hidden'
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      document.body.style.overflow = ''
+    }
+  }, [mobileOpen])
+
   return (
     <>
-      {/* Top Bar */}
-      <div className="bg-crimson text-white/80 text-xs py-1.5 px-4 hidden md:block">
-        <div className="max-w-7xl mx-auto flex justify-end items-center gap-4">
-          <div className="flex items-center gap-2">
-            <a href="/tr" className="flex items-center gap-1 hover:text-white transition-colors">
-              <span>🇹🇷</span> TR
-            </a>
-            <span className="opacity-40">|</span>
-            <a href="/" className="flex items-center gap-1 hover:text-white transition-colors text-white">
-              <span>🇬🇧</span> EN
-            </a>
-          </div>
-        </div>
-      </div>
-
       {/* Main Navbar */}
       <nav className={`sticky top-0 z-40 transition-all duration-300 ${
         scrolled ? 'bg-white/95 backdrop-blur-md shadow-md' : 'bg-white shadow-sm'
@@ -205,7 +251,7 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link to="/" className="flex-shrink-0">
+            <Link to="/" className="flex-shrink-0" aria-label="Cartesian Robotics — home">
               <img
                 src="/uploads/cartesian-wordmark.png"
                 alt="Cartesian Robotics"
@@ -236,7 +282,8 @@ export default function Navbar() {
           <button
             className="lg:hidden p-2 text-navy hover:text-crimson transition-colors"
             onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label="Toggle menu"
+            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={mobileOpen}
           >
             {mobileOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -246,14 +293,21 @@ export default function Navbar() {
       {/* Mobile Menu Overlay */}
       {mobileOpen && (
         <div className="fixed inset-0 z-50 lg:hidden" onClick={() => setMobileOpen(false)}>
-          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
+          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm animate-fade-in" />
           <div
-            className="absolute top-0 right-0 bottom-0 w-72 bg-navy overflow-y-auto"
+            className="absolute top-0 right-0 bottom-0 w-72 bg-navy overflow-y-auto animate-slide-in-right"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Site menu"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between px-6 py-4 border-b border-navy-mid/50">
               <span className="text-white font-bold uppercase tracking-wider text-sm">Menu</span>
-              <button onClick={() => setMobileOpen(false)} className="text-white/70 hover:text-white">
+              <button
+                onClick={() => setMobileOpen(false)}
+                className="text-white/70 hover:text-white"
+                aria-label="Close menu"
+              >
                 <X size={20} />
               </button>
             </div>
@@ -261,11 +315,6 @@ export default function Navbar() {
               {navItems.map((item) => (
                 <MobileNavItem key={item.label} item={item} onClose={() => setMobileOpen(false)} />
               ))}
-            </div>
-            <div className="px-6 py-4 border-t border-navy-mid/30 flex gap-3 mt-4">
-              <a href="/tr" className="flex items-center gap-1 text-white/60 text-sm hover:text-white">🇹🇷 TR</a>
-              <span className="text-white/30">|</span>
-              <a href="/" className="flex items-center gap-1 text-white text-sm">🇬🇧 EN</a>
             </div>
           </div>
         </div>

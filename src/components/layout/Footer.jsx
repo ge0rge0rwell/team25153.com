@@ -85,9 +85,10 @@ export default function Footer() {
               href="https://www.instagram.com/cartesian25153/"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Cartesian Robotics on Instagram"
               className="w-9 h-9 rounded-full bg-navy-mid hover:bg-crimson flex items-center justify-center transition-colors duration-300"
             >
-              <FaInstagram size={16} />
+              <FaInstagram size={16} aria-hidden="true" />
             </a>
           </div>
         </StaggerItem>
