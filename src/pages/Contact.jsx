@@ -1,5 +1,4 @@
 import PageBanner from '../components/ui/PageBanner'
-import { Link } from 'react-router-dom'
 import { MapPin, Mail } from 'lucide-react'
 import { FaInstagram } from 'react-icons/fa'
 import ContactForm from '../components/ui/ContactForm'

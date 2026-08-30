@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Code2, Cpu, Wrench, Focus, Crosshair, ChevronRight, Terminal } from 'lucide-react'
 
 const modules = [
