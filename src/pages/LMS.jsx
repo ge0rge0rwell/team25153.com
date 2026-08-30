@@ -670,11 +670,24 @@ function CourseGrid({ session, onSelect }) {
         )}
 
         {!loading && !error && courses.length === 0 && (
+          // Enrolment is manual: an approved account still sees nothing until
+          // an admin assigns it to a course. Without this explanation the
+          // empty list reads as a broken page rather than a pending step.
           <div className="flex flex-col items-center py-20 gap-3 text-center">
             <div className="w-14 h-14 rounded-full bg-gray-100 flex items-center justify-center">
-              <BookOpen size={24} className="text-gray-300" />
+              <BookOpen size={24} className="text-gray-400" />
             </div>
-            <p className="text-gray-500">Henüz ders yok.</p>
+            <p className="text-navy font-semibold">Henüz bir derse atanmadınız</p>
+            <p className="text-gray-500 text-sm max-w-sm">
+              Hesabınız aktif, ancak size henüz bir ders atanmamış. Bir yönetici
+              sizi derse ekledikten sonra dersleriniz burada görünecek.
+            </p>
+            <a
+              href="mailto:cartesian25153@gmail.com?subject=LMS%20ders%20erisimi"
+              className="mt-1 text-sm font-medium text-crimson hover:underline"
+            >
+              Yöneticiyle iletişime geç
+            </a>
           </div>
         )}
 
