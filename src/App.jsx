@@ -5,6 +5,7 @@ import Navbar from './components/layout/Navbar'
 import Footer from './components/layout/Footer'
 import Home from './pages/Home'
 import Loader from './components/ui/Loader'
+import ErrorBoundary from './components/ui/ErrorBoundary'
 import useDocumentMeta from './lib/useDocumentMeta'
 
 // Route-level code splitting: every page below ships as its own chunk and is
@@ -117,7 +118,11 @@ export default function App() {
   return (
     <BrowserRouter>
       <Toaster position="bottom-right" richColors closeButton />
-      <AppShell />
+      {/* Outermost so it covers every branch in AppShell — all of them mount
+          lazy() routes, and an un-caught chunk failure blanks the whole page. */}
+      <ErrorBoundary>
+        <AppShell />
+      </ErrorBoundary>
     </BrowserRouter>
   )
 }
