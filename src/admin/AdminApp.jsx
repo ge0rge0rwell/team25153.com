@@ -12,6 +12,7 @@ import Users from './pages/Users'
 import Settings from './pages/Settings'
 import Applications from './pages/Applications'
 import Submissions from './pages/Submissions'
+import Messages from './pages/Messages'
 
 export default function AdminApp() {
   return (
@@ -43,6 +44,7 @@ function Gate() {
         <Route path="/cms/blog/new" element={<BlogEditor />} />
         <Route path="/cms/blog/:slug" element={<BlogEditor />} />
         <Route path="/cms/applications" element={<Applications />} />
+        <Route path="/cms/messages" element={<Messages />} />
         <Route path="/cms/submissions" element={<Submissions />} />
         <Route path="/cms/media" element={<MediaLibrary />} />
         <Route path="/cms/users" element={<Users />} />

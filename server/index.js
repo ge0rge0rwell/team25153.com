@@ -292,6 +292,53 @@ api.get('/applications', requireAuth, async (_req, res, next) => {
   }
 })
 
+// ── Contact messages ───────────────────────────────────────────────────────
+// Same shape as applications above: public POST, admin-only GET, persisted to
+// a JSON file on the data volume. Before this existed the contact form only
+// ran a setTimeout and then claimed success, so every message sent through it
+// was silently discarded.
+const MESSAGES_FILE = path.join(DATA_DIR, 'messages.json')
+
+function readMessages() {
+  try {
+    return JSON.parse(fs.readFileSync(MESSAGES_FILE, 'utf8'))
+  } catch {
+    return []
+  }
+}
+
+api.post('/messages', async (req, res, next) => {
+  try {
+    const { name, email, subject, phone, message } = req.body || {}
+    if (!name?.trim() || !email?.trim() || !subject?.trim() || !message?.trim()) {
+      return res.status(400).json({ error: 'Name, email, subject, and message are required.' })
+    }
+    const entry = {
+      id: crypto.randomBytes(8).toString('hex'),
+      name: name.trim().slice(0, 200),
+      email: email.trim().toLowerCase().slice(0, 200),
+      subject: subject.trim().slice(0, 300),
+      phone: (phone || '').trim().slice(0, 60),
+      message: message.trim().slice(0, 5000),
+      submittedAt: new Date().toISOString(),
+    }
+    const existing = readMessages()
+    existing.push(entry)
+    await fsp.writeFile(MESSAGES_FILE, JSON.stringify(existing, null, 2) + '\n', 'utf8')
+    res.status(201).json({ ok: true })
+  } catch (e) {
+    next(e)
+  }
+})
+
+api.get('/messages', requireAuth, async (_req, res, next) => {
+  try {
+    res.json(readMessages())
+  } catch (e) {
+    next(e)
+  }
+})
+
 api.use((err, _req, res, _next) => {
   console.error('API error:', err)
   res.status(500).json({ error: err.message || 'Server error' })

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import {
   Home, Menu as MenuIcon, Bot, Trophy, BookOpen, FileText, HandCoins,
-  Newspaper, Image, Users, Users2, ArrowRight,
+  Newspaper, Image, Users, Users2, ArrowRight, Mail,
 } from 'lucide-react'
 import { useAuth } from '../AuthContext'
 import { schemas, collectionOrder } from '../schemas'
@@ -20,6 +20,7 @@ export default function Dashboard() {
     })),
     { to: '/cms/blog', label: 'Blog Posts', Icon: Newspaper, desc: 'Write & manage posts' },
     { to: '/cms/applications', label: 'Applications', Icon: Users2, desc: 'View membership submissions' },
+    { to: '/cms/messages', label: 'Messages', Icon: Mail, desc: 'Read contact enquiries' },
     { to: '/cms/media', label: 'Media', Icon: Image, desc: 'Upload images' },
     { to: '/cms/users', label: 'Users', Icon: Users, desc: 'Manage editors' },
   ]
