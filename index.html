@@ -25,9 +25,20 @@
     <meta name="twitter:card" content="summary_large_image" />
     <!--seo:end-->
 
-    <!-- Warm up the connection to the external image CDN used across pages -->
-    <link rel="preconnect" href="https://team25153.com" crossorigin />
-    <link rel="dns-prefetch" href="https://team25153.com" />
+    <!-- Fonts. These used to be pulled in with an @import at the top of
+         index.css, which serialises badly: the browser has to download and
+         parse our CSS before it even discovers the Google Fonts URL, then
+         fetch that stylesheet before it discovers the font files — three
+         round trips deep before text can paint in the right face. Declaring
+         them here lets the preload scanner start all of it immediately, and
+         the preconnects open the TLS connections to both font hosts up front
+         (googleapis serves the CSS, gstatic serves the actual font binaries). -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;900&family=Rajdhani:wght@500;600;700&display=swap"
+    />
   </head>
   <body>
     <div id="root"></div>

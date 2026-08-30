@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap');
+/* Fonts are linked from index.html — see the comment there for why an
+   @import here was costing an extra round trip before text could paint. */
 
 @tailwind base;
 @tailwind components;
