@@ -29,7 +29,7 @@ function StaticRow({ items, label }) {
   return (
     <div>
       {label && (
-        <p className="text-white/40 text-[10px] font-bold uppercase tracking-[0.3em] mb-3 text-center">
+        <p className="text-white/70 text-[10px] font-bold uppercase tracking-[0.3em] mb-3 text-center">
           {label}
         </p>
       )}
@@ -60,7 +60,7 @@ function Row({ items, direction, speed, label }) {
   return (
     <div className="group/row relative">
       {label && (
-        <p className="text-white/40 text-[10px] font-bold uppercase tracking-[0.3em] mb-3 text-center">
+        <p className="text-white/70 text-[10px] font-bold uppercase tracking-[0.3em] mb-3 text-center">
           {label}
         </p>
       )}
@@ -134,7 +134,7 @@ export default function LogoCarousel() {
 
       <div className="relative max-w-6xl mx-auto px-6">
         <Reveal direction="scale" className="text-center mb-12">
-          <p className="text-white/60 text-xs font-bold uppercase tracking-[0.35em] mb-3 flex items-center justify-center gap-2">
+          <p className="text-white/80 text-xs font-bold uppercase tracking-[0.35em] mb-3 flex items-center justify-center gap-2">
             <Handshake size={14} className="text-gold" />
             Proudly Supported By
           </p>

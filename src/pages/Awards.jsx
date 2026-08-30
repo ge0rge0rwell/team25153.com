@@ -134,7 +134,7 @@ export default function Awards() {
                   </h2>
                 </div>
                 <div className="flex-1 h-px bg-gray-200" />
-                <span className="text-xs text-gray-400 font-bold bg-white border border-gray-200 rounded-full px-3 py-1">
+                <span className="text-xs text-gray-500 font-bold bg-white border border-gray-200 rounded-full px-3 py-1">
                   {season.year}
                 </span>
               </div>
@@ -143,9 +143,9 @@ export default function Awards() {
               <div className="bg-white rounded-2xl shadow-sm ring-1 ring-gray-100 overflow-hidden">
                 {/* Table header */}
                 <div className="grid grid-cols-[auto_1fr_auto] gap-4 px-6 py-3 bg-gray-50 border-b border-gray-100">
-                  <span className="text-xs font-bold uppercase tracking-widest text-gray-400">#</span>
-                  <span className="text-xs font-bold uppercase tracking-widest text-gray-400">Award</span>
-                  <span className="text-xs font-bold uppercase tracking-widest text-gray-400">Event</span>
+                  <span className="text-xs font-bold uppercase tracking-widest text-gray-500">#</span>
+                  <span className="text-xs font-bold uppercase tracking-widest text-gray-500">Award</span>
+                  <span className="text-xs font-bold uppercase tracking-widest text-gray-500">Event</span>
                 </div>
 
                 <StaggerGroup as="div" staggerChildren={0.05} amount={0.1}>

@@ -111,7 +111,7 @@ export default function RobotPage() {
               >
                 <Maximize2 size={16} />
               </button>
-              <span className="absolute bottom-3 right-4 text-[11px] text-gray-400 uppercase tracking-widest pointer-events-none">
+              <span className="absolute bottom-3 right-4 text-[11px] text-gray-500 uppercase tracking-widest pointer-events-none">
                 Drag to rotate · Scroll to zoom · Right-click to pan
               </span>
             </div>
@@ -131,7 +131,7 @@ export default function RobotPage() {
           >
             <X size={20} />
           </button>
-          <span className="absolute bottom-5 right-6 text-xs text-white/40 uppercase tracking-widest pointer-events-none">
+          <span className="absolute bottom-5 right-6 text-xs text-white/60 uppercase tracking-widest pointer-events-none">
             Drag to rotate · Scroll to zoom · Right-click to pan · Esc to exit
           </span>
         </div>,

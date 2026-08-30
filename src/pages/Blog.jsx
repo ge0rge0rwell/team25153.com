@@ -53,7 +53,7 @@ export default function Blog() {
                       {post.title}
                     </h3>
                     <p className="text-gray-500 text-sm leading-relaxed flex-1">{post.excerpt}</p>
-                    <div className="mt-5 flex items-center justify-between text-xs text-gray-400">
+                    <div className="mt-5 flex items-center justify-between text-xs text-gray-500">
                       <span className="flex items-center gap-1"><Calendar size={12} /> {post.date}</span>
                       <span className="flex items-center gap-1"><Clock size={12} /> {post.readTime}</span>
                     </div>

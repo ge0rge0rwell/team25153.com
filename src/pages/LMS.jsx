@@ -229,7 +229,7 @@ function LoginScreen({ onLogin }) {
                   type="button"
                   onClick={() => setShow(!show)}
                   aria-label={show ? 'Şifreyi gizle' : 'Şifreyi göster'}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-navy transition"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-navy transition"
                 >
                   {show ? <EyeOff size={16} aria-hidden="true" /> : <Eye size={16} aria-hidden="true" />}
                 </button>
@@ -262,7 +262,7 @@ function LoginScreen({ onLogin }) {
           </form>
         </div>
 
-        <p className="text-center text-xs text-gray-400 mt-6">
+        <p className="text-center text-xs text-gray-500 mt-6">
           {mode === 'login' ? (
             <>Hesabın yok mu?{' '}
               <button type="button" onClick={() => { setMode('register'); setError(''); setPendingNotice('') }} className="text-crimson font-medium hover:underline">Kayıt ol</button>
@@ -370,11 +370,11 @@ function ChangePasswordModal({ session, onDone }) {
                       placeholder="••••••••"
                       className="w-full h-11 px-4 pr-11 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-crimson/20 focus:border-crimson transition"
                     />
-                    <button type="button" onClick={() => setShow(!show)} aria-label={show ? 'Şifreyi gizle' : 'Şifreyi göster'} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+                    <button type="button" onClick={() => setShow(!show)} aria-label={show ? 'Şifreyi gizle' : 'Şifreyi göster'} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
                       {show ? <EyeOff size={16} aria-hidden="true" /> : <Eye size={16} aria-hidden="true" />}
                     </button>
                   </div>
-                  <p id="lms-newpw-hint" className="text-xs text-gray-400 mt-1.5">Min 8 karakter, büyük harf, rakam ve özel karakter</p>
+                  <p id="lms-newpw-hint" className="text-xs text-gray-500 mt-1.5">Min 8 karakter, büyük harf, rakam ve özel karakter</p>
                 </div>
 
                 <div>
@@ -481,7 +481,7 @@ function CourseViewer({ course, session, onBack }) {
             <div className="w-14 h-14 rounded-full bg-gray-100 flex items-center justify-center">
               <BookOpen size={24} className="text-gray-300" />
             </div>
-            <p className="text-gray-400 text-sm">Bu derste henüz içerik yok.</p>
+            <p className="text-gray-500 text-sm">Bu derste henüz içerik yok.</p>
             <a href={`${MOODLE_PUBLIC_URL}/course/view.php?id=${course.id}`} target="_blank" rel="noopener noreferrer"
               className="text-sm text-crimson hover:underline flex items-center gap-1">
               Moodle'da aç <ExternalLink size={12} />
@@ -505,13 +505,13 @@ function CourseViewer({ course, session, onBack }) {
                     <span className="font-semibold text-navy text-sm">
                       {section.name || `Bölüm ${si + 1}`}
                     </span>
-                    <span className="text-xs text-gray-400 hidden sm:block">
+                    <span className="text-xs text-gray-500 hidden sm:block">
                       {section.modules?.length || 0} etkinlik
                     </span>
                   </div>
                   <ChevronDown
                     size={16}
-                    className={`text-gray-400 transition-transform duration-200 flex-shrink-0 ${open[section.id] ? 'rotate-180' : ''}`}
+                    className={`text-gray-500 transition-transform duration-200 flex-shrink-0 ${open[section.id] ? 'rotate-180' : ''}`}
                   />
                 </button>
 
@@ -545,7 +545,7 @@ function CourseViewer({ course, session, onBack }) {
                     ))}
 
                     {(!section.modules || section.modules.length === 0) && (
-                      <p className="px-5 py-4 text-sm text-gray-400">Bu bölümde henüz etkinlik yok.</p>
+                      <p className="px-5 py-4 text-sm text-gray-500">Bu bölümde henüz etkinlik yok.</p>
                     )}
                   </div>
                 )}
@@ -586,7 +586,7 @@ function CourseCard({ course, index, onClick }) {
           <p className="text-gray-500 text-sm leading-relaxed line-clamp-2 mb-3 flex-1">{summary}</p>
         )}
         <div className="mt-auto pt-3 border-t border-gray-100 flex items-center justify-between">
-          <span className="text-xs text-gray-400 uppercase tracking-wider">
+          <span className="text-xs text-gray-500 uppercase tracking-wider">
             {course.format || 'Topics'}
           </span>
           <span className="flex items-center gap-1 text-sm font-medium text-crimson group-hover:gap-2 transition-all">
@@ -647,7 +647,7 @@ function CourseGrid({ session, onSelect }) {
           <div className="flex flex-col items-center gap-4 py-20 text-center">
             <AlertCircle size={32} className="text-crimson" />
             <p className="text-navy font-semibold">Dersler yüklenemedi</p>
-            <p className="text-gray-400 text-sm">{error}</p>
+            <p className="text-gray-500 text-sm">{error}</p>
             <button onClick={load} className="flex items-center gap-2 px-4 py-2 bg-navy text-white text-sm rounded-xl hover:bg-navy-light transition">
               <RefreshCw size={14} /> Tekrar dene
             </button>
@@ -674,7 +674,7 @@ function CourseGrid({ session, onSelect }) {
             <div className="w-14 h-14 rounded-full bg-gray-100 flex items-center justify-center">
               <BookOpen size={24} className="text-gray-300" />
             </div>
-            <p className="text-gray-400">Henüz ders yok.</p>
+            <p className="text-gray-500">Henüz ders yok.</p>
           </div>
         )}
 
@@ -683,7 +683,7 @@ function CourseGrid({ session, onSelect }) {
             <div className="flex items-center justify-between mb-6">
               <div>
                 <h2 className="text-lg font-bold text-navy">{courses.length} Ders</h2>
-                <p className="text-gray-400 text-sm mt-0.5">Başlamak için bir derse tıkla</p>
+                <p className="text-gray-500 text-sm mt-0.5">Başlamak için bir derse tıkla</p>
               </div>
             </div>
             <StaggerGroup as="div" staggerChildren={0.08} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

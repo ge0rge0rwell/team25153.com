@@ -109,7 +109,7 @@ export default function Sponsorship() {
                 </tbody>
               </table>
             </div>
-            <p className="text-xs text-gray-400 mt-4 italic">
+            <p className="text-xs text-gray-500 mt-4 italic">
               * Financial transactions and invoicing are processed through the METU Development Foundation.
             </p>
           </Reveal>

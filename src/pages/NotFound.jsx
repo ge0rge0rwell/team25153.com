@@ -50,7 +50,7 @@ export default function NotFound() {
             </Link>
           </StaggerItem>
 
-          <StaggerItem as="p" className="text-gray-400 text-xs mt-6">
+          <StaggerItem as="p" className="text-gray-500 text-xs mt-6">
             Or <Link to="/contact" className="text-crimson hover:underline">let us know</Link> if you think this is a bug.
           </StaggerItem>
         </StaggerGroup>

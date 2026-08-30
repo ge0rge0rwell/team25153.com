@@ -97,7 +97,7 @@ export default function Footer() {
       {/* Bottom Bar */}
       <div className="border-t border-white/10">
         <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-white/40 text-xs">
+          <p className="text-white/60 text-xs">
             © {new Date().getFullYear()} Cartesian Robotics #25153. All rights reserved.
           </p>
           <button

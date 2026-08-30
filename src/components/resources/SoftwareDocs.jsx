@@ -17,7 +17,7 @@ export default function SoftwareDocs() {
     <div className="my-6 rounded-xl overflow-hidden shadow-sm border border-navy/10">
       <div className="bg-navy px-4 py-2 flex items-center gap-2 border-b border-white/10">
         <Terminal size={14} className="text-gold" />
-        <span className="text-xs font-mono text-gray-400">{language}</span>
+        <span className="text-xs font-mono text-gray-500">{language}</span>
       </div>
       <pre className="p-4 bg-[#0a1122] text-gray-300 font-mono text-sm overflow-x-auto leading-relaxed">
         <code>{code.trim()}</code>
@@ -345,7 +345,7 @@ switch (currentState) {
                   }`}
                 >
                   <div className="flex items-center gap-3">
-                    <span className={`${activeModule === mod.id ? 'text-gold' : 'text-gray-400'}`}>
+                    <span className={`${activeModule === mod.id ? 'text-gold' : 'text-gray-500'}`}>
                       {mod.icon}
                     </span>
                     <span className="font-bold text-sm">{mod.title}</span>
