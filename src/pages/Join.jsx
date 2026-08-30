@@ -77,12 +77,14 @@ function ApplicationForm() {
     <form onSubmit={handleSubmit} className="space-y-5">
       <StaggerGroup as="div" staggerChildren={0.08} amount={0.4} className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <StaggerItem>
-          <label className="block text-xs font-semibold text-navy uppercase tracking-wider mb-1.5">
+          <label htmlFor="join-name" className="block text-xs font-semibold text-navy uppercase tracking-wider mb-1.5">
             Full Name *
           </label>
           <input
+            id="join-name"
             type="text"
             required
+            autoComplete="name"
             value={form.name}
             onChange={set('name')}
             placeholder="Ada Yılmaz"
@@ -90,12 +92,14 @@ function ApplicationForm() {
           />
         </StaggerItem>
         <StaggerItem>
-          <label className="block text-xs font-semibold text-navy uppercase tracking-wider mb-1.5">
+          <label htmlFor="join-email" className="block text-xs font-semibold text-navy uppercase tracking-wider mb-1.5">
             Email *
           </label>
           <input
+            id="join-email"
             type="email"
             required
+            autoComplete="email"
             value={form.email}
             onChange={set('email')}
             placeholder="ada@example.com"
@@ -106,10 +110,10 @@ function ApplicationForm() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <div>
-          <label className="block text-xs font-semibold text-navy uppercase tracking-wider mb-1.5">
+          <label htmlFor="join-grade" className="block text-xs font-semibold text-navy uppercase tracking-wider mb-1.5">
             Grade / Year *
           </label>
-          <select required value={form.grade} onChange={set('grade')} className={inputClass}>
+          <select id="join-grade" required value={form.grade} onChange={set('grade')} className={inputClass}>
             <option value="">Select grade…</option>
             <option value="5th">5th Grade</option>
             <option value="6th">6th Grade</option>
@@ -123,10 +127,10 @@ function ApplicationForm() {
           </select>
         </div>
         <div>
-          <label className="block text-xs font-semibold text-navy uppercase tracking-wider mb-1.5">
+          <label htmlFor="join-interest" className="block text-xs font-semibold text-navy uppercase tracking-wider mb-1.5">
             Area of Interest *
           </label>
-          <select required value={form.interest} onChange={set('interest')} className={inputClass}>
+          <select id="join-interest" required value={form.interest} onChange={set('interest')} className={inputClass}>
             <option value="">Select area…</option>
             <option value="software">Software</option>
             <option value="mechanical">Mechanical</option>
@@ -137,10 +141,11 @@ function ApplicationForm() {
       </div>
 
       <div>
-        <label className="block text-xs font-semibold text-navy uppercase tracking-wider mb-1.5">
+        <label htmlFor="join-message" className="block text-xs font-semibold text-navy uppercase tracking-wider mb-1.5">
           Anything else you'd like us to know?
         </label>
         <textarea
+          id="join-message"
           rows={4}
           value={form.message}
           onChange={set('message')}

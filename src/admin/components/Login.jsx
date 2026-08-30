@@ -34,8 +34,9 @@ export default function Login() {
 
         <form onSubmit={submit} className="space-y-4 rounded-2xl bg-white p-6 shadow-xl">
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-gray-700">Username</label>
+            <label htmlFor="cms-username" className="mb-1.5 block text-sm font-medium text-gray-700">Username</label>
             <input
+              id="cms-username"
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
@@ -45,8 +46,9 @@ export default function Login() {
             />
           </div>
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-gray-700">Password</label>
+            <label htmlFor="cms-password" className="mb-1.5 block text-sm font-medium text-gray-700">Password</label>
             <input
+              id="cms-password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}

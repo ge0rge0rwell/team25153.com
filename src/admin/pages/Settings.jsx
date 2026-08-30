@@ -51,12 +51,12 @@ export default function Settings() {
         )}
         <form onSubmit={submit} className="space-y-4">
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-gray-700">New Password</label>
-            <input className={input} type="password" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="new-password" />
+            <label htmlFor="settings-newpw" className="mb-1.5 block text-sm font-medium text-gray-700">New Password</label>
+            <input id="settings-newpw" className={input} type="password" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="new-password" />
           </div>
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-gray-700">Confirm Password</label>
-            <input className={input} type="password" value={confirm} onChange={(e) => setConfirm(e.target.value)} autoComplete="new-password" />
+            <label htmlFor="settings-confirmpw" className="mb-1.5 block text-sm font-medium text-gray-700">Confirm Password</label>
+            <input id="settings-confirmpw" className={input} type="password" value={confirm} onChange={(e) => setConfirm(e.target.value)} autoComplete="new-password" />
           </div>
           <button
             type="submit"

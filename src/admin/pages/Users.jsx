@@ -92,18 +92,18 @@ export default function Users() {
         <form onSubmit={add} className="space-y-4">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
-              <label className="mb-1.5 block text-sm font-medium text-gray-700">Full Name</label>
-              <input className={input} value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Jane Doe" />
+              <label htmlFor="user-name" className="mb-1.5 block text-sm font-medium text-gray-700">Full Name</label>
+              <input id="user-name" className={input} value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Jane Doe" />
             </div>
             <div>
-              <label className="mb-1.5 block text-sm font-medium text-gray-700">Username</label>
-              <input className={input} value={form.username} onChange={(e) => setForm({ ...form, username: e.target.value })} placeholder="jane" required />
+              <label htmlFor="user-username" className="mb-1.5 block text-sm font-medium text-gray-700">Username</label>
+              <input id="user-username" className={input} value={form.username} onChange={(e) => setForm({ ...form, username: e.target.value })} placeholder="jane" required />
             </div>
           </div>
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-gray-700">Temporary Password</label>
-            <input className={input} type="text" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} placeholder="At least 6 characters" required />
-            <p className="mt-1 text-xs text-gray-400">Share this with the editor; they can change it under Settings.</p>
+            <label htmlFor="user-password" className="mb-1.5 block text-sm font-medium text-gray-700">Temporary Password</label>
+            <input id="user-password" aria-describedby="user-password-hint" className={input} type="text" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} placeholder="At least 6 characters" required />
+            <p id="user-password-hint" className="mt-1 text-xs text-gray-400">Share this with the editor; they can change it under Settings.</p>
           </div>
           <button
             type="submit"

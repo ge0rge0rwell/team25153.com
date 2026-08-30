@@ -165,15 +165,17 @@ function LoginScreen({ onLogin }) {
             {mode === 'register' && (
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">Ad</label>
+                  <label htmlFor="lms-firstname" className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">Ad</label>
                   <input
+                    id="lms-firstname" autoComplete="given-name"
                     type="text" required value={firstname} onChange={e => setFirstname(e.target.value)}
                     className="w-full h-11 px-4 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">Soyad</label>
+                  <label htmlFor="lms-lastname" className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">Soyad</label>
                   <input
+                    id="lms-lastname" autoComplete="family-name"
                     type="text" required value={lastname} onChange={e => setLastname(e.target.value)}
                     className="w-full h-11 px-4 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition"
                   />
@@ -183,8 +185,9 @@ function LoginScreen({ onLogin }) {
 
             {mode === 'register' && (
               <div>
-                <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">E-posta</label>
+                <label htmlFor="lms-email" className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">E-posta</label>
                 <input
+                  id="lms-email" autoComplete="email"
                   type="email" required value={email} onChange={e => setEmail(e.target.value)}
                   className="w-full h-11 px-4 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition"
                 />
@@ -192,10 +195,11 @@ function LoginScreen({ onLogin }) {
             )}
 
             <div>
-              <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">
+              <label htmlFor="lms-username" className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">
                 Kullanıcı Adı
               </label>
               <input
+                id="lms-username"
                 type="text"
                 required
                 autoComplete="username"
@@ -207,14 +211,15 @@ function LoginScreen({ onLogin }) {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">
+              <label htmlFor="lms-password" className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">
                 Şifre
               </label>
               <div className="relative">
                 <input
+                  id="lms-password"
                   type={show ? 'text' : 'password'}
                   required
-                  autoComplete="current-password"
+                  autoComplete={mode === 'register' ? 'new-password' : 'current-password'}
                   value={password}
                   onChange={e => setPassword(e.target.value)}
                   placeholder="••••••••"
@@ -223,9 +228,10 @@ function LoginScreen({ onLogin }) {
                 <button
                   type="button"
                   onClick={() => setShow(!show)}
+                  aria-label={show ? 'Şifreyi gizle' : 'Şifreyi göster'}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-navy transition"
                 >
-                  {show ? <EyeOff size={16} /> : <Eye size={16} />}
+                  {show ? <EyeOff size={16} aria-hidden="true" /> : <Eye size={16} aria-hidden="true" />}
                 </button>
               </div>
             </div>
@@ -349,11 +355,14 @@ function ChangePasswordModal({ session, onDone }) {
               </p>
               <form onSubmit={submit} className="space-y-4">
                 <div>
-                  <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">
+                  <label htmlFor="lms-newpw" className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">
                     Yeni Şifre
                   </label>
                   <div className="relative">
                     <input
+                      id="lms-newpw"
+                      aria-describedby="lms-newpw-hint"
+                      autoComplete="new-password"
                       type={show ? 'text' : 'password'}
                       required
                       value={pw}
@@ -361,18 +370,20 @@ function ChangePasswordModal({ session, onDone }) {
                       placeholder="••••••••"
                       className="w-full h-11 px-4 pr-11 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-crimson/20 focus:border-crimson transition"
                     />
-                    <button type="button" onClick={() => setShow(!show)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
-                      {show ? <EyeOff size={16} /> : <Eye size={16} />}
+                    <button type="button" onClick={() => setShow(!show)} aria-label={show ? 'Şifreyi gizle' : 'Şifreyi göster'} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+                      {show ? <EyeOff size={16} aria-hidden="true" /> : <Eye size={16} aria-hidden="true" />}
                     </button>
                   </div>
-                  <p className="text-xs text-gray-400 mt-1.5">Min 8 karakter, büyük harf, rakam ve özel karakter</p>
+                  <p id="lms-newpw-hint" className="text-xs text-gray-400 mt-1.5">Min 8 karakter, büyük harf, rakam ve özel karakter</p>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">
+                  <label htmlFor="lms-newpw2" className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">
                     Şifre Tekrar
                   </label>
                   <input
+                    id="lms-newpw2"
+                    autoComplete="new-password"
                     type={show ? 'text' : 'password'}
                     required
                     value={pw2}

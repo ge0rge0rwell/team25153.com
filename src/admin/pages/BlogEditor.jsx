@@ -4,7 +4,7 @@ import { Loader2, ArrowLeft, Eye } from 'lucide-react'
 import { marked } from 'marked'
 import { api } from '../api'
 import { blogTags } from '../schemas'
-import { LabeledField } from '../fields/Field'
+import Field, { LabeledField } from '../fields/Field'
 import { SaveButton } from './DocumentEditor'
 
 const blank = {
@@ -100,7 +100,7 @@ export default function BlogEditor() {
 
         <div>
           <div className="mb-1.5 flex items-center justify-between">
-            <label className="block text-sm font-medium text-gray-700">Body (Markdown)</label>
+            <label htmlFor="blog-body" className="block text-sm font-medium text-gray-700">Body (Markdown)</label>
             <button
               type="button"
               onClick={() => setPreview((p) => !p)}
@@ -115,7 +115,7 @@ export default function BlogEditor() {
               dangerouslySetInnerHTML={{ __html: marked.parse(post.body || '') }}
             />
           ) : (
-            <LabeledField field={{ label: '', type: 'markdown' }} value={post.body} onChange={(v) => set('body', v)} />
+            <Field id="blog-body" field={{ type: 'markdown' }} value={post.body} onChange={(v) => set('body', v)} />
           )}
         </div>
       </div>
