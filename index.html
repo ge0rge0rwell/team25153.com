@@ -5,6 +5,13 @@
     <link rel="icon" type="image/png" href="/cartesian-logo-transparent.png" />
     <link rel="apple-touch-icon" href="/cartesian-logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Tints the browser UI (Android Chrome address bar, iOS PWA status bar)
+         to the site's navy instead of leaving it default grey. -->
+    <meta name="theme-color" content="#002147" />
+    <!-- The design is light-only; declaring it stops the browser from
+         auto-darkening form controls and scrollbars for dark-mode users,
+         which otherwise renders inputs light-on-light. -->
+    <meta name="color-scheme" content="light" />
     <!-- Everything between these markers is replaced per-route by the Express
          server (server/seo.js) so each URL ships its own title, description,
          canonical, social tags and structured data. The defaults below are what

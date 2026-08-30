@@ -726,16 +726,28 @@ export default function LMS() {
 
   const handlePwDone = () => setNeedsPwChange(false)
 
-  if (!session) return <LoginScreen onLogin={handleLogin} />
+  // The whole learning centre is written in Turkish while the document is
+  // lang="en", so without this a screen reader reads it with English
+  // pronunciation rules — "Şifre", "Dersler" and the rest come out as
+  // nonsense. Marking the subtree switches the synthesiser to Turkish.
+  const body = (() => {
+    if (!session) return <LoginScreen onLogin={handleLogin} />
 
-  if (needsPwChange) return (
-    <>
-      <CourseGrid session={session} onSelect={() => {}} />
-      <ChangePasswordModal session={session} onDone={handlePwDone} />
-    </>
-  )
+    if (needsPwChange) {
+      return (
+        <>
+          <CourseGrid session={session} onSelect={() => {}} />
+          <ChangePasswordModal session={session} onDone={handlePwDone} />
+        </>
+      )
+    }
 
-  if (activeCourse) return <CourseViewer course={activeCourse} session={session} onBack={() => setActiveCourse(null)} />
+    if (activeCourse) {
+      return <CourseViewer course={activeCourse} session={session} onBack={() => setActiveCourse(null)} />
+    }
 
-  return <CourseGrid session={session} onSelect={setActiveCourse} />
+    return <CourseGrid session={session} onSelect={setActiveCourse} />
+  })()
+
+  return <div lang="tr">{body}</div>
 }
