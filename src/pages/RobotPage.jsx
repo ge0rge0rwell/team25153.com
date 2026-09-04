@@ -44,9 +44,11 @@ export default function RobotPage() {
     <div className="bg-white">
 
       {/* ══════════════════════════════════════════
-          HERO — solid navy, clean & sharp
+          HERO — ink brown from the Descartes portrait, the same value
+          the body copy is set in. Gold accent bar: crimson sat at 1.5:1
+          against this and was effectively invisible; gold is 9.3:1.
       ══════════════════════════════════════════ */}
-      <section className="relative overflow-hidden bg-navy" style={{ minHeight: '45vh' }}>
+      <section className="relative overflow-hidden bg-descartes-ink" style={{ minHeight: '45vh' }}>
         {/* Dot-grid texture */}
         <div
           className="absolute inset-0 opacity-5"
@@ -55,8 +57,8 @@ export default function RobotPage() {
             backgroundSize: '28px 28px',
           }}
         />
-        {/* Crimson accent bar left edge */}
-        <div className="absolute left-0 top-0 bottom-0 w-1 bg-crimson" />
+        {/* Gold accent bar, left edge */}
+        <div className="absolute left-0 top-0 bottom-0 w-1 bg-gold" />
 
         <div className="relative max-w-6xl mx-auto px-6 pt-12 pb-6 md:pt-20 md:pb-10">
           <StaggerGroup as="div" staggerChildren={0.12} amount={0.4} className="max-w-2xl text-white z-10">
@@ -69,6 +71,17 @@ export default function RobotPage() {
               <span className="text-gold font-bold">{robot.name}</span>
             </StaggerItem>
 
+
+            <StaggerItem className="inline-flex items-center gap-2.5 glass-dark rounded-full px-3.5 py-1.5 mb-5">
+              <span className="w-1.5 h-1.5 rounded-full bg-gold flex-shrink-0" />
+              <span className="font-mono text-[11px] font-bold uppercase tracking-[0.18em] text-white/90">
+                {robot.year}
+              </span>
+              <span className="w-px h-3 bg-white/25" />
+              <span className="font-mono text-[11px] font-bold uppercase tracking-[0.18em] text-white/70">
+                {robot.competition}
+              </span>
+            </StaggerItem>
 
             <StaggerItem
               as="h1"
@@ -106,12 +119,12 @@ export default function RobotPage() {
               </Suspense>
               <button
                 onClick={() => setFullscreen(true)}
-                className="absolute top-3 right-3 p-2 rounded-lg bg-white/80 hover:bg-white text-navy shadow-sm ring-1 ring-gray-200 transition-colors"
+                className="absolute top-3 right-3 p-2.5 rounded-xl glass-light text-descartes-ink hover:bg-white transition-colors"
                 aria-label="View fullscreen"
               >
                 <Maximize2 size={16} />
               </button>
-              <span className="absolute bottom-3 right-4 text-[11px] text-gray-500 uppercase tracking-widest pointer-events-none">
+              <span className="absolute bottom-3 right-4 glass-light rounded-full px-3 py-1.5 font-mono text-[10px] text-descartes-ink/80 uppercase tracking-widest pointer-events-none">
                 Drag to rotate · Scroll to zoom · Right-click to pan
               </span>
             </div>
@@ -120,18 +133,18 @@ export default function RobotPage() {
       )}
 
       {isDesktop && fullscreen && createPortal(
-        <div className="fixed inset-0 z-[999] bg-navy">
+        <div className="fixed inset-0 z-[999] bg-descartes-ink">
           <Suspense fallback={null}>
             <RobotScene modelUrl={`/models/${robot.slug}.glb?v=2`} />
           </Suspense>
           <button
             onClick={() => setFullscreen(false)}
-            className="absolute top-5 right-5 p-3 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-colors"
+            className="absolute top-5 right-5 p-3 rounded-xl glass-dark hover:bg-white/20 text-white transition-colors"
             aria-label="Exit fullscreen"
           >
             <X size={20} />
           </button>
-          <span className="absolute bottom-5 right-6 text-xs text-white/60 uppercase tracking-widest pointer-events-none">
+          <span className="absolute bottom-5 right-6 glass-dark rounded-full px-3.5 py-1.5 font-mono text-[10px] text-white/80 uppercase tracking-widest pointer-events-none">
             Drag to rotate · Scroll to zoom · Right-click to pan · Esc to exit
           </span>
         </div>,
@@ -178,7 +191,7 @@ export default function RobotPage() {
                   </div>
                 )}
                 {robot.specs && (
-                  <div className="bg-navy rounded-2xl p-7">
+                  <div className="bg-descartes-ink rounded-2xl p-7">
                     <p className="text-gold text-xs font-bold uppercase tracking-[0.3em] mb-5">Specifications</p>
                     <div className="flex flex-col gap-3">
                       {Object.entries(robot.specs).map(([key, val]) => (

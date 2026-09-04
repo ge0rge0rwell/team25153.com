@@ -62,6 +62,27 @@
       linear-gradient(to bottom, rgba(136, 21, 17, 0.05) 1px, transparent 1px);
   }
 
+  /* ── Frosted glass ───────────────────────────────────────────────────
+     Only worth using where something is actually visible behind it — the
+     dot-grid on the robot hero, or the 3D model under the viewer's
+     controls. Over a flat fill it degrades to a plain tint.
+
+     Built from Tailwind's backdrop utilities rather than hand-written
+     backdrop-filter declarations: writing the property directly here, the
+     minifier kept only the -webkit- prefixed form and dropped the standard
+     one, which silently disabled the blur in Firefox. Tailwind's own
+     utilities emit both.
+
+     The background tint is opaque enough to carry the text on its own, so
+     the controls stay readable on browsers with no backdrop-filter at all. */
+  .glass-light {
+    @apply bg-white/70 backdrop-blur-md backdrop-saturate-150 ring-1 ring-white/60 shadow-sm;
+  }
+
+  .glass-dark {
+    @apply bg-white/10 backdrop-blur-md backdrop-saturate-150 ring-1 ring-white/20;
+  }
+
   /* Eyebrow label — mono, crimson, wide tracking. Used above nearly every
      section heading, so it's a class rather than repeated utilities. */
   .eyebrow {
