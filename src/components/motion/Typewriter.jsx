@@ -9,6 +9,100 @@ const Cursor = ({ show }) => (
   />
 )
 
+// A solid blinking block, for the hero headline. Bigger and more deliberate
+// than the thin inline Cursor above, and it keeps blinking rather than
+// disappearing once typing stops.
+const BlockCursor = () => (
+  <span
+    aria-hidden="true"
+    className="inline-block w-[0.06em] h-[0.85em] ml-1 bg-crimson align-baseline animate-cursor-blink"
+  />
+)
+
+/**
+ * Headline typewriter that cycles through two-tone phrases: types the whole
+ * thing out, holds, deletes it, then moves to the next and loops.
+ *
+ * Each phrase is { lead, accent } and renders as `lead accent`, with the two
+ * halves coloured differently — "Cartesian" navy, "Robotics" crimson. The
+ * animation runs over the combined string so the colour boundary is crossed
+ * mid-type rather than the halves animating separately.
+ */
+export function TypewriterHeadline({
+  phrases,
+  leadClassName = '',
+  accentClassName = '',
+  typeSpeed = 75,
+  deleteSpeed = 38,
+  holdMs = 2400,
+  gapMs = 380,
+  startDelay = 600,
+}) {
+  const reducedMotion = useReducedMotion()
+  const [index, setIndex] = useState(0)
+  const [count, setCount] = useState(0)
+  const [phase, setPhase] = useState('waiting') // waiting | typing | holding | deleting
+  const timeoutRef = useRef(null)
+
+  const phrase = phrases[index % phrases.length]
+  const combined = `${phrase.lead} ${phrase.accent}`
+
+  // Reduced motion: rotate whole phrases on a plain interval. The content
+  // still cycles, but nothing animates character by character.
+  useEffect(() => {
+    if (!reducedMotion) return
+    const id = setInterval(() => setIndex((i) => (i + 1) % phrases.length), holdMs + 1200)
+    return () => clearInterval(id)
+  }, [reducedMotion, phrases.length, holdMs])
+
+  useEffect(() => {
+    if (reducedMotion) return
+
+    if (phase === 'waiting') {
+      timeoutRef.current = setTimeout(() => setPhase('typing'), startDelay)
+    } else if (phase === 'typing') {
+      if (count < combined.length) {
+        timeoutRef.current = setTimeout(() => setCount((c) => c + 1), typeSpeed)
+      } else {
+        timeoutRef.current = setTimeout(() => setPhase('holding'), 0)
+      }
+    } else if (phase === 'holding') {
+      timeoutRef.current = setTimeout(() => setPhase('deleting'), holdMs)
+    } else if (phase === 'deleting') {
+      if (count > 0) {
+        timeoutRef.current = setTimeout(() => setCount((c) => c - 1), deleteSpeed)
+      } else {
+        timeoutRef.current = setTimeout(() => {
+          setIndex((i) => (i + 1) % phrases.length)
+          setPhase('typing')
+        }, gapMs)
+      }
+    }
+    return () => clearTimeout(timeoutRef.current)
+  }, [phase, count, combined, phrases.length, typeSpeed, deleteSpeed, holdMs, gapMs, startDelay, reducedMotion])
+
+  // Split the typed substring back across the colour boundary. The separating
+  // space is keyed off whether it has been typed yet, not off the accent being
+  // non-empty — otherwise on the single frame between typing the space and
+  // typing the first accent character the space vanishes and the cursor
+  // visibly jumps back a space-width before moving forward again.
+  const shown = reducedMotion ? combined : combined.slice(0, count)
+  const leadShown = shown.slice(0, phrase.lead.length)
+  const spaceTyped = shown.length > phrase.lead.length
+  const accentShown = spaceTyped ? shown.slice(phrase.lead.length + 1) : ''
+
+  return (
+    // aria-label carries the full current phrase so a screen reader announces
+    // it once, instead of reading a half-typed string on every state change.
+    <span aria-label={combined} role="text">
+      <span aria-hidden="true" className={leadClassName}>{leadShown}</span>
+      {spaceTyped && <span aria-hidden="true">{' '}</span>}
+      <span aria-hidden="true" className={accentClassName}>{accentShown}</span>
+      {!reducedMotion && <BlockCursor />}
+    </span>
+  )
+}
+
 // One-shot "natural" typing: per-character delay jitters slightly instead of
 // a robotic fixed interval, so it reads like someone actually typing.
 export function TypewriterText({ text, className, startDelay = 0, minCharDelay = 28, maxCharDelay = 68, cursor = true, onComplete }) {

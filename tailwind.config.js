@@ -44,6 +44,7 @@ export default {
         'fade-up': 'fadeUp 0.6s ease forwards',
         'fade-in': 'fadeIn 0.5s ease forwards',
         'slide-in-right': 'slideInRight 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        'cursor-blink': 'cursorBlink 0.85s cubic-bezier(1, 0, 0, 1) infinite',
       },
       keyframes: {
         scrollLeft: {
@@ -65,6 +66,10 @@ export default {
         slideInRight: {
           '0%': { transform: 'translateX(100%)' },
           '100%': { transform: 'translateX(0)' },
+        },
+        cursorBlink: {
+          '0%, 49%': { opacity: '1' },
+          '50%, 100%': { opacity: '0' },
         },
       },
       backgroundImage: {

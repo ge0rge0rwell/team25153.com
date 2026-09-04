@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState } from 'react'
+import { lazy, Suspense } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import useReducedMotion from '../lib/useReducedMotion'
@@ -6,7 +6,7 @@ import RobotCard from '../components/ui/RobotCard'
 import LogoCarousel from '../components/ui/LogoCarousel'
 import Reveal from '../components/motion/Reveal'
 import { StaggerGroup, StaggerItem } from '../components/motion/Stagger'
-import { TypewriterText, TypewriterCycle } from '../components/motion/Typewriter'
+import { TypewriterHeadline, TypewriterCycle } from '../components/motion/Typewriter'
 import { useCollection } from '../context/ContentContext'
 import { useIsDesktop } from '../lib/useIsDesktop'
 
@@ -14,6 +14,13 @@ import { useIsDesktop } from '../lib/useIsDesktop'
 // ships in the critical-path main chunk) via lazy() and only fetched once
 // isDesktop is true.
 const ParticlesBackground = lazy(() => import('../components/motion/ParticlesBackground'))
+
+// Cycled by the hero headline. `lead` renders navy, `accent` crimson.
+const HERO_PHRASES = [
+  { lead: 'Cartesian', accent: 'Robotics' },
+  { lead: 'FTC Team', accent: '#25153' },
+  { lead: 'I think,', accent: 'therefore I can' },
+]
 
 // The four L-shaped brackets on the Descartes frame, borrowed from the
 // registration marks on an engineering drawing.
@@ -39,7 +46,6 @@ function RegistrationMarks() {
 
 export default function Home() {
   const { robots, stats } = useCollection('home')
-  const [firstWordDone, setFirstWordDone] = useState(false)
   const reducedMotion = useReducedMotion()
 
   const isDesktop = useIsDesktop()
@@ -74,13 +80,18 @@ export default function Home() {
                 <span className="eyebrow">FTC Team #25153</span>
               </div>
 
-              <h1
-                className="font-display font-bold tracking-tight leading-[1.05] mb-2 text-[44px] sm:text-[64px] lg:text-[72px] xl:text-[80px] min-h-[2.1em] sm:min-h-0"
-              >
-                <TypewriterText text="Cartesian" className="text-navy" startDelay={150} onComplete={() => setFirstWordDone(true)} />
-                <br />
-                {firstWordDone && <TypewriterText text="Robotics" className="text-crimson" />}
-              </h1>
+              {/* Fixed min-height: the three phrases are different lengths and
+                  wrap to different line counts, so without it the whole hero
+                  shifts vertically every few seconds as they cycle. */}
+              <div className="flex items-center min-h-[140px] sm:min-h-[180px] lg:min-h-[195px] mb-2">
+                <h1 className="font-display font-bold tracking-tight leading-[1.05] text-[44px] sm:text-[64px] lg:text-[72px] xl:text-[80px]">
+                  <TypewriterHeadline
+                    phrases={HERO_PHRASES}
+                    leadClassName="text-navy"
+                    accentClassName="text-crimson"
+                  />
+                </h1>
+              </div>
 
               {statPhrases.length > 0 && (
                 <p className="font-mono text-xs text-gray-500 mb-6 h-5">
