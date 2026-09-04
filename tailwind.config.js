@@ -4,20 +4,41 @@ export default {
   theme: {
     extend: {
       colors: {
+        // Re-derived from the cloak red sampled off the Descartes portrait
+        // (#881511). The previous #832a22 was already within 3 degrees of hue
+        // of it — this just takes the value from the source directly.
         crimson: {
-          DEFAULT: '#832a22',
-          dark: '#6a1f1a',
-          light: '#a33329',
+          DEFAULT: '#881511',
+          dark: '#5f0f0c',   // hover
+          light: '#ac1b16',
           50: '#fdf2f1',
-          100: '#fce4e2',
-          200: '#f9cac7',
-          900: '#4a120d',
+          100: '#fbe0df',
+          200: '#f7c1c0',
+          900: '#511612',    // the cloak's shadowed folds
         },
         navy: {
           DEFAULT: '#002147',
           mid: '#374b6b',
           light: '#1A3B61',
           50: '#f0f4f9',
+        },
+        // Replaces Tailwind's cool default gray with a ramp built from the
+        // portrait's own neutrals, so every existing text-gray-*/border-gray-*
+        // utility across the site warms up without touching each call site.
+        // Steps keep their relative lightness, and each text-weight step ends
+        // up with MORE contrast than the default it replaces:
+        //   500  4.83 -> 6.55    600  7.56 -> 10.75    700  10.31 -> 14.53
+        gray: {
+          50: '#faf8f8',
+          100: '#f3eff0',
+          200: '#e5dbde',   // blush   — borders
+          300: '#c6b7ba',   // mauve
+          400: '#a08483',   // rose    — accents only, 3.43 on white
+          500: '#6a5a55',   // taupe   — secondary text
+          600: '#4b3a34',   // hair    — strong secondary
+          700: '#342621',   // ink     — body text
+          800: '#221916',
+          900: '#120503',   // deepest line work
         },
         surface: {
           DEFAULT: '#fcfbf9',   // page ground

@@ -17,11 +17,11 @@ export default function ParticlesBackground() {
       fpsLimit: 60,
       particles: {
         number: { value: 36 },
-        color: { value: ['#832a22', '#FDC800', '#002147'] },
+        color: { value: ['#881511', '#FDC800', '#002147'] },
         opacity: { value: 0.25 },
         size: { value: { min: 1, max: 3 } },
         move: { enable: true, speed: 0.4, direction: 'none', random: true, outModes: 'bounce' },
-        links: { enable: true, distance: 130, color: '#832a22', opacity: 0.12 },
+        links: { enable: true, distance: 130, color: '#881511', opacity: 0.12 },
       },
       detectRetina: true,
     }),

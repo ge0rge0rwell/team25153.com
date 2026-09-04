@@ -138,7 +138,7 @@ export default function Home() {
                 {/* Rotated accent border sitting behind the frame */}
                 <div
                   aria-hidden="true"
-                  className="absolute inset-0 rounded-[32px] border-2 border-[#f3dedb] rotate-3 bg-white/40 pointer-events-none transition-transform duration-300 group-hover:scale-[1.01]"
+                  className="absolute inset-0 rounded-[32px] border-2 border-crimson-100 rotate-3 bg-white/40 pointer-events-none transition-transform duration-300 group-hover:scale-[1.01]"
                 />
 
                 <div className="relative w-full h-full rounded-[28px] border border-gray-200/90 bg-white p-6 sm:p-7 flex items-center justify-center overflow-hidden shadow-[0_20px_45px_-12px_rgba(0,33,71,0.12)] group-hover:shadow-[0_25px_50px_-10px_rgba(131,42,34,0.16)] transition-all duration-300 group-hover:-translate-y-1">
