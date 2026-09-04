@@ -15,6 +15,28 @@ import { useIsDesktop } from '../lib/useIsDesktop'
 // isDesktop is true.
 const ParticlesBackground = lazy(() => import('../components/motion/ParticlesBackground'))
 
+// The four L-shaped brackets on the Descartes frame, borrowed from the
+// registration marks on an engineering drawing.
+function RegistrationMarks() {
+  const corners = [
+    'top-3 left-3 border-t-2 border-l-2',
+    'top-3 right-3 border-t-2 border-r-2',
+    'bottom-3 left-3 border-b-2 border-l-2',
+    'bottom-3 right-3 border-b-2 border-r-2',
+  ]
+  return (
+    <>
+      {corners.map((c) => (
+        <div
+          key={c}
+          aria-hidden="true"
+          className={`absolute w-4 h-4 border-crimson/40 group-hover:border-crimson transition-colors duration-200 ${c}`}
+        />
+      ))}
+    </>
+  )
+}
+
 export default function Home() {
   const { robots, stats } = useCollection('home')
   const [firstWordDone, setFirstWordDone] = useState(false)
@@ -25,11 +47,15 @@ export default function Home() {
   const statPhrases = (stats || []).map((s) => `${s.number} ${s.label}`)
 
   return (
-    <div>
+    <div className="bg-[#fcfbf9]">
       {/* ── Hero ─────────────────────────────────── */}
-      <section className="min-h-[88vh] flex items-center bg-gradient-to-br from-[#fdf8f7] to-white relative overflow-hidden">
-        {/* Background decoration */}
-        <div className="absolute top-0 right-0 w-1/2 h-full bg-crimson/3 clip-diagonal pointer-events-none" />
+      <section className="relative bg-gradient-to-b from-white via-[#fafbfc] to-white border-b border-gray-200/70 overflow-hidden">
+        {/* Coordinate grid — the site's signature texture */}
+        <div className="absolute inset-0 cartesian-grid pointer-events-none opacity-80" aria-hidden="true" />
+
+        {/* Faint x/y axes, echoing a plotted graph */}
+        <div className="absolute top-0 left-12 h-full w-px bg-gradient-to-b from-transparent via-crimson/20 to-transparent pointer-events-none hidden lg:block" aria-hidden="true" />
+        <div className="absolute top-28 left-0 w-full h-px bg-gradient-to-r from-transparent via-navy/15 to-transparent pointer-events-none hidden lg:block" aria-hidden="true" />
 
         {/* Ambient particle field — desktop only */}
         {isDesktop && !reducedMotion && (
@@ -38,111 +64,124 @@ export default function Home() {
           </Suspense>
         )}
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center lg:items-start w-full">
-          {/* Left – Text + Robots */}
-          <div>
-            <p className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-4 flex items-center gap-2">
-              <span className="w-8 h-px bg-crimson inline-block" />
-              FTC Team #25153
-            </p>
+        <div className="relative z-10 max-w-[1360px] mx-auto px-5 sm:px-8 pt-8 pb-16 sm:py-16 lg:py-20">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium text-navy leading-tight mb-2 min-h-[2.4em] sm:min-h-0">
-              <TypewriterText text="Cartesian" startDelay={150} onComplete={() => setFirstWordDone(true)} />
-              <br />
-              {firstWordDone && <TypewriterText text="Robotics" className="text-crimson" />}
-            </h1>
-
-            {statPhrases.length > 0 && (
-              <p className="text-navy/50 text-sm font-medium mb-6 h-6">
-                <TypewriterCycle phrases={statPhrases} />
-              </p>
-            )}
-
-            <StaggerGroup as="div" staggerChildren={0.12} delayChildren={1.1} amount={0.3}>
-              <StaggerItem as="p" className="text-navy/70 text-base leading-relaxed mb-3 max-w-lg">
-                <strong>Cartesian Robotics #25153</strong> is a <strong>student-led team of over 25 students</strong>, having grown each season. We like to emphasize to the minds we touch the importance of thought and creation, inspiring our motto: <em>"I think, therefore I can."</em>
-              </StaggerItem>
-
-              <StaggerItem as="p" className="text-gray-600 text-sm leading-relaxed mb-3 max-w-lg">
-                Our design process follows the philosophy of <em>"I think, therefore I can."</em> Over three years, we have established a <strong>structured design process</strong> within our team, integrating our core philosophies and each year striving towards the optimal design.
-              </StaggerItem>
-
-              <StaggerItem as="p" className="text-gray-600 text-sm leading-relaxed mb-3 max-w-lg">
-                René Descartes, the philosopher we represent ourselves with, argued that he had to exist because he could think. We, recognizing that <strong>philosophy is the basis for all sciences</strong>, teach how to think, observe, and understand through hands-on STEM experience.
-              </StaggerItem>
-
-              <StaggerItem as="p" className="text-gray-600 text-sm leading-relaxed mb-8 max-w-lg">
-                Our team aims to develop middle school students' skills in <strong>engineering, creativity, strategy, and teamwork</strong> while <strong>spreading STEM culture</strong> within our community. We are proud of our international achievements, but we measure our success by the <strong>people we impact</strong>.
-              </StaggerItem>
-
-              <StaggerItem className="flex flex-wrap gap-3">
-                <Link to="/team" className="btn-primary">
-                  Team Overview <ArrowRight size={16} />
-                </Link>
-              </StaggerItem>
-
-              {/* Robot Roster */}
-              <StaggerItem className="mt-12 border border-crimson/15 rounded-xl overflow-hidden grid grid-cols-3 bg-white shadow-sm">
-                {robots.map((r) => (
-                  <RobotCard key={r.name} {...r} />
-                ))}
-              </StaggerItem>
-            </StaggerGroup>
-          </div>
-
-          {/* Right – Hero Image */}
-          <Reveal direction="left" delay={0.2} className="flex justify-center lg:justify-end relative mt-4 lg:mt-8">
-            <div className="relative">
-              {/* Decorative ring */}
-              <div className="absolute -inset-4 rounded-3xl border-2 border-crimson/10 rotate-3" />
-              {/* Rounded-corner clip confined to this inner wrapper so it
-                  doesn't clip the ring or badge outside it */}
-              <div className="relative inline-block rounded-2xl overflow-hidden">
-                <img
-                  src="/media/hero-descartes.webp"
-                  alt="Cartesian Robotics Hero"
-                  className="relative block w-full max-w-sm lg:max-w-md object-cover shadow-2xl"
-                  fetchPriority="high"
-                  decoding="async"
-                />
+            {/* Left — headline and copy */}
+            <div className="lg:col-span-7">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="w-10 h-[2.5px] bg-crimson inline-block rounded-full" />
+                <span className="eyebrow">FTC Team #25153</span>
               </div>
-              {/* Badge */}
-              <div className="absolute -bottom-4 -left-4 bg-crimson text-white rounded-xl px-5 py-3 shadow-lg">
-                <p className="text-xs font-bold uppercase tracking-widest">Team</p>
-                <p className="text-2xl font-bold leading-none">#25153</p>
-              </div>
+
+              <h1
+                className="font-display font-bold tracking-tight leading-[1.05] mb-2 text-[44px] sm:text-[64px] lg:text-[72px] xl:text-[80px] min-h-[2.1em] sm:min-h-0"
+              >
+                <TypewriterText text="Cartesian" className="text-navy" startDelay={150} onComplete={() => setFirstWordDone(true)} />
+                <br />
+                {firstWordDone && <TypewriterText text="Robotics" className="text-crimson" />}
+              </h1>
+
+              {statPhrases.length > 0 && (
+                <p className="font-mono text-xs text-gray-500 mb-6 h-5">
+                  <TypewriterCycle phrases={statPhrases} />
+                </p>
+              )}
+
+              <StaggerGroup as="div" staggerChildren={0.12} delayChildren={1.1} amount={0.3}>
+                <StaggerItem as="p" className="text-gray-700 text-[15px] sm:text-base leading-[1.72] mb-4 max-w-2xl">
+                  <strong className="font-bold text-navy">Cartesian Robotics #25153</strong> is a <strong className="font-bold text-navy">student-led team of over 25 students</strong>, having grown each season. We like to emphasize to the minds we touch the importance of thought and creation, inspiring our motto: <em className="italic text-navy">"I think, therefore I can."</em>
+                </StaggerItem>
+
+                <StaggerItem as="p" className="text-gray-600 text-[15px] sm:text-base leading-[1.72] mb-4 max-w-2xl">
+                  Our design process follows the philosophy of <em className="italic">"I think, therefore I can."</em> Over three years, we have established a <strong className="font-bold text-navy">structured design process</strong> within our team, integrating our core philosophies and each year striving towards the optimal design.
+                </StaggerItem>
+
+                <StaggerItem as="p" className="text-gray-600 text-[15px] sm:text-base leading-[1.72] mb-4 max-w-2xl">
+                  René Descartes, the philosopher we represent ourselves with, argued that he had to exist because he could think. We, recognizing that <strong className="font-bold text-navy">philosophy is the basis for all sciences</strong>, teach how to think, observe, and understand through hands-on STEM experience.
+                </StaggerItem>
+
+                <StaggerItem as="p" className="text-gray-600 text-[15px] sm:text-base leading-[1.72] mb-8 max-w-2xl">
+                  Our team aims to develop middle school students' skills in <strong className="font-bold text-navy">engineering, creativity, strategy, and teamwork</strong> while <strong className="font-bold text-navy">spreading STEM culture</strong> within our community. We are proud of our international achievements, but we measure our success by the <strong className="font-bold text-navy">people we impact</strong>.
+                </StaggerItem>
+
+                <StaggerItem className="flex flex-wrap gap-3">
+                  <Link to="/awards" className="btn-primary group">
+                    Team Overview
+                    <ArrowRight size={16} className="transition-transform duration-200 group-hover:translate-x-1" />
+                  </Link>
+                </StaggerItem>
+
+                {/* Robot roster */}
+                <StaggerItem className="mt-12 border border-crimson/15 rounded-xl overflow-hidden grid grid-cols-3 bg-white shadow-sm">
+                  {robots.map((r) => (
+                    <RobotCard key={r.name} {...r} />
+                  ))}
+                </StaggerItem>
+              </StaggerGroup>
             </div>
-          </Reveal>
+
+            {/* Right — Descartes in an engineering frame */}
+            <Reveal direction="left" delay={0.2} className="lg:col-span-5 flex justify-center lg:sticky lg:top-28">
+              <div className="relative w-full max-w-[420px] aspect-[0.88] select-none group">
+                {/* Rotated accent border sitting behind the frame */}
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 rounded-[32px] border-2 border-[#f3dedb] rotate-3 bg-white/40 pointer-events-none transition-transform duration-300 group-hover:scale-[1.01]"
+                />
+
+                <div className="relative w-full h-full rounded-[28px] border border-gray-200/90 bg-white p-6 sm:p-7 flex items-center justify-center overflow-hidden shadow-[0_20px_45px_-12px_rgba(0,33,71,0.12)] group-hover:shadow-[0_25px_50px_-10px_rgba(131,42,34,0.16)] transition-all duration-300 group-hover:-translate-y-1">
+                  <div className="absolute inset-0 cartesian-grid-dense pointer-events-none opacity-40" aria-hidden="true" />
+                  <RegistrationMarks />
+
+                  <img
+                    src="/media/hero-descartes.webp"
+                    alt="René Descartes, the philosopher the team takes its name and motto from"
+                    className="relative w-full h-full object-contain max-h-[360px] transition-transform duration-500 ease-out group-hover:scale-[1.04] drop-shadow-sm"
+                    fetchPriority="high"
+                    decoding="async"
+                  />
+
+                  {/* Team badge */}
+                  <div className="absolute bottom-4 left-4 sm:bottom-5 sm:left-5 bg-crimson text-white rounded-2xl px-5 py-2.5 shadow-xl flex flex-col items-start border border-white/20 transition-transform duration-200 group-hover:scale-105">
+                    <span className="flex items-center gap-1.5">
+                      <span className={`w-1.5 h-1.5 rounded-full bg-gold ${reducedMotion ? '' : 'animate-pulse'}`} />
+                      <span className="font-mono text-[9px] tracking-[0.25em] font-bold text-white/90 uppercase">Team</span>
+                    </span>
+                    <span className="font-display text-2xl sm:text-3xl font-bold tracking-wider leading-none mt-0.5">#25153</span>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+          </div>
         </div>
       </section>
 
-      {/* ── About Strip ───────────────────────────── */}
-      <section className="py-12 md:py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <StaggerGroup as="div" staggerChildren={0.15} className="max-w-3xl mx-auto text-center">
-            <StaggerItem as="p" className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-3">Our Mission</StaggerItem>
-            <StaggerItem as="h2" className="text-3xl font-medium text-navy mb-6">
+      {/* ── Mission ──────────────────────────────── */}
+      <section className="py-20 lg:py-28 bg-white">
+        <div className="max-w-3xl mx-auto px-6 text-center">
+          <StaggerGroup as="div" staggerChildren={0.15}>
+            <StaggerItem as="p" className="eyebrow tracking-[0.3em] mb-3">Our Mission</StaggerItem>
+            <StaggerItem
+              as="h2"
+              className="font-display text-3xl sm:text-4xl lg:text-[42px] font-bold text-navy tracking-tight mb-10"
+            >
               Not Just Building Robots
             </StaggerItem>
-            <StaggerItem as="p" className="text-gray-600 leading-relaxed mb-4">
-              Our team aims to develop middle school students' skills in <strong>engineering, creativity, strategy, and teamwork</strong> while simultaneously <strong>spreading STEM culture</strong> within our community.
+            <StaggerItem as="p" className="text-gray-600 leading-[1.8] mb-6">
+              Our team aims to develop middle school students' skills in <strong className="font-bold text-navy">engineering, creativity, strategy, and teamwork</strong> while simultaneously <strong className="font-bold text-navy">spreading STEM culture</strong> within our community.
             </StaggerItem>
-            <StaggerItem as="p" className="text-gray-600 leading-relaxed mb-4">
-              We take pride in our national and international achievements; however, we see our true success in the <strong>young minds we inspire</strong> and the <strong>STEM ecosystem</strong> we cultivate.
+            <StaggerItem as="p" className="text-gray-600 leading-[1.8] mb-6">
+              We take pride in our national and international achievements; however, we see our true success in the <strong className="font-bold text-navy">young minds we inspire</strong> and the <strong className="font-bold text-navy">STEM ecosystem</strong> we cultivate.
             </StaggerItem>
-            <StaggerItem as="p" className="text-gray-600 leading-relaxed">
-              For us, robotics is not just about building robots—it is about <strong>thinking, producing, and inspiring</strong>.
+            <StaggerItem as="p" className="text-gray-600 leading-[1.8]">
+              For us, robotics is not just about building robots—it is about <strong className="font-bold text-navy">thinking, producing, and inspiring</strong>.
             </StaggerItem>
           </StaggerGroup>
         </div>
       </section>
 
-      {/* ── Divider ───────────────────────────────── */}
-      <div className="max-w-7xl mx-auto px-6">
-        <hr className="border-gray-100" />
-      </div>
-
-      {/* ── Sponsors / Partners ───────────────────── */}
+      {/* ── Sponsors ─────────────────────────────── */}
       <LogoCarousel />
     </div>
   )

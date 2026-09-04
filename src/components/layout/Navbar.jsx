@@ -25,7 +25,7 @@ function DropdownItem({ item, depth = 0 }) {
           if (e.key === 'Escape') setOpen(false)
         }}
       >
-        <div className="flex items-center justify-between w-full px-5 py-2.5 text-sm text-white/80 hover:text-gold hover:bg-navy-light transition-colors uppercase tracking-wider font-medium">
+        <div className="flex items-center justify-between w-full px-4 py-2 text-xs font-semibold text-navy hover:text-crimson hover:bg-crimson-50 transition-colors">
           {item.to ? (
             <Link to={item.to} className="flex-1 text-left">{item.label}</Link>
           ) : (
@@ -42,7 +42,7 @@ function DropdownItem({ item, depth = 0 }) {
           <ChevronDown size={12} className={`ml-2 transition-transform ${open ? 'rotate-180' : ''}`} />
         </div>
         {open && (
-          <div className="absolute left-full top-0 min-w-[200px] bg-navy shadow-2xl py-2 z-50 border-t-2 border-gold">
+          <div className="absolute left-full top-0 ml-1 min-w-[224px] bg-white border border-gray-200 rounded-xl shadow-xl py-2.5 z-50">
             {item.children.map((child) => (
               <DropdownItem key={child.label} item={child} depth={depth + 1} />
             ))}
@@ -58,7 +58,7 @@ function DropdownItem({ item, depth = 0 }) {
         href={item.to}
         target="_blank"
         rel="noopener noreferrer"
-        className="block px-5 py-2.5 text-sm uppercase tracking-wider font-medium transition-colors text-white/80 hover:text-gold hover:bg-navy-light"
+        className="block px-4 py-2 text-xs font-semibold transition-colors text-navy hover:text-crimson hover:bg-crimson-50"
       >
         {item.label}
       </a>
@@ -68,8 +68,8 @@ function DropdownItem({ item, depth = 0 }) {
   return (
     <Link
       to={item.to}
-      className={`block px-5 py-2.5 text-sm uppercase tracking-wider font-medium transition-colors
-        ${location.pathname === item.to ? 'text-gold' : 'text-white/80 hover:text-gold hover:bg-navy-light'}`}
+      className={`block px-4 py-2 text-xs font-semibold transition-colors
+        ${location.pathname === item.to ? 'text-crimson bg-crimson-50' : 'text-navy hover:text-crimson hover:bg-crimson-50'}`}
     >
       {item.label}
     </Link>
@@ -95,8 +95,8 @@ function TopNavItem({ item }) {
           if (e.key === 'Escape') setOpen(false)
         }}
       >
-        <div className={`flex items-center gap-1 px-3 py-2 text-sm font-medium uppercase tracking-wider transition-colors
-          ${open ? 'text-navy-mid' : 'text-navy hover:text-navy-mid'}`}>
+        <div className={`nav-underline flex items-center gap-1.5 py-2 text-[13px] font-bold uppercase tracking-wider transition-colors
+          ${open ? 'text-crimson' : 'text-navy hover:text-crimson'}`}>
           {item.to ? (
             <Link to={item.to} className="flex-1">{item.label}</Link>
           ) : (
@@ -113,7 +113,7 @@ function TopNavItem({ item }) {
           <ChevronDown size={12} className={`transition-transform ${open ? 'rotate-180' : ''}`} />
         </div>
         {open && (
-          <div className="absolute top-full left-0 min-w-[200px] bg-navy shadow-2xl py-2 z-50 border-t-2 border-gold">
+          <div className="absolute top-full left-0 mt-1 min-w-[224px] bg-white border border-gray-200 rounded-xl shadow-xl py-2.5 z-50">
             {item.children.map((child) => (
               <DropdownItem key={child.label} item={child} />
             ))}
@@ -141,12 +141,12 @@ function TopNavItem({ item }) {
     <Link
       to={item.to}
       aria-current={isActive ? 'page' : undefined}
-      className={`relative px-3 py-2 text-sm font-medium uppercase tracking-wider transition-colors
-        ${isActive ? 'text-navy-mid' : 'text-navy hover:text-navy-mid'}`}
+      className={`nav-underline relative py-2 text-[13px] font-bold uppercase tracking-wider transition-colors
+        ${isActive ? 'text-crimson' : 'text-navy hover:text-crimson'}`}
     >
       {item.label}
       {isActive && (
-        <span className="absolute left-3 right-3 -bottom-0.5 h-0.5 bg-crimson rounded-full" />
+        <span className="absolute left-0 right-0 -bottom-0.5 h-0.5 bg-crimson" />
       )}
     </Link>
   )
@@ -248,14 +248,14 @@ export default function Navbar() {
       <nav className={`sticky top-0 z-40 transition-all duration-300 ${
         scrolled ? 'bg-white/95 backdrop-blur-md shadow-md' : 'bg-white shadow-sm'
       }`}>
-        <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
+        <div className="max-w-[1360px] mx-auto px-5 sm:px-8 flex items-center justify-between h-20">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link to="/" className="flex-shrink-0" aria-label="Cartesian Robotics — home">
+            <Link to="/" className="group flex-shrink-0 py-2" aria-label="Cartesian Robotics — home">
               <img
                 src="/uploads/cartesian-wordmark.png"
                 alt="Cartesian Robotics"
-                className="h-8 sm:h-10 w-auto max-w-[160px] sm:max-w-[192px]"
+                className="h-8 sm:h-9 w-auto max-w-[170px] sm:max-w-[200px] transition-transform duration-300 group-hover:scale-105"
                 fetchPriority="high"
                 decoding="async"
                 onError={(e) => {

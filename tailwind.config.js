@@ -19,6 +19,11 @@ export default {
           light: '#1A3B61',
           50: '#f0f4f9',
         },
+        surface: {
+          DEFAULT: '#fcfbf9',   // page ground
+          subtle: '#fafbfe',
+          alt: '#f4f6fa',
+        },
         gold: {
           DEFAULT: '#FDC800',
           dark: '#d4a800',
@@ -27,6 +32,11 @@ export default {
       },
       fontFamily: {
         roboto: ['Roboto', 'sans-serif'],
+        // Rajdhani carries every large heading, not just robot names.
+        display: ['Rajdhani', 'Roboto', 'sans-serif'],
+        // Roboto Mono carries eyebrows, badges and technical micro-text —
+        // it's what gives the site its engineering-drawing feel.
+        mono: ['"Roboto Mono"', 'ui-monospace', 'monospace'],
       },
       animation: {
         'scroll-left': 'scrollLeft 30s linear infinite',

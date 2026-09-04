@@ -44,6 +44,49 @@
 }
 
 @layer components {
+  /* ── Cartesian coordinate grid ───────────────────────────────────────
+     The team is named after the Cartesian coordinate system, so the grid
+     is identity rather than decoration. Sits behind hero sections; the
+     dense crimson variant goes inside framed panels. */
+  .cartesian-grid {
+    background-size: 32px 32px;
+    background-image:
+      linear-gradient(to right, rgba(0, 33, 71, 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0, 33, 71, 0.04) 1px, transparent 1px);
+  }
+
+  .cartesian-grid-dense {
+    background-size: 16px 16px;
+    background-image:
+      linear-gradient(to right, rgba(131, 42, 34, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(131, 42, 34, 0.05) 1px, transparent 1px);
+  }
+
+  /* Eyebrow label — mono, crimson, wide tracking. Used above nearly every
+     section heading, so it's a class rather than repeated utilities. */
+  .eyebrow {
+    @apply font-mono text-[12px] sm:text-[13px] font-bold uppercase tracking-[0.25em] text-crimson;
+  }
+
+  /* Underline that grows from the left on hover, for top-level nav links. */
+  .nav-underline {
+    @apply relative;
+  }
+
+  .nav-underline::after {
+    content: '';
+    @apply absolute left-0 bg-crimson;
+    bottom: -2px;
+    width: 0;
+    height: 2px;
+    transition: width 0.25s ease-out;
+  }
+
+  .nav-underline:hover::after,
+  .nav-underline:focus-visible::after {
+    width: 100%;
+  }
+
   /* Logo Carousel Track */
   .logo-track {
     display: flex;

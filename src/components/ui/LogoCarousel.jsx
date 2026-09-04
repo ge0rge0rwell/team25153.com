@@ -29,7 +29,7 @@ function StaticRow({ items, label }) {
   return (
     <div>
       {label && (
-        <p className="text-white/70 text-[10px] font-bold uppercase tracking-[0.3em] mb-3 text-center">
+        <p className="font-mono text-white/70 text-[11px] font-bold uppercase tracking-[0.25em] mb-6 text-center">
           {label}
         </p>
       )}
@@ -60,7 +60,7 @@ function Row({ items, direction, speed, label }) {
   return (
     <div className="group/row relative">
       {label && (
-        <p className="text-white/70 text-[10px] font-bold uppercase tracking-[0.3em] mb-3 text-center">
+        <p className="font-mono text-white/70 text-[11px] font-bold uppercase tracking-[0.25em] mb-6 text-center">
           {label}
         </p>
       )}
@@ -89,7 +89,7 @@ function LogoCard({ sponsor: s }) {
   return (
     <div
       className={`group/card relative flex-shrink-0 flex items-center justify-center ${card}
-                  bg-white rounded-2xl px-4 shadow-md ring-1 ring-black/5
+                  bg-white rounded-2xl px-4 shadow-lg ring-1 ring-black/5
                   transition-all duration-300 ease-out
                   hover:-translate-y-1.5 hover:shadow-xl hover:ring-2 hover:ring-gold/70`}
     >
@@ -118,11 +118,7 @@ function LogoCard({ sponsor: s }) {
 
 export default function LogoCarousel() {
   return (
-    <section className="bg-crimson-gradient py-16 md:py-20 overflow-hidden relative">
-      {/* Gold accent lines */}
-      <div className="absolute top-0 left-0 right-0 h-0.5 bg-gold/60" />
-      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gold/60" />
-
+    <section className="relative overflow-hidden py-20 lg:py-24 text-white border-t-2 border-gold bg-gradient-to-b from-[#78241d] via-[#5c1c16] to-[#251522]">
       {/* Faint dot-grid texture, consistent with hero sections elsewhere */}
       <div
         className="absolute inset-0 opacity-[0.06] pointer-events-none"
@@ -134,11 +130,11 @@ export default function LogoCarousel() {
 
       <div className="relative max-w-6xl mx-auto px-6">
         <Reveal direction="scale" className="text-center mb-12">
-          <p className="text-white/80 text-xs font-bold uppercase tracking-[0.35em] mb-3 flex items-center justify-center gap-2">
+          <p className="font-mono text-white/80 text-[11px] font-bold uppercase tracking-[0.25em] mb-3 flex items-center justify-center gap-2">
             <Handshake size={14} className="text-gold" />
             Proudly Supported By
           </p>
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
+          <h2 className="font-display text-3xl sm:text-4xl lg:text-[44px] font-bold text-white tracking-tight mb-3">
             Our Sponsors &amp; Partners
           </h2>
           <div className="w-10 h-0.5 bg-gold mx-auto" />
