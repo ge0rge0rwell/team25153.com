@@ -11,7 +11,7 @@ export default function Footer() {
   return (
     <footer className="bg-navy text-white border-t-2 border-gold">
       {/* Main Footer */}
-      <StaggerGroup as="div" amount={0.1} className="max-w-[1360px] mx-auto px-5 sm:px-8 py-16 grid grid-cols-1 md:grid-cols-12 gap-10">
+      <StaggerGroup as="div" amount={0.1} className="max-w-[1360px] mx-auto px-5 sm:px-8 py-16 grid grid-cols-1 md:grid-cols-12 gap-x-12 gap-y-12">
         {/* Brand */}
         <StaggerItem className="md:col-span-5">
           <img
@@ -33,12 +33,12 @@ export default function Footer() {
           <h3 className="font-mono text-gold font-bold uppercase tracking-[0.2em] text-xs mb-5 flex items-center gap-1.5">
             <span aria-hidden="true">—</span> Quick Links
           </h3>
-          <ul className="space-y-2.5">
+          <ul className="space-y-4">
             {footerLinks.map((link) => (
               <li key={link.to}>
                 <Link
                   to={link.to}
-                  className="text-white/60 hover:text-gold text-sm transition-colors flex items-center gap-2 group"
+                  className="text-white/60 hover:text-gold text-sm transition-colors flex items-center gap-2.5 py-0.5 group"
                 >
                   <span className="w-3 h-px bg-gold/40 group-hover:w-5 group-hover:bg-gold transition-all duration-300"></span>
                   {link.label}

@@ -24,6 +24,28 @@ export default {
           subtle: '#fafbfe',
           alt: '#f4f6fa',
         },
+        // Sampled directly from the Descartes portrait the team uses as its
+        // emblem, ordered by how much of the image each covers. Red and white
+        // dominate it, which is why they lead; the rest are the painting's
+        // supporting tones and are meant for accents, borders and surfaces.
+        //
+        // Worth noting: the cloak red came out at #881511 against the brand
+        // crimson's #832a22 — hue 2 vs 5, near-identical. The palette the site
+        // already used was effectively taken from this portrait.
+        descartes: {
+          ruff: '#ffffff',      // 26% of the image — the collar and ground
+          blush: '#e5dbde',     //  6% — warm off-white in the ruff folds
+          mauve: '#c6b7ba',     //  4% — pale shadow on the linen
+          rose: '#a08483',      //  4% — muted skin shadow
+          cloak: '#881511',     //  7% — the red cloak
+          cloakDeep: '#511612', //  2% — its shadowed folds
+          mantle: '#686161',    //  8% — grey mantle over the shoulder
+          taupe: '#6a5a55',     //  3% — warm mid-grey
+          hair: '#4b3a34',      //  3% — brown curls
+          hairDark: '#3e302a',  //  2% — their shadow
+          ink: '#342621',       //  9% — the drawn outline
+          inkDeep: '#120503',   //  6% — deepest black in the linework
+        },
         gold: {
           DEFAULT: '#FDC800',
           dark: '#d4a800',
