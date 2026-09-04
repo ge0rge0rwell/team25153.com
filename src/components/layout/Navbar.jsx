@@ -272,7 +272,10 @@ export default function Navbar() {
           </div>
 
           {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center gap-1">
+          {/* Spacing lives on the container, not as padding on each link:
+              the hover underline is drawn at the link's own width, so padding
+              would stretch it out past the text on both sides. */}
+          <div className="hidden lg:flex items-center gap-6 xl:gap-8">
             {navItems.map((item) => (
               <TopNavItem key={item.label} item={item} />
             ))}
