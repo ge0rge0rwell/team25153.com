@@ -71,6 +71,9 @@ export default {
           DEFAULT: '#FDC800',
           dark: '#d4a800',
           light: '#fdd84d',
+          // For gold text on a pale-gold chip. `dark` only manages 2.03:1
+          // there, which is unreadable; this clears AA at 5.7:1.
+          deep: '#7a5c00',
         },
       },
       fontFamily: {
