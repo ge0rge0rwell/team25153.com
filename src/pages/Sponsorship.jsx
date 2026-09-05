@@ -7,12 +7,6 @@ import { useCollection } from '../context/ContentContext'
 
 const iconMap = { Heart, Star, Package, Handshake }
 
-// Short partnership labels shown on the foot of each tier card. Presentational
-// only — they aren't in the CMS, so they're positional rather than tied to a
-// tier by name. If these need to be editable, they should move into
-// sponsorship.json as a `label` on each tier.
-const TIER_LABELS = ['Entry Alliance', 'Hardware Supporter', 'Systems Partner', 'Premier Alliance']
-
 // "18,000 $" -> 18000, so the bars can be drawn to scale.
 function parseAmount(s) {
   const n = Number(String(s).replace(/[^0-9.]/g, ''))
@@ -74,7 +68,7 @@ export default function Sponsorship() {
           <SectionHeading eyebrow="Investment Packages" title="Sponsorship Tiers" />
 
           <StaggerGroup as="div" staggerChildren={0.1} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {tiers.map((tier, i) => {
+            {tiers.map((tier) => {
               const Icon = iconMap[tier.icon] || Heart
               const featured = tier.featured
               return (
@@ -107,13 +101,6 @@ export default function Sponsorship() {
                     {tier.perks.map((perk) => (
                       <p key={perk} className="text-sm text-gray-500 leading-relaxed">{perk}</p>
                     ))}
-                  </div>
-
-                  <div className="border-t border-gray-200 mt-4 pt-4 flex items-center justify-between gap-2">
-                    <span className={`font-mono text-[10px] font-bold uppercase tracking-[0.12em] ${featured ? 'text-crimson' : 'text-gray-500'}`}>
-                      {TIER_LABELS[i] || ''}
-                    </span>
-                    <BadgeCheck size={14} className={featured ? 'text-crimson' : 'text-gray-400'} aria-hidden="true" />
                   </div>
                 </StaggerItem>
               )
