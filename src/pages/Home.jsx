@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import useReducedMotion from '../lib/useReducedMotion'
 import RobotCard from '../components/ui/RobotCard'
+import ComingSoonRobotCard from '../components/ui/ComingSoonRobotCard'
 import LogoCarousel from '../components/ui/LogoCarousel'
 import Reveal from '../components/motion/Reveal'
 import { StaggerGroup, StaggerItem } from '../components/motion/Stagger'
@@ -124,10 +125,11 @@ export default function Home() {
                 </StaggerItem>
 
                 {/* Robot roster */}
-                <StaggerItem className="mt-12 border border-crimson/15 rounded-xl overflow-hidden grid grid-cols-3 bg-white shadow-sm">
+                <StaggerItem className="mt-12 border border-crimson/15 rounded-xl overflow-hidden grid grid-cols-4 bg-white shadow-sm">
                   {robots.map((r) => (
                     <RobotCard key={r.name} {...r} />
                   ))}
+                  <ComingSoonRobotCard />
                 </StaggerItem>
               </StaggerGroup>
             </div>
