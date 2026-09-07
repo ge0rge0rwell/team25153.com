@@ -25,13 +25,13 @@ export default function ComingSoonRobotCard() {
         <span className="font-mono text-[10px] tracking-[0.15em] text-crimson uppercase">
           2026 – 27
         </span>
+        <span className="text-[9px] font-semibold tracking-[0.15em] uppercase text-crimson/50">
+          {days} {days === 1 ? 'day' : 'days'} left
+        </span>
         <h3 className="font-['Rajdhani',sans-serif] text-lg sm:text-3xl md:text-4xl font-extrabold text-crimson leading-none tracking-tight">
           BIOBUZZ
         </h3>
         <div className="w-4 h-px bg-crimson/35 my-0.5" />
-        <span className="text-[9px] font-semibold tracking-[0.15em] uppercase text-crimson/50">
-          {days} {days === 1 ? 'day' : 'days'} left
-        </span>
         <span className="text-[10px] font-bold text-crimson mt-1">
           Coming Soon!
         </span>
