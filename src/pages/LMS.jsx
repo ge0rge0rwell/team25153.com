@@ -146,21 +146,23 @@ function LoginScreen({ onLogin }) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gray-50 cartesian-grid flex items-center justify-center px-4">
       <Reveal direction="scale" className="w-full max-w-sm">
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-navy mb-4">
-            <GraduationCap size={28} className="text-gold" />
-          </div>
           <h1 className="text-2xl font-bold text-navy">Öğrenme Merkezi</h1>
-          <p className="text-gray-500 text-sm mt-1">
+          <img
+            src="/cartesian-logo-transparent.png"
+            alt="Cartesian Robotics"
+            className="h-16 mx-auto mt-3"
+          />
+          <p className="text-gray-500 text-sm mt-3">
             {mode === 'login' ? 'Devam etmek için giriş yapın' : 'Yeni hesap oluşturun'}
           </p>
         </div>
 
         {/* Card */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+        <div className="bg-white rounded-2xl shadow-sm border border-crimson/15 p-8">
           <form onSubmit={submit} className="space-y-5">
             {mode === 'register' && (
               <div className="grid grid-cols-2 gap-3">
@@ -169,7 +171,7 @@ function LoginScreen({ onLogin }) {
                   <input
                     id="lms-firstname" autoComplete="given-name"
                     type="text" required value={firstname} onChange={e => setFirstname(e.target.value)}
-                    className="w-full h-11 px-4 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition"
+                    className="w-full h-11 px-4 border border-navy/15 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-crimson/20 focus:border-crimson transition"
                   />
                 </div>
                 <div>
@@ -177,7 +179,7 @@ function LoginScreen({ onLogin }) {
                   <input
                     id="lms-lastname" autoComplete="family-name"
                     type="text" required value={lastname} onChange={e => setLastname(e.target.value)}
-                    className="w-full h-11 px-4 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition"
+                    className="w-full h-11 px-4 border border-navy/15 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-crimson/20 focus:border-crimson transition"
                   />
                 </div>
               </div>
@@ -189,7 +191,7 @@ function LoginScreen({ onLogin }) {
                 <input
                   id="lms-email" autoComplete="email"
                   type="email" required value={email} onChange={e => setEmail(e.target.value)}
-                  className="w-full h-11 px-4 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition"
+                  className="w-full h-11 px-4 border border-navy/15 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-crimson/20 focus:border-crimson transition"
                 />
               </div>
             )}
@@ -206,7 +208,7 @@ function LoginScreen({ onLogin }) {
                 value={username}
                 onChange={e => setUsername(e.target.value)}
                 placeholder="kullanici_adi"
-                className="w-full h-11 px-4 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition"
+                className="w-full h-11 px-4 border border-navy/15 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-crimson/20 focus:border-crimson transition"
               />
             </div>
 
@@ -223,7 +225,7 @@ function LoginScreen({ onLogin }) {
                   value={password}
                   onChange={e => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full h-11 px-4 pr-11 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition"
+                  className="w-full h-11 px-4 pr-11 border border-navy/15 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-crimson/20 focus:border-crimson transition"
                 />
                 <button
                   type="button"
