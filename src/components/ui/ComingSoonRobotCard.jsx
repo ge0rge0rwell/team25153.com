@@ -25,7 +25,7 @@ export default function ComingSoonRobotCard() {
         <span className="font-mono text-[10px] tracking-[0.15em] text-crimson uppercase">
           2026 – 27
         </span>
-        <h3 className="font-['Rajdhani',sans-serif] text-base sm:text-2xl md:text-3xl font-bold text-crimson leading-none tracking-tight">
+        <h3 className="font-['Rajdhani',sans-serif] text-lg sm:text-3xl md:text-4xl font-extrabold text-crimson leading-none tracking-tight">
           BIOBUZZ
         </h3>
         <div className="w-4 h-px bg-crimson/35 my-0.5" />
