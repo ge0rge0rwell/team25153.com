@@ -40,16 +40,45 @@ const DescartesChat = () => {
   }
 
   const parseCitations = (content) => {
-    return content.split(/(\[\[\d+\]\]\(#\d+\))/g).map((part, i) => {
-      const match = part.match(/\[\[(\d+)\]\]\(#(\d+)\)/)
-      if (match) {
+    const tokenPattern = /(\[\[\d+\]\]\(#\d+\)|\[[^\]]+\]\([^)]+\)|https?:\/\/[^\s)]+)/g
+    return content.split(tokenPattern).map((part, i) => {
+      const internalCitation = part.match(/^\[\[(\d+)\]\]\(#(\d+)\)$/)
+      if (internalCitation) {
         return (
-          <a key={i} href={`#${match[2]}`} className="descartes-citation-link"
-            onClick={(e) => { e.preventDefault(); setPdfPage(parseInt(match[2])); setActiveTab('pdf') }}>
-            [{match[1]}]
+          <a key={i} href={`#${internalCitation[2]}`} className="descartes-citation-link"
+            onClick={(e) => { e.preventDefault(); setPdfPage(parseInt(internalCitation[2])); setActiveTab('pdf') }}>
+            [{internalCitation[1]}]
           </a>
         )
       }
+
+      const markdownLink = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/)
+      if (markdownLink) {
+        const [, label, href] = markdownLink
+        const pageAnchor = href.match(/^#(\d+)$/)
+        if (pageAnchor) {
+          return (
+            <a key={i} href={href} className="descartes-citation-link"
+              onClick={(e) => { e.preventDefault(); setPdfPage(parseInt(pageAnchor[1])); setActiveTab('pdf') }}>
+              {label}
+            </a>
+          )
+        }
+        return (
+          <a key={i} href={href} target="_blank" rel="noopener noreferrer" className="descartes-citation-link">
+            {label}
+          </a>
+        )
+      }
+
+      if (/^https?:\/\//.test(part)) {
+        return (
+          <a key={i} href={part} target="_blank" rel="noopener noreferrer" className="descartes-citation-link">
+            {part}
+          </a>
+        )
+      }
+
       return part
     })
   }
