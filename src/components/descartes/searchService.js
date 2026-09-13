@@ -1,4 +1,4 @@
-export const searchManual = async (query, limit = 3) => {
+export const searchManual = async (query, limit = 5) => {
     if (!query) return [];
 
     const { default: manualIndex } = await import('./manual-index.json');
