@@ -5,21 +5,53 @@
     <link rel="icon" type="image/png" href="/cartesian-logo-transparent.png" />
     <link rel="apple-touch-icon" href="/cartesian-logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Cartesian Robotics #25153 — A student-led FTC robotics team. I think, therefore I can." />
-    <meta name="keywords" content="FTC, robotics, Cartesian, Team 25153, Turkey, STEM, Ankara" />
-    <meta property="og:title" content="Cartesian Robotics #25153" />
-    <meta property="og:description" content="A student-led FTC robotics team from Ankara, Turkey. We think, therefore we can." />
+    <!-- Tints the browser UI (Android Chrome address bar, iOS PWA status bar)
+         to the site's navy instead of leaving it default grey. -->
+    <meta name="theme-color" content="#002147" />
+    <!-- The design is light-only; declaring it stops the browser from
+         auto-darkening form controls and scrollbars for dark-mode users,
+         which otherwise renders inputs light-on-light. -->
+    <meta name="color-scheme" content="light" />
+    <!-- Everything between these markers is replaced per-route by the Express
+         server (server/seo.js) so each URL ships its own title, description,
+         canonical, social tags and structured data. The defaults below are what
+         a visitor gets in `vite dev` or if injection ever fails. -->
+    <!--seo:start-->
     <title>Cartesian Robotics #25153</title>
+    <meta
+      name="description"
+      content="Cartesian Robotics #25153 is a student-led FIRST Tech Challenge (FTC) and FRC robotics team from Ankara, Türkiye. Inspire Award winners and FIRST World Championship competitors."
+    />
+    <link rel="canonical" href="https://team25153.com/" />
+    <meta property="og:title" content="Cartesian Robotics #25153" />
+    <meta
+      property="og:description"
+      content="A student-led FTC and FRC robotics team from Ankara, Türkiye. I think, therefore I can."
+    />
+    <meta property="og:image" content="https://team25153.com/og-cover.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <!--seo:end-->
 
-    <!-- Warm up the connection to the external image CDN used across pages -->
-    <link rel="preconnect" href="https://team25153.com" crossorigin />
-    <link rel="dns-prefetch" href="https://team25153.com" />
-    <script type="module" crossorigin src="/assets/index-CORSgGXg.js"></script>
-    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-jpDsebLB.js">
-    <link rel="modulepreload" crossorigin href="/assets/react-vendor-CJnihGfj.js">
-    <link rel="modulepreload" crossorigin href="/assets/vendor-BvAmHIfc.js">
-    <link rel="modulepreload" crossorigin href="/assets/router-W4jBjYkb.js">
-    <link rel="stylesheet" crossorigin href="/assets/index--5_m-xgP.css">
+    <!-- Fonts. These used to be pulled in with an @import at the top of
+         index.css, which serialises badly: the browser has to download and
+         parse our CSS before it even discovers the Google Fonts URL, then
+         fetch that stylesheet before it discovers the font files — three
+         round trips deep before text can paint in the right face. Declaring
+         them here lets the preload scanner start all of it immediately, and
+         the preconnects open the TLS connections to both font hosts up front
+         (googleapis serves the CSS, gstatic serves the actual font binaries). -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;900&family=Rajdhani:wght@500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap"
+    />
+    <script type="module" crossorigin src="/assets/index-DYNpiiUm.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-S-ySWqyJ.js">
+    <link rel="modulepreload" crossorigin href="/assets/react-vendor-CbTGJPxK.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-BNAkNmiS.js">
+    <link rel="modulepreload" crossorigin href="/assets/router-BRl3kYlz.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-y9E0Es1m.css">
   </head>
   <body>
     <div id="root"></div>

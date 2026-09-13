@@ -1,59 +1,51 @@
 export const FTC_KNOWLEDGE_BASE = {
-    season: "2025-2026: DECODE",
-    game_theme: "Cyber-Physical Security and Cryptography",
+    season: "2026-2027: BIOBUZZ",
+    game_theme: "Pollination — Bees, Hives, and Flowers",
     field_setup: {
-        dimensions: "12ft x 12ft (3.66m x 3.66m)",
-        central_element: "The Mainframe (Digital Scoring Tower)",
-        corner_elements: "Encryption Hubs (One for each alliance)",
-        floor_elements: "Data Strips (Navigation lines)",
-        navigation_aid: "AprilTags (ID 1-10 on field perimeter, ID 11-20 on structures)"
+        central_element: "HIVE Structure (red HIVE + blue HIVE, each bi-stable on a pivot, 2 CELLS per HIVE)",
+        perimeter_elements: "4 FLOWERS mounted on the perimeter wall (top opening to score, bottom Retrieval Opening to remove elements)",
+        zones: "ALLIANCE-specific GARDENS, LOADING ZONE (for PARK)",
+        navigation_aid: "AprilTag Clusters (4 AprilTags each) on the bottom face of every HIVE CELL, 36h11 family, 3.25in squares"
     },
     game_elements: {
-        nodes: "Hexagonal scoring objects (3 colors: Blue, Red, Green)",
-        size_nodes: "4-inch wide hexagons",
-        packets: "Rectangular data blocks (Yellow)",
-        size_packets: "6-inch x 2-inch x 2-inch",
-        total_objects: "60 Nodes, 20 Packets"
+        pollen: "Yellow polyethylene balls, ~2.8in diameter, 40 total in a MATCH",
+        nectar: "Red/Blue polyethylene balls, ~3.6in diameter, 8 red + 8 blue total in a MATCH",
+        hive_cell: "Opening ~20in wide x 14in tall x 12in deep; HIVE tips when enough SCORING ELEMENTS are LAUNCHED into the upward CELL"
     },
     scoring_rules: {
-        autonomous: {
-            navigation: "Parking in Safe Zone: 5 points",
-            preloaded_node: "Scoring in Mainframe: 15 points",
-            data_sync: "Scanning Obelisk: 20 points"
+        autonomous_and_teleop_shared: {
+            hive_tip: "20 points (AUTO or TELEOP) each time a HIVE tips",
+            pollen_nectar_remaining_in_cell: "2 points each (TELEOP only, assessed at match end)",
+            leave: "3 points (AUTO) — robot no longer contacting perimeter wall"
         },
         teleop: {
-            node_scoring: {
-                mainframe_low: "2 points",
-                mainframe_mid: "5 points",
-                mainframe_high: "10 points"
-            },
-            packet_scoring: "Placement in Encryption Hub: 15 points",
-            link_bonus: "3 consecutive Nodes of same color: 10 points"
+            park: "5 points — robot at least partially in LOADING ZONE",
+            flower_bottom_nectar_bonus: "5 points — ALLIANCE with bottom-most qualifying NECTAR of its color in a FLOWER",
+            flower_owned_scoring: "2 points per POLLEN/NECTAR in an owned FLOWER (scoring only allowed in final 1 minute of MATCH per G410)",
+            garden_scoring: "1 point per POLLEN/NECTAR at least partially in the ALLIANCE's GARDEN"
         },
-        endgame: {
-            uplink: "Robot suspension from Mainframe Rungs: 30 points",
-            security_lock: "Closing Encryption Hub Gate: 20 points",
-            final_sync: "Both robots in Center Zone: 15 points"
+        ranking_points: {
+            swarm_rp: "Combined LEAVE + PARK points at or above threshold (16 pts at most events)",
+            pollinator_1_rp: "HIVE TIPS at or above threshold (4 TIPS at most events)",
+            pollinator_2_rp: "HIVE TIPS at or above higher threshold (7 TIPS at most events)",
+            win_tie: "WIN = 3 RP, TIE = 1 RP"
         }
     },
     robot_constraints: {
-        starting_size: "18x18x18 inches",
-        expansion_limit: "Vertical: No limit, Horizontal: No more than 36 inches",
-        motors: "Maximum 8 DC motors",
-        weight: "No weight limit (gravity must be respected)",
-        control_system: "REV Control Hub + REV Expansion Hub"
-    },
-    penalties: {
-        minor: "5 points (e.g., pinning, illegal contact)",
-        major: "15 points (e.g., damaging game elements, tipping others)"
+        starting_size: "18x18x18 inch cube (STARTING CONFIGURATION, R102)",
+        motors: "Only specific approved DC motor actuators (REV, goBILDA, AndyMark, TETRIX, etc. — see R501 motor table)",
+        control_system: "REV Control Hub based Control/Command/Signals system"
     },
     index_reference: [
         { page: 1,  title: "Cover & Table of Contents" },
-        { page: 5,  title: "Section 1: Introduction to DECODE" },
-        { page: 12, title: "Section 2: Field Components & Layout" },
-        { page: 18, title: "Section 3: Scoring & Penalties" },
-        { page: 24, title: "Section 4: Robot Rules & Inspection" },
-        { page: 35, title: "Appendix A: Field Specs" }
+        { page: 5,  title: "Section 1: Introduction to BIOBUZZ" },
+        { page: 62, title: "Section 8: Game Overview" },
+        { page: 63, title: "Section 9: ARENA (FIELD, HIVE, FLOWER, SCORING ELEMENTS, AprilTags)" },
+        { page: 86, title: "Section 10.5: Scoring Criteria & Point Values" },
+        { page: 99, title: "Section 11: Game Rules (G)" },
+        { page: 118, title: "Section 12: ROBOT Construction Rules (R)" },
+        { page: 145, title: "Section 13: Tournament (T)" },
+        { page: 169, title: "Section 16: Glossary" }
     ]
 };
 

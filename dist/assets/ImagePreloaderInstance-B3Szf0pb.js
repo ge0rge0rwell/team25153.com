@@ -1,0 +1,1 @@
+import{n as e,r as t,t as n}from"./classPrivateFieldGet2-chieQAxy.js";var r=new WeakMap,i=new WeakMap,a=class{constructor(n,a){t(this,r,void 0),t(this,i,void 0),e(i,this,n),e(r,this,a)}destroy(){n(i,this).images?.delete(n(r,this))}};export{a as ImagePreloaderInstance};

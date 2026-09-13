@@ -1,1 +1,0 @@
-import{t as e}from"./react-vendor-CJnihGfj.js";var t=e(),n=`https://lms.team25153.com/admin`;function r(){return(0,t.jsx)(`iframe`,{src:n,title:`Moodle Admin`,style:{position:`fixed`,inset:0,width:`100%`,height:`100%`,border:`none`},sandbox:`allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox allow-top-navigation`})}export{r as default};
