@@ -1,26 +1,28 @@
-import { searchManual } from './searchService';
-
 const OPENROUTER_API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
 const OPENROUTER_MODEL = "nex-agi/nex-n2.5-mini:free";
 
-export const callGemini = async (messages) => {
-    const lastUserMessage = messages[messages.length - 1].content;
-    const searchResults = await searchManual(lastUserMessage);
-
-    let contextHeader = "\n\n--- MANUAL SEARCH RESULTS ---\n";
-    if (searchResults.length > 0) {
-        searchResults.forEach(res => {
-            contextHeader += `[SAYFA ${res.page}]:\n${res.content}\n\n`;
+let fullManualContextPromise = null;
+const getFullManualContext = () => {
+    if (!fullManualContextPromise) {
+        fullManualContextPromise = import('./manual-index.json').then(({ default: manualIndex }) => {
+            let context = "\n\n--- FULL COMPETITION MANUAL (all pages) ---\n";
+            manualIndex.forEach(page => {
+                context += `[SAYFA ${page.page}]:\n${page.content}\n\n`;
+            });
+            context += "--- END OF MANUAL ---\n";
+            return context;
         });
-    } else {
-        contextHeader += "Aranan konu kural kitabında bulunamadı.\n";
     }
-    contextHeader += "--- END OF SEARCH ---\n";
+    return fullManualContextPromise;
+};
+
+export const callGemini = async (messages) => {
+    const manualContext = await getFullManualContext();
 
     const augmentedMessages = [...messages];
     augmentedMessages[0] = {
         ...augmentedMessages[0],
-        content: augmentedMessages[0].content + contextHeader
+        content: augmentedMessages[0].content + manualContext
     };
 
     try {
