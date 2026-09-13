@@ -39,6 +39,14 @@ const DescartesChat = () => {
     }
   }
 
+  const isSafeHref = (href) => {
+    try {
+      return ['http:', 'https:'].includes(new URL(href, window.location.origin).protocol)
+    } catch {
+      return false
+    }
+  }
+
   const parseCitations = (content) => {
     const tokenPattern = /(\[\[\d+\]\]\(#\d+\)|\[[^\]]+\]\([^)]+\)|https?:\/\/[^\s)]+)/g
     return content.split(tokenPattern).map((part, i) => {
@@ -64,6 +72,7 @@ const DescartesChat = () => {
             </a>
           )
         }
+        if (!isSafeHref(href)) return label
         return (
           <a key={i} href={href} target="_blank" rel="noopener noreferrer" className="descartes-citation-link">
             {label}
