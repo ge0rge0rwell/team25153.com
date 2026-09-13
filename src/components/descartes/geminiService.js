@@ -1,7 +1,7 @@
 import { searchManual } from './searchService';
 
 const OPENROUTER_API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
-const OPENROUTER_MODEL = "google/gemma-4-31b-it:free";
+const OPENROUTER_MODEL = "nex-agi/nex-n2.5-mini:free";
 
 export const callGemini = async (messages) => {
     const lastUserMessage = messages[messages.length - 1].content;
