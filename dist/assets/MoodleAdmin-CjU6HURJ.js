@@ -1,0 +1,1 @@
+import{r as e}from"./rolldown-runtime-S-ySWqyJ.js";import{a as t}from"./react-vendor-CbTGJPxK.js";var n=e(t(),1),r=`https://lms.team25153.com/admin`;function i(){return(0,n.useEffect)(()=>{window.location.replace(r)},[]),null}export{i as default};

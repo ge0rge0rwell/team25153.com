@@ -1,13 +1,14 @@
-// Full-screen Moodle admin — no site chrome. Accessible at /admin.
+// Redirects to Moodle admin. Accessible at /admin.
+// Moodle's login page sends X-Frame-Options: sameorigin, so it refuses to
+// render inside an iframe on this (different) origin — browsers show a
+// blank/white frame instead. A top-level redirect avoids that entirely.
+import { useEffect } from 'react'
+
 const MOODLE_ADMIN_URL = 'https://lms.team25153.com/admin'
 
 export default function MoodleAdmin() {
-  return (
-    <iframe
-      src={MOODLE_ADMIN_URL}
-      title="Moodle Admin"
-      style={{ position: 'fixed', inset: 0, width: '100%', height: '100%', border: 'none' }}
-      sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox allow-top-navigation"
-    />
-  )
+  useEffect(() => {
+    window.location.replace(MOODLE_ADMIN_URL)
+  }, [])
+  return null
 }
