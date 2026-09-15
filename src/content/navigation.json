@@ -28,7 +28,7 @@
         { "label": "Library", "to": "/resources/library" }
       ]
     },
-    { "label": "Sponsorship", "to": "/sponsorship" },
+    { "label": "Support Us", "to": "/sponsorship" },
     { "label": "Contact Us", "to": "/contact" }
   ],
   "footerLinks": [
@@ -37,7 +37,7 @@
     { "label": "Portfolio", "to": "/portfolio/age" },
     { "label": "Learn", "to": "/lms" },
     { "label": "Resources", "to": "/resources/decoding-ftc" },
-    { "label": "Sponsorship", "to": "/sponsorship" },
+    { "label": "Support Us", "to": "/sponsorship" },
     { "label": "Join Us", "to": "/join" },
     { "label": "Contact Us", "to": "/contact" }
   ]
