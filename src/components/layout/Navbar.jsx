@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Menu, X, ChevronDown } from 'lucide-react'
+import { Menu, X, ChevronDown, Heart } from 'lucide-react'
 import { useCollection } from '../../context/ContentContext'
 
 // Submenu entries (second level and deeper, rendered inside the dark panel).
@@ -141,9 +141,10 @@ function TopNavItem({ item }) {
     <Link
       to={item.to}
       aria-current={isActive ? 'page' : undefined}
-      className={`nav-underline relative py-2 text-[13px] font-bold uppercase tracking-wider transition-colors
+      className={`nav-underline relative py-2 text-[13px] font-bold uppercase tracking-wider transition-colors flex items-center gap-1.5
         ${isActive ? 'text-crimson' : 'text-navy hover:text-crimson'}`}
     >
+      {item.label === 'Support Us' && <Heart size={13} fill="currentColor" />}
       {item.label}
       {isActive && (
         <span className="absolute left-0 right-0 -bottom-0.5 h-0.5 bg-crimson" />
@@ -209,8 +210,9 @@ function MobileNavItem({ item, onClose }) {
     <Link
       to={item.to}
       onClick={onClose}
-      className="block px-8 py-3 text-white/80 text-sm uppercase tracking-wider border-b border-navy-mid/20 hover:text-gold hover:bg-navy-light transition-colors"
+      className="flex items-center gap-2 px-8 py-3 text-white/80 text-sm uppercase tracking-wider border-b border-navy-mid/20 hover:text-gold hover:bg-navy-light transition-colors"
     >
+      {item.label === 'Support Us' && <Heart size={14} fill="currentColor" />}
       {item.label}
     </Link>
   )

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Mail, MapPin, ArrowUp } from 'lucide-react'
+import { Mail, MapPin, ArrowUp, Heart } from 'lucide-react'
 import { FaInstagram } from 'react-icons/fa'
 import { useCollection } from '../../context/ContentContext'
 import { StaggerGroup, StaggerItem } from '../motion/Stagger'
@@ -41,6 +41,7 @@ export default function Footer() {
                   className="text-white/60 hover:text-gold text-sm transition-colors flex items-center gap-2.5 py-0.5 group"
                 >
                   <span className="w-3 h-px bg-gold/40 group-hover:w-5 group-hover:bg-gold transition-all duration-300"></span>
+                  {link.label === 'Support Us' && <Heart size={13} fill="currentColor" className="text-crimson" />}
                   {link.label}
                 </Link>
               </li>
