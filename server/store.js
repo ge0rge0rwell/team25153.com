@@ -91,6 +91,7 @@ export async function runContentMigrations() {
   await migratePortfolioMenuToFlipbook()
   await migrateRemoveBlogNavLinks()
   await migrateBreakdownImagesToWebp()
+  await migrateSponsorshipLabelToSupportUs()
 }
 
 async function migratePortfolioMenuToFlipbook() {
@@ -139,6 +140,33 @@ async function migrateRemoveBlogNavLinks() {
   if (changed) {
     await fsp.writeFile(file, JSON.stringify(data, null, 2) + '\n', 'utf8')
     console.log('  ✦ Removed Blog links from live navigation (content untouched)')
+  }
+}
+
+// The "Sponsorship" nav label was renamed to "Support Us" in the seed, but
+// (like the migration above) that alone never reaches an already-deployed
+// site's live data volume.
+async function migrateSponsorshipLabelToSupportUs() {
+  const file = path.join(CONTENT_DIR, collections.navigation.file)
+  if (!fs.existsSync(file)) return
+
+  const data = JSON.parse(await fsp.readFile(file, 'utf8'))
+  let changed = false
+
+  for (const key of ['navItems', 'footerLinks']) {
+    const list = data[key]
+    if (!Array.isArray(list)) continue
+    for (const item of list) {
+      if (item.label === 'Sponsorship') {
+        item.label = 'Support Us'
+        changed = true
+      }
+    }
+  }
+
+  if (changed) {
+    await fsp.writeFile(file, JSON.stringify(data, null, 2) + '\n', 'utf8')
+    console.log('  ✦ Renamed "Sponsorship" nav label to "Support Us" in live navigation')
   }
 }
 
