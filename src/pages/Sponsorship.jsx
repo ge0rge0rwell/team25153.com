@@ -38,7 +38,10 @@ export default function Sponsorship() {
 
   return (
     <div>
-      <PageBanner title="Sponsorship" breadcrumbs={[{ label: 'Sponsorship' }]} />
+      <PageBanner
+        title={<span className="inline-flex items-center gap-3"><Heart className="text-crimson" size={32} fill="currentColor" /> Support Us</span>}
+        breadcrumbs={[{ label: 'Support Us' }]}
+      />
 
       {/* ── Why sponsor ─────────────────────────── */}
       <section className="relative py-16 md:py-24 bg-white overflow-hidden">
