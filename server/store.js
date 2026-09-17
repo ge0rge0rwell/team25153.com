@@ -92,6 +92,7 @@ export async function runContentMigrations() {
   await migrateRemoveBlogNavLinks()
   await migrateBreakdownImagesToWebp()
   await migrateSponsorshipLabelToSupportUs()
+  await migrateDecodingFtcToBuzzingIntoFtc()
 }
 
 async function migratePortfolioMenuToFlipbook() {
@@ -167,6 +168,49 @@ async function migrateSponsorshipLabelToSupportUs() {
   if (changed) {
     await fsp.writeFile(file, JSON.stringify(data, null, 2) + '\n', 'utf8')
     console.log('  ✦ Renamed "Sponsorship" nav label to "Support Us" in live navigation')
+  }
+}
+
+// "Decoding FTC" (a pun on last season's DECODE game) is renamed to "Buzzing
+// Into FTC" (this season's game is BIOBUZZ) in the seed's nav label and
+// resources entry. Same reach-the-data-volume problem as the migration
+// above, so it needs the same treatment.
+async function migrateDecodingFtcToBuzzingIntoFtc() {
+  const navFile = path.join(CONTENT_DIR, collections.navigation.file)
+  if (fs.existsSync(navFile)) {
+    const data = JSON.parse(await fsp.readFile(navFile, 'utf8'))
+    let changed = false
+    for (const key of ['navItems', 'footerLinks']) {
+      const list = data[key]
+      if (!Array.isArray(list)) continue
+      for (const item of list) {
+        if (item.label === 'Decoding FTC') {
+          item.label = 'Buzzing Into FTC'
+          changed = true
+        }
+        for (const child of item.children || []) {
+          if (child.label === 'Decoding FTC') {
+            child.label = 'Buzzing Into FTC'
+            changed = true
+          }
+        }
+      }
+    }
+    if (changed) {
+      await fsp.writeFile(navFile, JSON.stringify(data, null, 2) + '\n', 'utf8')
+      console.log('  ✦ Renamed "Decoding FTC" nav label to "Buzzing Into FTC"')
+    }
+  }
+
+  const resourcesFile = path.join(CONTENT_DIR, collections.resources.file)
+  if (fs.existsSync(resourcesFile)) {
+    const data = JSON.parse(await fsp.readFile(resourcesFile, 'utf8'))
+    const entry = (data.resources || []).find((r) => r.slug === 'decoding-ftc')
+    if (entry && entry.title === 'Decoding FTC') {
+      entry.title = 'Buzzing Into FTC'
+      await fsp.writeFile(resourcesFile, JSON.stringify(data, null, 2) + '\n', 'utf8')
+      console.log('  ✦ Renamed "Decoding FTC" resource title to "Buzzing Into FTC"')
+    }
   }
 }
 

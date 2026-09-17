@@ -22,7 +22,7 @@
       "label": "Resources",
       "children": [
         { "label": "All Resources", "to": "/resources" },
-        { "label": "Decoding FTC", "to": "/resources/decoding-ftc" },
+        { "label": "Buzzing Into FTC", "to": "/resources/decoding-ftc" },
         { "label": "Software", "to": "/resources/software" },
         { "label": "CAD & Modeling", "to": "/resources/cad" },
         { "label": "Library", "to": "/resources/library" }
