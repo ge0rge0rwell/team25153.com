@@ -93,6 +93,7 @@ export async function runContentMigrations() {
   await migrateBreakdownImagesToWebp()
   await migrateSponsorshipLabelToSupportUs()
   await migrateDecodingFtcToBuzzingIntoFtc()
+  await migrateSponsorshipTiersTo2026()
 }
 
 async function migratePortfolioMenuToFlipbook() {
@@ -212,6 +213,46 @@ async function migrateDecodingFtcToBuzzingIntoFtc() {
       console.log('  ✦ Renamed "Decoding FTC" resource title to "Buzzing Into FTC"')
     }
   }
+}
+
+// The 2026 sponsorship prospectus replaced the tier names, amounts, benefit
+// matrix, and budget entirely. Only overwrites the live data if it still has
+// the old sentinel tier name — if an admin already edited it through the
+// CMS since, leave their changes alone rather than clobbering them.
+async function migrateSponsorshipTiersTo2026() {
+  const file = path.join(CONTENT_DIR, collections.sponsorship.file)
+  if (!fs.existsSync(file)) return
+
+  const data = JSON.parse(await fsp.readFile(file, 'utf8'))
+  const stillOld = (data.tiers || []).some((t) => t.name === 'Tier 01: Inspiration')
+  if (!stillOld) return
+
+  data.tiers = [
+    { icon: 'Heart', name: 'Tier 01: Supporter', amount: '$500 – $1,500', perks: ['Every major achievement starts with small but meaningful support.'], featured: false },
+    { icon: 'Star', name: 'Tier 02: Silver', amount: '$1,500 – $3,000', perks: ['Become part of the driving force pushing our team forward.'], featured: false },
+    { icon: 'Package', name: 'Tier 03: Gold', amount: '$3,000 – $5,000', perks: ["Support the technology turning our students' dreams into reality."], featured: false },
+    { icon: 'Handshake', name: 'Tier 04: Main Partner', amount: '$5,000+', perks: ['Not just a sponsor — our long-term partner shaping the future.'], featured: true },
+  ]
+  data.benefitMatrix = [
+    { label: 'Corporate Logo on Robot Chassis', tiers: [false, false, false, true] },
+    { label: 'Your Promotional Product Distribution', tiers: [false, false, true, true] },
+    { label: 'Pit Area Brand Advertisement', tiers: [false, true, true, true] },
+    { label: 'Dedicated PR & Media Spotlight', tiers: [false, true, true, true] },
+    { label: 'Corporate Logo on Official Jersey', tiers: [true, true, true, true] },
+    { label: 'Social Media Recognition', tiers: [true, true, true, true] },
+    { label: 'Engineering Portfolio Recognition', tiers: [true, true, true, true] },
+    { label: 'Certificate of Appreciation', tiers: [true, true, true, true] },
+  ]
+  data.budget = [
+    { label: 'Registration & Participation Fees', amount: '16,700 $' },
+    { label: 'Consumables & Materials', amount: '7,100 $' },
+    { label: 'Fixed Equipment & Tools', amount: '5,000 $' },
+    { label: 'Safety Equipment', amount: '300 $' },
+  ]
+  data.budgetTotal = '29,100 $'
+
+  await fsp.writeFile(file, JSON.stringify(data, null, 2) + '\n', 'utf8')
+  console.log('  ✦ Updated live sponsorship tiers/matrix/budget to the 2026 prospectus')
 }
 
 // The two robot breakdown diagrams were re-encoded as WebP (2.6 MB of PNG down

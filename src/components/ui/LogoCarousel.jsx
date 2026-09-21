@@ -2,13 +2,11 @@ import { Handshake } from 'lucide-react'
 import Reveal from '../motion/Reveal'
 import useReducedMotion from '../../lib/useReducedMotion'
 
-// tier: 1 = Ergün (biggest), 2 = Pasifik (second), 3 = standard
+// tier: 1 = Yamantürk (biggest), 3 = standard
 const sponsors = [
-  { src: '/sponsors/1.jpg', alt: 'Ergün',               tier: 1 },
-  { src: '/sponsors/7.jpg', alt: 'Pasifik Teknoloji',   tier: 2 },
+  { src: '/sponsors/4.jpg', alt: 'Yamantürk Vakfı',     tier: 1 },
   { src: '/sponsors/2.jpg', alt: 'KOZKA İnşaat',        tier: 3 },
   { src: '/sponsors/3.jpg', alt: 'Fikret Yüksel Vakfı', tier: 3 },
-  { src: '/sponsors/4.jpg', alt: 'Yamantürk Vakfı',     tier: 3 },
   { src: '/sponsors/5.jpg', alt: 'Öztekin Beta',         tier: 3 },
   { src: '/sponsors/6.jpg', alt: 'Kemron',               tier: 3 },
 ]
