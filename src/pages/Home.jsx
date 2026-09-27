@@ -1,6 +1,6 @@
-import { lazy, Suspense, useRef, useState } from 'react'
+import { lazy, Suspense } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, Headphones, Pause } from 'lucide-react'
+import { ArrowRight, Headphones } from 'lucide-react'
 import useReducedMotion from '../lib/useReducedMotion'
 import RobotCard from '../components/ui/RobotCard'
 import ComingSoonRobotCard from '../components/ui/ComingSoonRobotCard'
@@ -45,41 +45,14 @@ function RegistrationMarks() {
   )
 }
 
-// Toggles playback of the BioBuzz podcast via a hidden <audio> element.
+// Sends the visitor to the dedicated /podcast page rather than playing
+// inline — keeps the player, transcript and episode notes on one shareable URL.
 function PodcastButton() {
-  const audioRef = useRef(null)
-  const [isPlaying, setIsPlaying] = useState(false)
-
-  const togglePlayback = () => {
-    const audio = audioRef.current
-    if (!audio) return
-    if (isPlaying) {
-      audio.pause()
-    } else {
-      audio.play()
-    }
-  }
-
   return (
-    <>
-      <button
-        type="button"
-        onClick={togglePlayback}
-        className="btn-outline"
-        aria-pressed={isPlaying}
-      >
-        {isPlaying ? <Pause size={16} /> : <Headphones size={16} />}
-        {isPlaying ? 'Pause podcast' : 'Listen to our podcast'}
-      </button>
-      <audio
-        ref={audioRef}
-        src="/media/biobuzz-podcast-en.mp3"
-        preload="none"
-        onPlay={() => setIsPlaying(true)}
-        onPause={() => setIsPlaying(false)}
-        onEnded={() => setIsPlaying(false)}
-      />
-    </>
+    <Link to="/podcast" className="btn-outline">
+      <Headphones size={16} />
+      Listen to our podcast
+    </Link>
   )
 }
 

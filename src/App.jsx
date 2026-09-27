@@ -25,6 +25,7 @@ const routeImports = [
   () => import('./pages/PortfolioDetail'),
   () => import('./pages/Join'),
   () => import('./pages/LMS'),
+  () => import('./pages/Podcast'),
   () => import('./pages/NotFound'),
 ]
 const [
@@ -37,6 +38,7 @@ const [
   importPortfolioDetail,
   importJoin,
   importLMS,
+  importPodcast,
   importNotFound,
 ] = routeImports
 
@@ -49,6 +51,7 @@ const ResourceDetail = lazy(importResourceDetail)
 const PortfolioDetail = lazy(importPortfolioDetail)
 const Join = lazy(importJoin)
 const LMS = lazy(importLMS)
+const Podcast = lazy(importPodcast)
 const NotFound = lazy(importNotFound)
 
 // The Descartes chat widget bundles an Adobe PDF viewer, an LLM client and a
@@ -200,6 +203,7 @@ function PublicSite() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/join" element={<Join />} />
               <Route path="/lms" element={<LMS />} />
+              <Route path="/podcast" element={<Podcast />} />
 
               {/* 404 */}
               <Route path="*" element={<NotFound />} />

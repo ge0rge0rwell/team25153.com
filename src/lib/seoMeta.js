@@ -105,6 +105,11 @@ const STATIC = {
     description:
       'Our learning platform: structured FTC courses covering robot programming, CAD and engineering fundamentals, taught by team #25153.',
   },
+  '/podcast': {
+    title: 'BioBuzz Podcast',
+    description:
+      "Listen to Cartesian Robotics #25153's BioBuzz season podcast — the game, our strategy and what it's like building for FTC this year.",
+  },
 }
 
 // ── Dynamic route resolvers ────────────────────────────────────────────────
@@ -314,6 +319,7 @@ export function sitemapEntries(content = {}) {
     { path: '/join', priority: '0.6', changefreq: 'monthly' },
     { path: '/contact', priority: '0.6', changefreq: 'yearly' },
     { path: '/lms', priority: '0.6', changefreq: 'monthly' },
+    { path: '/podcast', priority: '0.5', changefreq: 'monthly' },
   ]
   for (const r of content?.robots?.robots || []) {
     entries.push({ path: `/robots/${r.slug}`, priority: '0.9', changefreq: 'monthly' })
