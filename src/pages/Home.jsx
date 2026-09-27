@@ -1,6 +1,6 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Headphones, Pause } from 'lucide-react'
 import useReducedMotion from '../lib/useReducedMotion'
 import RobotCard from '../components/ui/RobotCard'
 import ComingSoonRobotCard from '../components/ui/ComingSoonRobotCard'
@@ -41,6 +41,44 @@ function RegistrationMarks() {
           className={`absolute w-4 h-4 border-crimson/40 group-hover:border-crimson transition-colors duration-200 ${c}`}
         />
       ))}
+    </>
+  )
+}
+
+// Toggles playback of the BioBuzz podcast via a hidden <audio> element.
+function PodcastButton() {
+  const audioRef = useRef(null)
+  const [isPlaying, setIsPlaying] = useState(false)
+
+  const togglePlayback = () => {
+    const audio = audioRef.current
+    if (!audio) return
+    if (isPlaying) {
+      audio.pause()
+    } else {
+      audio.play()
+    }
+  }
+
+  return (
+    <>
+      <button
+        type="button"
+        onClick={togglePlayback}
+        className="btn-outline"
+        aria-pressed={isPlaying}
+      >
+        {isPlaying ? <Pause size={16} /> : <Headphones size={16} />}
+        {isPlaying ? 'Pause podcast' : 'Listen to our podcast'}
+      </button>
+      <audio
+        ref={audioRef}
+        src="/media/biobuzz-podcast-en.mp3"
+        preload="none"
+        onPlay={() => setIsPlaying(true)}
+        onPause={() => setIsPlaying(false)}
+        onEnded={() => setIsPlaying(false)}
+      />
     </>
   )
 }
@@ -122,6 +160,7 @@ export default function Home() {
                     Team Overview
                     <ArrowRight size={16} className="transition-transform duration-200 group-hover:translate-x-1" />
                   </Link>
+                  <PodcastButton />
                 </StaggerItem>
 
                 {/* Robot roster */}
