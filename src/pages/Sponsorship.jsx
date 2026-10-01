@@ -28,7 +28,7 @@ function SectionHeading({ eyebrow, title, children }) {
 
 export default function Sponsorship() {
   const sponsorshipData = useCollection('sponsorship')
-  const { intro, prospectusUrl, heroImage, heroCaption, benefitMatrix, budget, budgetTotal, inKind } = sponsorshipData
+  const { intro, prospectusUrl, benefitMatrix, budget, budgetTotal, inKind } = sponsorshipData
   const tiers = sponsorshipData.tiers
 
   // Largest first, so the bar chart reads as a ranking rather than an
@@ -59,7 +59,7 @@ export default function Sponsorship() {
           <p className="eyebrow tracking-[0.3em] mb-3">Why Sponsor Cartesian?</p>
           <p className="text-gray-600 leading-relaxed mb-10 max-w-lg mx-auto">{intro}</p>
 
-          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 mb-14">
+          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
             <a
               href={prospectusUrl}
               target="_blank"
@@ -76,22 +76,6 @@ export default function Sponsorship() {
               Become a Sponsor
               <ArrowRight size={14} className="transition-transform duration-200 group-hover:translate-x-1" />
             </a>
-          </div>
-
-          <div className="relative max-w-2xl mx-auto">
-            <div className="absolute -top-3 -left-3 w-8 h-8 border-t-2 border-l-2 border-crimson" aria-hidden="true" />
-            <div className="absolute -bottom-3 -right-3 w-8 h-8 border-b-2 border-r-2 border-crimson" aria-hidden="true" />
-            <div className="aspect-[16/9] rounded-sm overflow-hidden shadow-xl">
-              <img
-                src={heroImage}
-                alt="Cartesian Robotics team #25153"
-                className="w-full h-full object-cover"
-                loading="eager"
-              />
-            </div>
-            <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.15em] text-gray-400 text-right">
-              {heroCaption}
-            </p>
           </div>
         </div>
       </section>
