@@ -43,59 +43,55 @@ export default function Sponsorship() {
       {/* ── Hero ────────────────────────────────── */}
       <section className="relative bg-surface py-14 md:py-20 overflow-hidden">
         <div className="absolute inset-0 cartesian-grid pointer-events-none" aria-hidden="true" />
-        <div className="relative max-w-7xl mx-auto px-6">
-          <nav className="flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-gray-500 mb-8">
+        <div className="relative max-w-4xl mx-auto px-6 text-center">
+          <nav className="flex items-center justify-center gap-1.5 text-xs font-mono uppercase tracking-wider text-gray-500 mb-8">
             <Link to="/" className="hover:text-crimson transition-colors">Cartesian Robotics</Link>
             <ChevronRight size={12} />
             <span className="text-navy font-bold">Support Us</span>
           </nav>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-            <div>
-              <h1 className="flex items-center gap-3 font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-navy tracking-tight mb-6">
-                <Heart className="text-crimson flex-shrink-0" size={40} fill="currentColor" />
-                Support Us
-              </h1>
-              <div className="w-full max-w-sm h-px bg-gradient-to-r from-crimson via-gray-300 to-transparent mb-8" />
+          <h1 className="flex items-center justify-center gap-3 font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-navy tracking-tight mb-6">
+            <Heart className="text-crimson flex-shrink-0" size={40} fill="currentColor" />
+            Support Us
+          </h1>
+          <div className="w-full max-w-sm h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent mb-8 mx-auto" />
 
-              <p className="eyebrow tracking-[0.3em] mb-3">Why Sponsor Cartesian?</p>
-              <p className="text-gray-600 leading-relaxed mb-10 max-w-lg">{intro}</p>
+          <p className="eyebrow tracking-[0.3em] mb-3">Why Sponsor Cartesian?</p>
+          <p className="text-gray-600 leading-relaxed mb-10 max-w-lg mx-auto">{intro}</p>
 
-              <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
-                <a
-                  href={prospectusUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-primary text-xs tracking-widest"
-                >
-                  <FileText size={16} aria-hidden="true" />
-                  Download Sponsorship Prospectus
-                </a>
-                <a
-                  href="#become-a-sponsor"
-                  className="group inline-flex items-center gap-1.5 font-mono text-xs font-bold uppercase tracking-[0.15em] text-navy border-b-2 border-crimson pb-1 hover:text-crimson transition-colors"
-                >
-                  Become a Sponsor
-                  <ArrowRight size={14} className="transition-transform duration-200 group-hover:translate-x-1" />
-                </a>
-              </div>
+          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 mb-14">
+            <a
+              href={prospectusUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary text-xs tracking-widest"
+            >
+              <FileText size={16} aria-hidden="true" />
+              Download Sponsorship Prospectus
+            </a>
+            <a
+              href="#become-a-sponsor"
+              className="group inline-flex items-center gap-1.5 font-mono text-xs font-bold uppercase tracking-[0.15em] text-navy border-b-2 border-crimson pb-1 hover:text-crimson transition-colors"
+            >
+              Become a Sponsor
+              <ArrowRight size={14} className="transition-transform duration-200 group-hover:translate-x-1" />
+            </a>
+          </div>
+
+          <div className="relative max-w-2xl mx-auto">
+            <div className="absolute -top-3 -left-3 w-8 h-8 border-t-2 border-l-2 border-crimson" aria-hidden="true" />
+            <div className="absolute -bottom-3 -right-3 w-8 h-8 border-b-2 border-r-2 border-crimson" aria-hidden="true" />
+            <div className="aspect-[16/9] rounded-sm overflow-hidden shadow-xl">
+              <img
+                src={heroImage}
+                alt="Cartesian Robotics team #25153"
+                className="w-full h-full object-cover"
+                loading="eager"
+              />
             </div>
-
-            <div className="relative">
-              <div className="absolute -top-3 -left-3 w-8 h-8 border-t-2 border-l-2 border-crimson" aria-hidden="true" />
-              <div className="absolute -bottom-3 -right-3 w-8 h-8 border-b-2 border-r-2 border-crimson" aria-hidden="true" />
-              <div className="aspect-[16/10] rounded-sm overflow-hidden shadow-xl">
-                <img
-                  src={heroImage}
-                  alt="Cartesian Robotics team #25153"
-                  className="w-full h-full object-cover"
-                  loading="eager"
-                />
-              </div>
-              <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.15em] text-gray-400 text-right">
-                {heroCaption}
-              </p>
-            </div>
+            <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.15em] text-gray-400 text-right">
+              {heroCaption}
+            </p>
           </div>
         </div>
       </section>
