@@ -66,7 +66,7 @@ export default function RobotPage() {
               <ChevronRight size={12} />
               <Link to="/team" className="hover:text-white transition-colors">Team</Link>
               <ChevronRight size={12} />
-              <span className="text-gold font-bold">{robot.name}</span>
+              <span className="text-white font-bold">{robot.name}</span>
             </StaggerItem>
 
 
@@ -78,7 +78,7 @@ export default function RobotPage() {
               {robot.name}
             </StaggerItem>
 
-            <StaggerItem className="w-16 h-0.5 bg-gold mb-5" />
+            <StaggerItem className="w-16 h-0.5 bg-white mb-5" />
 
             <StaggerItem as="p" className="text-white/60 italic mb-6 text-base">
               "{robot.tagline}"
@@ -166,7 +166,7 @@ export default function RobotPage() {
             <Reveal className="mb-10">
               <p className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-2">The Robot</p>
               <h2 className="text-3xl font-bold text-navy mb-1">Quick Facts</h2>
-              <div className="w-10 h-0.5 bg-gold" />
+              <div className="w-10 h-0.5 bg-crimson" />
             </Reveal>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
@@ -179,7 +179,7 @@ export default function RobotPage() {
                 )}
                 {robot.specs && (
                   <div className="bg-navy rounded-2xl p-7">
-                    <p className="text-gold text-xs font-bold uppercase tracking-[0.3em] mb-5">Specifications</p>
+                    <p className="text-white text-xs font-bold uppercase tracking-[0.3em] mb-5">Specifications</p>
                     <div className="flex flex-col gap-3">
                       {Object.entries(robot.specs).map(([key, val]) => (
                         <div key={key} className="flex items-center justify-between border-b border-white/10 pb-3 last:border-0 last:pb-0">

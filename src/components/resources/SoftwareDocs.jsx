@@ -16,7 +16,7 @@ export default function SoftwareDocs() {
   const CodeBlock = ({ code, language = 'java' }) => (
     <div className="my-6 rounded-xl overflow-hidden shadow-sm border border-navy/10">
       <div className="bg-navy px-4 py-2 flex items-center gap-2 border-b border-white/10">
-        <Terminal size={14} className="text-gold" />
+        <Terminal size={14} className="text-white/70" />
         <span className="text-xs font-mono text-gray-500">{language}</span>
       </div>
       <pre className="p-4 bg-[#0a1122] text-gray-300 font-mono text-sm overflow-x-auto leading-relaxed">
@@ -228,9 +228,9 @@ double power = pid + ff;
 armMotor.setPower(power);
             `} />
             
-            <div className="bg-amber-50 border border-amber-200 rounded-xl p-5 mt-8">
-              <h4 className="font-bold text-amber-800 mb-2">Tuning Tips</h4>
-              <p className="text-sm text-amber-700">
+            <div className="bg-crimson-50 border border-crimson-200 rounded-xl p-5 mt-8">
+              <h4 className="font-bold text-crimson-900 mb-2">Tuning Tips</h4>
+              <p className="text-sm text-crimson-dark">
                 Always tune Feedforward (F) first to ensure the arm can hold its own weight. Then tune P until the arm reaches the target quickly. If it overshoots and oscillates, increase D to dampen it. Only use I if absolutely necessary.
               </p>
             </div>
@@ -345,7 +345,7 @@ switch (currentState) {
                   }`}
                 >
                   <div className="flex items-center gap-3">
-                    <span className={`${activeModule === mod.id ? 'text-gold' : 'text-gray-500'}`}>
+                    <span className={`${activeModule === mod.id ? 'text-white' : 'text-gray-500'}`}>
                       {mod.icon}
                     </span>
                     <span className="font-bold text-sm">{mod.title}</span>

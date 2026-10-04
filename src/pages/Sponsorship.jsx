@@ -7,12 +7,6 @@ import { useCollection } from '../context/ContentContext'
 
 const iconMap = { Heart, Star, Package, Handshake }
 
-// "18,000 $" -> 18000, so the bars can be drawn to scale.
-function parseAmount(s) {
-  const n = Number(String(s).replace(/[^0-9.]/g, ''))
-  return Number.isFinite(n) ? n : 0
-}
-
 function SectionHeading({ eyebrow, title, children }) {
   return (
     <Reveal className="text-center mb-12">
@@ -20,7 +14,7 @@ function SectionHeading({ eyebrow, title, children }) {
       <h2 className="font-display text-3xl sm:text-4xl lg:text-[42px] font-bold text-navy tracking-tight mb-4">
         {title}
       </h2>
-      <div className="w-12 h-0.5 bg-gold mx-auto" />
+      <div className="w-12 h-0.5 bg-crimson mx-auto" />
       {children}
     </Reveal>
   )
@@ -28,13 +22,8 @@ function SectionHeading({ eyebrow, title, children }) {
 
 export default function Sponsorship() {
   const sponsorshipData = useCollection('sponsorship')
-  const { intro, prospectusUrl, benefitMatrix, budget, budgetTotal, inKind } = sponsorshipData
+  const { intro, prospectusUrl, benefitMatrix, inKind } = sponsorshipData
   const tiers = sponsorshipData.tiers
-
-  // Largest first, so the bar chart reads as a ranking rather than an
-  // arbitrary order. Sorted on a copy — never mutate CMS data in place.
-  const rankedBudget = [...budget].sort((a, b) => parseAmount(b.amount) - parseAmount(a.amount))
-  const budgetGrandTotal = rankedBudget.reduce((sum, item) => sum + parseAmount(item.amount), 0) || 1
 
   const totalBenefits = benefitMatrix.length
 
@@ -91,7 +80,7 @@ export default function Sponsorship() {
               <h2 className="font-display text-3xl sm:text-4xl lg:text-[42px] font-bold text-navy tracking-tight">
                 Sponsorship Tiers
               </h2>
-              <div className="w-12 h-0.5 bg-gold mt-4" />
+              <div className="w-12 h-0.5 bg-crimson mt-4" />
             </div>
             <p className="font-mono text-[11px] uppercase tracking-wider text-gray-400">
               Bar height = benefits included
@@ -120,14 +109,14 @@ export default function Sponsorship() {
                   <div className="flex items-start justify-between mb-5">
                     <div
                       className={`w-11 h-11 rounded-xl flex items-center justify-center ${
-                        featured ? 'bg-gold text-navy' : 'bg-crimson-100 text-crimson'
+                        featured ? 'bg-white text-navy' : 'bg-crimson-100 text-crimson'
                       }`}
                     >
                       <Icon size={20} />
                     </div>
                     <span
                       className={`font-mono text-[10px] font-bold uppercase tracking-[0.15em] ${
-                        featured ? 'text-gold' : 'text-gray-400'
+                        featured ? 'text-white/50' : 'text-gray-400'
                       }`}
                     >
                       Tier 0{i + 1}
@@ -135,7 +124,7 @@ export default function Sponsorship() {
                   </div>
 
                   {featured && (
-                    <span className="inline-flex items-center gap-1.5 self-start mb-3 rounded-full bg-gold px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-navy">
+                    <span className="inline-flex items-center gap-1.5 self-start mb-3 rounded-full bg-white px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-navy">
                       <BadgeCheck size={12} aria-hidden="true" /> Main Partner
                     </span>
                   )}
@@ -143,7 +132,7 @@ export default function Sponsorship() {
                   <h3 className={`font-display text-xl font-bold leading-tight mb-2 ${featured ? 'text-white' : 'text-navy'}`}>
                     {tier.name.replace(/^Tier \d+:\s*/, '')}
                   </h3>
-                  <p className={`font-mono text-2xl font-bold tabular-nums tracking-tight mb-1 ${featured ? 'text-gold' : 'text-crimson'}`}>
+                  <p className={`font-mono text-2xl font-bold tabular-nums tracking-tight mb-1 ${featured ? 'text-white' : 'text-crimson'}`}>
                     {tier.amount}
                   </p>
                   <p className={`font-mono text-[11px] uppercase tracking-wider mb-5 ${featured ? 'text-white/60' : 'text-gray-400'}`}>
@@ -200,10 +189,10 @@ export default function Sponsorship() {
                       scope="col"
                       className={`px-5 py-5 text-center align-top ${t.featured ? 'bg-navy-light' : ''}`}
                     >
-                      <span className={`block font-mono text-[11px] font-bold uppercase tracking-[0.1em] ${t.featured ? 'text-gold' : 'text-white'}`}>
+                      <span className={`block font-mono text-[11px] font-bold uppercase tracking-[0.1em] ${t.featured ? 'text-white' : 'text-white'}`}>
                         T{i + 1} ({t.name.replace(/^Tier \d+:\s*/, '')})
                       </span>
-                      <span className={`block font-mono text-[11px] mt-1 ${t.featured ? 'text-gold/80' : 'text-white/60'}`}>
+                      <span className={`block font-mono text-[11px] mt-1 ${t.featured ? 'text-white/70' : 'text-white/60'}`}>
                         {t.amount}
                       </span>
                     </th>
@@ -241,71 +230,26 @@ export default function Sponsorship() {
         </div>
       </section>
 
-      {/* ── Budget ──────────────────────────────── */}
-      <section className="relative py-16 md:py-24 bg-navy overflow-hidden">
-        <div className="absolute inset-0 cartesian-grid-dense opacity-30 pointer-events-none" aria-hidden="true" />
-        <div className="relative max-w-5xl mx-auto px-6">
-          <div className="flex flex-wrap items-start justify-between gap-6 mb-12">
-            <div className="max-w-lg">
-              <p className="font-mono text-[12px] sm:text-[13px] font-bold uppercase tracking-[0.25em] text-gold mb-3">
-                Fiscal Transparency
-              </p>
-              <h2 className="font-display text-3xl sm:text-4xl lg:text-[42px] font-bold text-white tracking-tight mb-4 uppercase">
-                Technical Aligned Budget
-              </h2>
-              <p className="text-white/60 leading-relaxed">
-                These figures reflect the real operational and capital expenditure of one full competitive season.
-              </p>
-            </div>
-            <div className="text-right">
-              <span className="flex items-center justify-end gap-2 font-mono text-[11px] uppercase tracking-wider text-white/50 mb-2">
-                <Landmark size={14} className="text-gold" aria-hidden="true" />
-                Total Annual Requirement
-              </span>
-              <span className="font-mono text-4xl sm:text-5xl font-bold text-gold tabular-nums">{budgetTotal}</span>
-            </div>
-          </div>
-
-          {/* Treemap-style breakdown: block area is proportional to spend,
-              so registration's dominance over the budget reads at a glance. */}
-          <Reveal className="grid grid-cols-1 sm:grid-cols-2 gap-3" style={{ gridAutoRows: '7rem' }}>
-            {rankedBudget.map((item, i) => {
-              const pct = (parseAmount(item.amount) / budgetGrandTotal) * 100
-              const isLargest = i === 0
-              const rowSpan = isLargest ? 2 : 1
-              return (
-                <div
-                  key={item.label}
-                  className={`relative rounded-xl p-5 flex flex-col justify-between overflow-hidden ${
-                    isLargest ? 'bg-crimson sm:row-span-2' : 'bg-navy-mid'
-                  }`}
-                  style={isLargest ? { gridRow: `span ${rowSpan} / span ${rowSpan}` } : undefined}
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <span className="font-semibold text-white text-sm sm:text-base leading-snug">{item.label}</span>
-                    <span className="font-mono text-[11px] text-white/60 whitespace-nowrap">{pct.toFixed(1)}%</span>
-                  </div>
-                  <span className="font-mono text-2xl sm:text-3xl font-bold text-white tabular-nums">
-                    {item.amount}
-                  </span>
-                </div>
-              )
-            })}
-          </Reveal>
-        </div>
-      </section>
-
       {/* ── In-kind ─────────────────────────────── */}
-      <section className="py-16 md:py-24 bg-crimson">
-        <div className="max-w-4xl mx-auto px-6">
+      <section className="relative py-20 md:py-28 bg-navy overflow-hidden">
+        <div className="absolute inset-0 cartesian-grid-dense opacity-30 pointer-events-none" aria-hidden="true" />
+        <div
+          aria-hidden="true"
+          className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-crimson/20 blur-3xl pointer-events-none"
+        />
+        <div className="relative max-w-4xl mx-auto px-6">
           <Reveal>
-            <p className="font-mono text-[12px] sm:text-[13px] font-bold uppercase tracking-[0.25em] text-gold mb-4">
-              Technical Alliances
-            </p>
-            <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight uppercase leading-[0.95] mb-6">
+            <div className="inline-flex items-center gap-2 rounded-full bg-crimson px-4 py-1.5 mb-6">
+              <Landmark size={14} className="text-white" aria-hidden="true" />
+              <p className="font-mono text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.25em] text-white">
+                Technical Alliances
+              </p>
+            </div>
+            <h2 className="font-display text-4xl sm:text-5xl lg:text-7xl font-bold text-white tracking-tight uppercase leading-[0.95] mb-6">
               In-Kind<br />Support
             </h2>
-            <p className="text-white/85 leading-relaxed max-w-2xl">{inKind}</p>
+            <div className="w-16 h-1 bg-crimson mb-8" />
+            <p className="text-white/85 text-lg leading-relaxed max-w-2xl">{inKind}</p>
           </Reveal>
         </div>
       </section>
@@ -315,11 +259,11 @@ export default function Sponsorship() {
         <div className="max-w-2xl mx-auto px-6">
           <Reveal className="text-center mb-12">
             <p className="font-mono text-xs tracking-[0.3em] text-white/50 mb-2">VI</p>
-            <p className="eyebrow text-gold tracking-[0.3em] mb-3">Get In Touch</p>
+            <p className="eyebrow text-white/70 tracking-[0.3em] mb-3">Get In Touch</p>
             <h2 className="font-display text-3xl sm:text-4xl lg:text-[42px] font-bold text-white tracking-tight">
               Become a Sponsor
             </h2>
-            <div className="w-12 h-0.5 bg-gold mx-auto mt-4" />
+            <div className="w-12 h-0.5 bg-white mx-auto mt-4" />
           </Reveal>
           <Reveal className="bg-surface rounded-2xl p-5 sm:p-8 shadow-xl">
             <ContactForm />

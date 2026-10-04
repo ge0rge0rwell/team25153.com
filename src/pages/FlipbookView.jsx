@@ -33,7 +33,7 @@ export default function FlipbookView() {
       <div className="w-screen h-screen flex items-center justify-center bg-navy text-white">
         <div className="text-center px-6">
           <h1 className="text-2xl font-medium mb-4">Portfolio Not Found</h1>
-          <Link to="/" className="text-gold underline">Go Home</Link>
+          <Link to="/" className="text-white underline">Go Home</Link>
         </div>
       </div>
     )

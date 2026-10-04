@@ -125,7 +125,7 @@ export default function Home() {
                 </StaggerItem>
 
                 <StaggerItem as="p" className="text-gray-600 text-[15px] sm:text-base leading-[1.72] mb-8 max-w-2xl">
-                  Our team aims to develop middle school students' skills in <strong className="font-bold text-navy">engineering, creativity, strategy, and teamwork</strong> while <strong className="font-bold text-navy">spreading STEM culture</strong> within our community. We are proud of our international achievements, but we measure our success by the <strong className="font-bold text-navy">people we impact</strong>.
+                  Our team aims to develop middle school students' skills in <strong className="font-bold text-navy">engineering, creativity, strategy, and teamwork</strong> while <strong className="font-bold text-navy">spreading STEM culture</strong> within our community. We are proud of our international achievements, but we measure our success by the <strong className="font-bold text-navy">people we inspire</strong>.
                 </StaggerItem>
 
                 <StaggerItem className="flex flex-wrap gap-3">
@@ -136,12 +136,12 @@ export default function Home() {
                   <PodcastButton />
                 </StaggerItem>
 
-                {/* Robot roster */}
+                {/* Robot roster — Bio Buzz (next season) leads, then reverse-chronological by season */}
                 <StaggerItem className="mt-12 border border-crimson/15 rounded-xl overflow-hidden grid grid-cols-4 bg-white shadow-sm">
+                  <ComingSoonRobotCard />
                   {robots.map((r) => (
                     <RobotCard key={r.name} {...r} />
                   ))}
-                  <ComingSoonRobotCard />
                 </StaggerItem>
               </StaggerGroup>
             </div>
@@ -170,7 +170,7 @@ export default function Home() {
                   {/* Team badge */}
                   <div className="absolute bottom-4 left-4 sm:bottom-5 sm:left-5 bg-crimson text-white rounded-2xl px-5 py-2.5 shadow-xl flex flex-col items-start border border-white/20 transition-transform duration-200 group-hover:scale-105">
                     <span className="flex items-center gap-1.5">
-                      <span className={`w-1.5 h-1.5 rounded-full bg-gold ${reducedMotion ? '' : 'animate-pulse'}`} />
+                      <span className={`w-1.5 h-1.5 rounded-full bg-white ${reducedMotion ? '' : 'animate-pulse'}`} />
                       <span className="font-mono text-[9px] tracking-[0.25em] font-bold text-white/90 uppercase">Team</span>
                     </span>
                     <span className="font-display text-2xl sm:text-3xl font-bold tracking-wider leading-none mt-0.5">#25153</span>

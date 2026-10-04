@@ -181,7 +181,7 @@ export default function Join() {
           <Reveal className="text-center mb-12">
             <p className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-2">Membership</p>
             <h2 className="text-3xl font-medium text-navy mb-2">How to Join</h2>
-            <div className="w-10 h-0.5 bg-gold mx-auto" />
+            <div className="w-10 h-0.5 bg-crimson mx-auto" />
           </Reveal>
           <StaggerGroup as="div" staggerChildren={0.1} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {steps.map(({ icon: Icon, number, title, desc }) => (
@@ -204,9 +204,9 @@ export default function Join() {
       {/* Moodle CTA — navy band */}
       <section className="py-16 bg-navy text-white">
         <Reveal direction="scale" className="max-w-3xl mx-auto px-6 text-center">
-          <p className="text-gold text-xs font-bold uppercase tracking-[0.3em] mb-2">Learning Platform</p>
+          <p className="text-white text-xs font-bold uppercase tracking-[0.3em] mb-2">Learning Platform</p>
           <h2 className="text-3xl font-medium mb-2">Complete Tasks on Moodle</h2>
-          <div className="w-10 h-0.5 bg-gold mx-auto mb-6" />
+          <div className="w-10 h-0.5 bg-white mx-auto mb-6" />
           <p className="text-white/70 leading-relaxed mb-8 max-w-xl mx-auto">
             After submitting your interest below, you will receive access to our Moodle
             course where you'll complete onboarding tasks before your interview.
@@ -228,7 +228,7 @@ export default function Join() {
           <Reveal className="text-center mb-10">
             <p className="text-crimson text-xs font-bold uppercase tracking-[0.3em] mb-2">Get Started</p>
             <h2 className="text-3xl font-medium text-navy mb-2">Submit Your Interest</h2>
-            <div className="w-10 h-0.5 bg-gold mx-auto" />
+            <div className="w-10 h-0.5 bg-crimson mx-auto" />
           </Reveal>
           <Reveal delay={0.1} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 sm:p-8">
             <ApplicationForm />

@@ -21,7 +21,7 @@ export default function Contact() {
               <span className="w-6 h-px bg-crimson" /> Get In Touch
             </p>
             <h2 className="text-3xl font-medium text-navy mb-1">Contact Us</h2>
-            <div className="w-10 h-0.5 bg-gold mb-8" />
+            <div className="w-10 h-0.5 bg-crimson mb-8" />
 
             <StaggerGroup as="ul" staggerChildren={0.12} className="space-y-8">
               <StaggerItem as="li" className="flex items-start gap-4">

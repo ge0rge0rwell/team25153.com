@@ -454,10 +454,10 @@ function CourseViewer({ course, session, onBack }) {
           </button>
           <div className="flex items-start gap-4">
             <div className="w-12 h-12 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center flex-shrink-0">
-              <GraduationCap size={22} className="text-gold" />
+              <GraduationCap size={22} className="text-white/80" />
             </div>
             <div>
-              <p className="text-gold text-xs font-semibold uppercase tracking-widest mb-1">{course.shortname}</p>
+              <p className="text-white/80 text-xs font-semibold uppercase tracking-widest mb-1">{course.shortname}</p>
               <h1 className="text-xl md:text-2xl font-bold leading-snug">{course.fullname}</h1>
             </div>
           </div>
@@ -578,7 +578,7 @@ function CourseCard({ course, index, onClick }) {
           </div>
           <span className="text-white/60 text-xs font-medium uppercase tracking-widest">{course.shortname}</span>
         </div>
-        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gold/60 group-hover:bg-gold transition-colors" />
+        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-white/60 group-hover:bg-white transition-colors" />
       </div>
       <div className="flex flex-col flex-1 p-5">
         <h3 className="font-semibold text-navy text-base leading-snug mb-2 line-clamp-2 group-hover:text-crimson transition-colors">
@@ -624,8 +624,8 @@ function CourseGrid({ session, onSelect }) {
           <div className="flex items-start justify-between gap-4">
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-1 h-7 bg-gold rounded-full" />
-                <span className="text-gold text-xs font-semibold uppercase tracking-widest">
+                <div className="w-1 h-7 bg-white rounded-full" />
+                <span className="text-white/80 text-xs font-semibold uppercase tracking-widest">
                   Cartesian Robotics · Team 25153
                 </span>
               </div>

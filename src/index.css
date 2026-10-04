@@ -34,12 +34,12 @@
     border-radius: 2px;
   }
 
-  /* On dark backgrounds a crimson ring is nearly invisible — use gold. */
+  /* On dark backgrounds a crimson ring is nearly invisible — use white. */
   .bg-navy :focus-visible,
   .bg-crimson :focus-visible,
   .bg-navy-gradient :focus-visible,
   .bg-crimson-gradient :focus-visible {
-    outline-color: theme('colors.gold.DEFAULT');
+    outline-color: theme('colors.white');
   }
 }
 
@@ -126,7 +126,7 @@
   }
 
   .section-divider {
-    @apply w-10 h-0.5 bg-gold mb-6;
+    @apply w-10 h-0.5 bg-crimson mb-6;
   }
 
   /* Buttons */

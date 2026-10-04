@@ -7,7 +7,7 @@ export default function NotFound() {
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center bg-gradient-to-br from-[#fdf8f7] to-white relative overflow-hidden">
       <div className="absolute top-0 right-0 w-1/2 h-full bg-crimson/3 clip-diagonal pointer-events-none" />
-      <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-gold/10 blur-3xl pointer-events-none" />
+      <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-crimson/10 blur-3xl pointer-events-none" />
 
       <div className="max-w-2xl mx-auto px-6 py-16 w-full relative text-center">
         {/* René, framed again, stacked above the 404 numeral in plain flow

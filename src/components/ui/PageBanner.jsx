@@ -30,12 +30,12 @@ export default function PageBanner({ title, breadcrumbs = [], bg = null, childre
           {/* Breadcrumbs */}
           {breadcrumbs.length > 0 && (
             <nav className="flex items-center gap-1.5 text-sm text-white/60">
-              <Link to="/" className="hover:text-gold transition-colors">Cartesian Robotics</Link>
+              <Link to="/" className="hover:text-white transition-colors">Cartesian Robotics</Link>
               {breadcrumbs.map((crumb, i) => (
                 <span key={i} className="flex items-center gap-1.5">
                   <ChevronRight size={14} />
                   {crumb.to ? (
-                    <Link to={crumb.to} className="hover:text-gold transition-colors">{crumb.label}</Link>
+                    <Link to={crumb.to} className="hover:text-white transition-colors">{crumb.label}</Link>
                   ) : (
                     <span className="text-white/80">{crumb.label}</span>
                   )}

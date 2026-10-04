@@ -9,7 +9,7 @@ export default function Footer() {
   const footerLinks = useCollection('navigation').footerLinks || []
 
   return (
-    <footer className="bg-navy text-white border-t-2 border-gold">
+    <footer className="bg-navy text-white border-t-2 border-crimson">
       {/* Main Footer */}
       <StaggerGroup as="div" amount={0.1} className="max-w-[1360px] mx-auto px-5 sm:px-8 py-16 grid grid-cols-1 md:grid-cols-12 gap-x-12 gap-y-12">
         {/* Brand */}
@@ -25,12 +25,12 @@ export default function Footer() {
           <p className="text-white/60 text-sm leading-relaxed mb-6">
             A student-led FTC robotics team that believes in the power of thinking and creating.
           </p>
-          <p className="text-gold font-medium italic text-sm">"I think, therefore I can."</p>
+          <p className="text-white font-medium italic text-sm">"I think, therefore I can."</p>
         </StaggerItem>
 
         {/* Quick Links */}
         <StaggerItem className="md:col-span-3">
-          <h3 className="font-mono text-gold font-bold uppercase tracking-[0.2em] text-xs mb-5 flex items-center gap-1.5">
+          <h3 className="font-mono text-white font-bold uppercase tracking-[0.2em] text-xs mb-5 flex items-center gap-1.5">
             <span aria-hidden="true">—</span> Quick Links
           </h3>
           <ul className="space-y-4">
@@ -38,9 +38,9 @@ export default function Footer() {
               <li key={link.to}>
                 <Link
                   to={link.to}
-                  className="text-white/60 hover:text-gold text-sm transition-colors flex items-center gap-2.5 py-0.5 group"
+                  className="text-white/60 hover:text-white text-sm transition-colors flex items-center gap-2.5 py-0.5 group"
                 >
-                  <span className="w-3 h-px bg-gold/40 group-hover:w-5 group-hover:bg-gold transition-all duration-300"></span>
+                  <span className="w-3 h-px bg-white/40 group-hover:w-5 group-hover:bg-white transition-all duration-300"></span>
                   {link.label === 'Support Us' && <Heart size={13} fill="currentColor" className="text-crimson" />}
                   {link.label}
                 </Link>
@@ -51,29 +51,29 @@ export default function Footer() {
 
         {/* Contact Info */}
         <StaggerItem className="md:col-span-4">
-          <h3 className="font-mono text-gold font-bold uppercase tracking-[0.2em] text-xs mb-5 flex items-center gap-1.5">
+          <h3 className="font-mono text-white font-bold uppercase tracking-[0.2em] text-xs mb-5 flex items-center gap-1.5">
             <span aria-hidden="true">—</span> Contact
           </h3>
           <ul className="space-y-4">
             <li className="flex items-start gap-3 text-sm text-white/60">
-              <MapPin size={16} className="text-gold mt-0.5 flex-shrink-0" />
+              <MapPin size={16} className="text-white/70 mt-0.5 flex-shrink-0" />
               <span>ODTÜ Geliştirme Vakfı Ankara Okulları<br />
               Üniversiteler, İhsan Doğramacı Blv No:5,<br />
               06800 Çankaya/Ankara</span>
             </li>
             <li className="flex items-center gap-3 text-sm text-white/60">
-              <Mail size={16} className="text-gold flex-shrink-0" />
-              <a href="mailto:cartesian25153@gmail.com" className="hover:text-gold transition-colors">
+              <Mail size={16} className="text-white/70 flex-shrink-0" />
+              <a href="mailto:cartesian25153@gmail.com" className="hover:text-white transition-colors">
                 cartesian25153@gmail.com
               </a>
             </li>
             <li className="flex items-center gap-3 text-sm text-white/60">
-              <FaInstagram size={16} className="text-gold flex-shrink-0" />
+              <FaInstagram size={16} className="text-white/70 flex-shrink-0" />
               <a
                 href="https://www.instagram.com/cartesian25153/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-gold transition-colors"
+                className="hover:text-white transition-colors"
               >
                 @cartesian25153
               </a>

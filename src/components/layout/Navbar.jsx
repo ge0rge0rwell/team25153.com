@@ -199,7 +199,7 @@ function MobileNavItem({ item, onClose }) {
         target="_blank"
         rel="noopener noreferrer"
         onClick={onClose}
-        className="block px-8 py-3 text-white/80 text-sm uppercase tracking-wider border-b border-navy-mid/20 hover:text-gold hover:bg-navy-light transition-colors"
+        className="block px-8 py-3 text-white/80 text-sm uppercase tracking-wider border-b border-navy-mid/20 hover:text-white hover:bg-navy-light transition-colors"
       >
         {item.label}
       </a>
@@ -210,7 +210,7 @@ function MobileNavItem({ item, onClose }) {
     <Link
       to={item.to}
       onClick={onClose}
-      className="flex items-center gap-2 px-8 py-3 text-white/80 text-sm uppercase tracking-wider border-b border-navy-mid/20 hover:text-gold hover:bg-navy-light transition-colors"
+      className="flex items-center gap-2 px-8 py-3 text-white/80 text-sm uppercase tracking-wider border-b border-navy-mid/20 hover:text-white hover:bg-navy-light transition-colors"
     >
       {item.label === 'Support Us' && <Heart size={14} fill="currentColor" />}
       {item.label}

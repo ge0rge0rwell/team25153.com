@@ -12,7 +12,7 @@ const iconMap = { BookOpen, Code2, Box, Library }
 const tagColors = {
   Guide: 'bg-crimson-100 text-crimson',
   Course: 'bg-navy-50 text-navy',
-  Reference: 'bg-gold/20 text-gold-deep',
+  Reference: 'bg-navy-50 text-navy',
 }
 
 export default function Resources() {
@@ -31,7 +31,7 @@ export default function Resources() {
             <h2 className="font-display text-3xl sm:text-4xl lg:text-[42px] font-bold text-navy tracking-tight mb-4">
               Resources for FTC Teams
             </h2>
-            <div className="w-10 h-0.5 bg-gold mx-auto mb-5" />
+            <div className="w-10 h-0.5 bg-crimson mx-auto mb-5" />
             <p className="text-gray-500 max-w-xl mx-auto leading-relaxed">
               We believe in open knowledge. Everything we've learned is here for you to use, adapt, and build upon.
             </p>

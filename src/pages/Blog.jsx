@@ -8,7 +8,7 @@ import { useCollection } from '../context/ContentContext'
 const tagColors = {
   'Season Recap': 'bg-crimson/10 text-crimson',
   Strategy: 'bg-navy/10 text-navy',
-  Outreach: 'bg-gold/20 text-yellow-700',
+  Outreach: 'bg-navy-50 text-navy',
 }
 
 export default function Blog() {
@@ -24,7 +24,7 @@ export default function Blog() {
               <span className="w-6 h-px bg-crimson" /> From the Team
             </p>
             <h2 className="text-3xl font-medium text-navy mb-1">Latest Posts</h2>
-            <div className="w-10 h-0.5 bg-gold" />
+            <div className="w-10 h-0.5 bg-crimson" />
           </Reveal>
 
           <StaggerGroup as="div" staggerChildren={0.1} className="grid grid-cols-1 md:grid-cols-3 gap-8">

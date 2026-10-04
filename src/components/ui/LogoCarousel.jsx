@@ -4,11 +4,7 @@ import useReducedMotion from '../../lib/useReducedMotion'
 
 // tier: 1 = Yamantürk (biggest), 3 = standard
 const sponsors = [
-  { src: '/sponsors/4.jpg', alt: 'Yamantürk Vakfı',     tier: 1 },
-  { src: '/sponsors/2.jpg', alt: 'KOZKA İnşaat',        tier: 3 },
-  { src: '/sponsors/3.jpg', alt: 'Fikret Yüksel Vakfı', tier: 3 },
-  { src: '/sponsors/5.jpg', alt: 'Öztekin Beta',         tier: 3 },
-  { src: '/sponsors/6.jpg', alt: 'Kemron',               tier: 3 },
+  { src: '/sponsors/4.jpg', alt: 'Yamantürk Vakfı', tier: 1 },
 ]
 
 const majors = sponsors.filter((s) => s.tier <= 2)
@@ -89,16 +85,14 @@ function LogoCard({ sponsor: s }) {
       className={`group/card relative flex-shrink-0 flex items-center justify-center ${card}
                   bg-white rounded-2xl px-4 shadow-lg ring-1 ring-black/5
                   transition-all duration-300 ease-out
-                  hover:-translate-y-1.5 hover:shadow-xl hover:ring-2 hover:ring-gold/70`}
+                  hover:-translate-y-1.5 hover:shadow-xl`}
     >
       <img
         src={s.src}
         alt={s.alt}
         loading="lazy"
         decoding="async"
-        className={`${logo} max-w-full object-contain grayscale opacity-80
-                    transition-all duration-300 ease-out
-                    group-hover/card:grayscale-0 group-hover/card:opacity-100`}
+        className={`${logo} max-w-full object-contain`}
       />
       {/* Name label — slides in under the card on hover */}
       <span
@@ -116,7 +110,7 @@ function LogoCard({ sponsor: s }) {
 
 export default function LogoCarousel() {
   return (
-    <section className="relative overflow-hidden py-20 lg:py-24 text-white border-t-2 border-gold bg-gradient-to-b from-[#78241d] via-[#5c1c16] to-[#251522]">
+    <section className="relative overflow-hidden py-20 lg:py-24 text-white border-t-2 border-crimson bg-gradient-to-b from-[#78241d] via-[#5c1c16] to-[#251522]">
       {/* Faint dot-grid texture, consistent with hero sections elsewhere */}
       <div
         className="absolute inset-0 opacity-[0.06] pointer-events-none"
@@ -129,18 +123,20 @@ export default function LogoCarousel() {
       <div className="relative max-w-6xl mx-auto px-6">
         <Reveal direction="scale" className="text-center mb-12">
           <p className="font-mono text-white/80 text-[11px] font-bold uppercase tracking-[0.25em] mb-3 flex items-center justify-center gap-2">
-            <Handshake size={14} className="text-gold" />
+            <Handshake size={14} className="text-crimson-light" />
             Proudly Supported By
           </p>
           <h2 className="font-display text-3xl sm:text-4xl lg:text-[44px] font-bold text-white tracking-tight mb-3">
             Our Sponsors &amp; Partners
           </h2>
-          <div className="w-10 h-0.5 bg-gold mx-auto" />
+          <div className="w-10 h-0.5 bg-crimson-light mx-auto" />
         </Reveal>
 
         <div className="flex flex-col gap-10">
           <StaticRow items={majors} label="Major Partners" />
-          <Row items={community} direction="right" speed={34} label="Community Supporters" />
+          {community.length > 0 && (
+            <Row items={community} direction="right" speed={34} label="Community Supporters" />
+          )}
         </div>
       </div>
     </section>
